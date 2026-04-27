@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
 import subscribeImage from "@/assests/subscribe-01.png";
@@ -53,12 +54,12 @@ export function SubscriptionCtaSection() {
             <p className="mt-7 text-sm font-medium text-black">
               Choose a plan that fits your lifestyle...
             </p>
-            <a
-              href="#"
+            <Link
+              href="/subscription"
               className="mt-7 inline-flex w-fit rounded-full bg-[#6ead3d] px-6 py-3 text-xs font-extrabold uppercase tracking-[0.06em] text-white transition hover:bg-[#5e9d31]"
             >
               Subscribe Now
-            </a>
+            </Link>
           </div>
         </FadeIn>
       </div>
