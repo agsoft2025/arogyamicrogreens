@@ -34,7 +34,10 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-background text-foreground">
+      <body
+        className="min-h-full bg-background text-foreground"
+        suppressHydrationWarning
+      >
         <div className="flex min-h-full flex-col">
           <SiteShell>{children}</SiteShell>
         </div>
