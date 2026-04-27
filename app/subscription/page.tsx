@@ -89,6 +89,25 @@ const benefits = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What is a microgreens subscription?",
+    answer: "A subscription allows you to receive fresh microgreens at regular intervals without reordering every time.",
+  },
+  {
+    question: "Can I pause or modify my subscription?",
+    answer: "Yes, you can pause or modify it anytime through your account settings.",
+  },
+  {
+    question: "Are there plans for couples and families?",
+    answer: "Absolutely, we have specifically designed grouping for individuals, couples, and families to suit varying needs.",
+  },
+  {
+    question: "Do subscriptions auto-renew?",
+    answer: "Yes, our subscriptions auto-renew according to your chosen billing cycle so you never run out or forget to order.",
+  },
+];
+
 export default function SubscriptionPage() {
   return (
     <>
@@ -144,9 +163,8 @@ export default function SubscriptionPage() {
                   <button
                     key={group}
                     type="button"
-                    className={`px-8 py-6 text-center text-3xl font-extrabold uppercase tracking-[0.04em] text-white transition ${
-                      index === 0 ? "bg-[#acd6bd]" : "hover:bg-white/5"
-                    }`}
+                    className={`px-8 py-6 text-center text-3xl font-extrabold uppercase tracking-[0.04em] text-white transition ${index === 0 ? "bg-[#acd6bd]" : "hover:bg-white/5"
+                      }`}
                   >
                     {group}
                   </button>
@@ -164,15 +182,13 @@ export default function SubscriptionPage() {
                 className="h-full"
               >
                 <article
-                  className={`relative flex h-full min-h-[430px] flex-col overflow-hidden bg-white p-8 shadow-[0_26px_60px_rgba(15,23,42,0.12)] ${
-                    index === 0
-                      ? "rounded-t-[18px] md:rounded-tr-none lg:rounded-l-[18px]"
-                      : ""
-                  } ${
-                    index === plans.length - 1
+                  className={`relative flex h-full min-h-[430px] flex-col overflow-hidden bg-white p-8 shadow-[0_26px_60px_rgba(15,23,42,0.12)] ${index === 0
+                    ? "rounded-t-[18px] md:rounded-tr-none lg:rounded-l-[18px]"
+                    : ""
+                    } ${index === plans.length - 1
                       ? "rounded-b-[18px] md:rounded-bl-none lg:rounded-r-[18px]"
                       : ""
-                  } ${plan.featured ? "z-10 lg:-mt-1" : ""}`}
+                    } ${plan.featured ? "z-10 lg:-mt-1" : ""}`}
                 >
                   {plan.featured ? (
                     <div className="absolute inset-x-0 top-0 h-[74px] bg-[#86bd2f]" />
@@ -180,16 +196,14 @@ export default function SubscriptionPage() {
 
                   <div className="relative">
                     <p
-                      className={`font-serif text-sm font-extrabold tracking-[0.06em] ${
-                        plan.featured ? "text-white" : "text-[#32231d]"
-                      }`}
+                      className={`font-serif text-sm font-extrabold tracking-[0.06em] ${plan.featured ? "text-white" : "text-[#32231d]"
+                        }`}
                     >
                       {plan.billing}
                     </p>
                     <p
-                      className={`mt-2 text-[10px] font-extrabold uppercase tracking-[0.14em] ${
-                        plan.featured ? "text-white" : "text-[#32231d]"
-                      }`}
+                      className={`mt-2 text-[10px] font-extrabold uppercase tracking-[0.14em] ${plan.featured ? "text-white" : "text-[#32231d]"
+                        }`}
                     >
                       {plan.audience}
                     </p>
@@ -240,15 +254,15 @@ export default function SubscriptionPage() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,_rgba(38,38,38,0.88)_0%,_rgba(38,38,38,0.78)_34%,_rgba(38,38,38,0.5)_100%)]" />
 
         <div className="relative mx-auto grid min-h-[720px] w-full max-w-5xl items-center px-6 py-20 md:grid-cols-[0.95fr_1fr] md:py-24">
-          <div className="grid gap-y-10 gap-x-14 sm:grid-cols-2">
+          <div className="grid gap-y-10 gap-x-60 sm:grid-cols-2">
             {benefits.map((benefit, index) => (
               <FadeIn
                 key={benefit.title}
                 delay={0.06 * index}
                 distance={22}
-                className={index % 2 === 1 ? "sm:translate-y-14" : ""}
+                className={index % 2 === 1 ? "sm:translate-y-16" : ""}
               >
-                <article className="relative min-h-[200px] w-full overflow-hidden rounded-[12px] bg-white px-8 py-10 text-center shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
+                <article className="relative min-w-[300px] min-h-[200px] w-full overflow-hidden rounded-[12px] bg-white px-8 py-10 text-center shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
                   <div className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-bl-full border-b border-l border-[#78b944]/25 bg-[radial-gradient(circle_at_80%_20%,_rgba(120,185,68,0.28)_0,_rgba(120,185,68,0.28)_2px,_transparent_3px)] [background-size:14px_14px]" />
                   <div
                     className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full ${benefit.color} text-3xl font-bold text-white`}
@@ -269,7 +283,56 @@ export default function SubscriptionPage() {
 
           <div className="hidden md:block" aria-hidden="true" />
         </div>
+
+
+      </section>
+
+      <section className="bg-white px-6 py-16 md:py-24">
+        <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-[1fr_2fr]">
+          <FadeIn>
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#556956]">
+              FAQ
+            </p>
+            <h2 className="mt-4 font-serif text-3xl font-bold leading-tight text-[#241f1c] md:text-4xl">
+              Frequently Asked
+              <br className="hidden md:block" /> Questions
+            </h2>
+            <div className="mt-8 h-px w-12 bg-[#cbd5cc]" />
+          </FadeIn>
+
+          <div className="flex flex-col gap-4">
+            {faqs.map((faq, index) => (
+              <FadeIn key={index} delay={0.06 * index}>
+                <details className="group rounded-md border border-[#e5e7eb] bg-white p-5 [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer items-center justify-between font-serif text-base font-bold text-[#161616] marker:content-none">
+                    {faq.question}
+                    <span className="ml-4 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#acd6bd]/40 text-[#558661] transition duration-300 group-open:rotate-45">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                    </span>
+                  </summary>
+                  <p className="mt-4 pr-12 text-sm leading-6 text-[#45525c]">
+                    {faq.answer}
+                  </p>
+                </details>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
       </section>
     </>
+
   );
 }

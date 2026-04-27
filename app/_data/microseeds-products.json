@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "name": "Alfalfa Microgreens",
+    "price": "249.00",
+    "image": "seed-1"
+  },
+  {
+    "id": 2,
+    "name": "Amaranthus Microgreens",
+    "price": "249.00",
+    "image": "seed-2"
+  },
+  {
+    "id": 3,
+    "name": "Basil Microgreens",
+    "price": "249.00",
+    "image": "seed-3"
+  },
+  {
+    "id": 4,
+    "name": "Beetroot Microgreens",
+    "price": "299.00",
+    "image": "seed-4"
+  },
+  {
+    "id": 5,
+    "name": "Broccoli Microgreens",
+    "price": "299.00",
+    "image": "seed-5"
+  },
+  {
+    "id": 6,
+    "name": "Carrot Microgreens",
+    "price": "249.00",
+    "image": "seed-6"
+  },
+  {
+    "id": 7,
+    "name": "Chinese Cabbage Microgreens",
+    "price": "299.00",
+    "image": "seed-7"
+  },
+  {
+    "id": 8,
+    "name": "Corn Microgreens",
+    "price": "249.00",
+    "image": "seed-8"
+  },
+  {
+    "id": 9,
+    "name": "Fenugreek Microgreens",
+    "price": "249.00",
+    "image": "seed-9"
+  },
+  {
+    "id": 10,
+    "name": "Green Mustard Microgreens",
+    "price": "249.00",
+    "image": "seed-10"
+  },
+  {
+    "id": 11,
+    "name": "Kale Microgreens",
+    "price": "249.00",
+    "image": "seed-11"
+  },
+  {
+    "id": 12,
+    "name": "Kohlrabi Microgreens",
+    "price": "249.00",
+    "image": "seed-12"
+  },
+  {
+    "id": 13,
+    "name": "Pak Choi Microgreens",
+    "price": "249.00",
+    "image": "seed-13"
+  },
+  {
+    "id": 14,
+    "name": "Pea Shoots",
+    "price": "249.00",
+    "image": "seed-14"
+  },
+  {
+    "id": 15,
+    "name": "Radish China Rose Microgreens",
+    "price": "249.00",
+    "image": "seed-15"
+  },
+  {
+    "id": 16,
+    "name": "Radish Pink Microgreens",
+    "price": "249.00",
+    "image": "seed-16"
+  },
+  {
+    "id": 17,
+    "name": "Radish Purple Microgreens",
+    "price": "249.00",
+    "image": "seed-17"
+  },
+  {
+    "id": 18,
+    "name": "Radish White Microgreens",
+    "price": "249.00",
+    "image": "seed-18"
+  },
+  {
+    "id": 19,
+    "name": "Red Cabbage Microgreens",
+    "price": "299.00",
+    "image": "seed-19"
+  },
+  {
+    "id": 20,
+    "name": "Red Lentil (Masoor) Microgreens",
+    "price": "249.00",
+    "image": "seed-20"
+  },
+  {
+    "id": 21,
+    "name": "Rocket Arugula Microgreens",
+    "price": "249.00",
+    "image": "seed-21"
+  },
+  {
+    "id": 22,
+    "name": "Spinach Microgreens",
+    "price": "249.00",
+    "image": "seed-22"
+  },
+  {
+    "id": 23,
+    "name": "Sunflower Microgreens",
+    "price": "249.00",
+    "image": "seed-23"
+  },
+  {
+    "id": 24,
+    "name": "Wheatgrass",
+    "price": "249.00",
+    "image": "seed-24"
+  }
+]
