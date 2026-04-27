@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
 import logo from "@/assests/mg-logo-01.png";
+import { FaInstagram, FaFacebookF, FaYoutube, FaLinkedinIn } from "react-icons/fa";
 
 const mgmLinks = [
   "Subscription Plans",
@@ -19,8 +20,12 @@ const quickLinks = [
   "Shipping & Returns",
 ];
 
-const socials = ["ig", "f", "yt", "in"];
-
+const socials = [
+  { name: "instagram", icon: FaInstagram },
+  { name: "facebook", icon: FaFacebookF },
+  { name: "youtube", icon: FaYoutube },
+  { name: "linkedin", icon: FaLinkedinIn },
+];
 export function SiteFooter() {
   return (
     <FadeIn delay={0.15}>
@@ -86,16 +91,20 @@ export function SiteFooter() {
         </div>
 
         <div className="mx-auto flex w-full max-w-6xl justify-center gap-3 px-6 pb-9">
-          {socials.map((social) => (
-            <a
-              key={social}
-              href="#"
-              aria-label={social}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e2bd76] text-sm font-extrabold uppercase text-[#1d2d19] transition hover:bg-white"
-            >
-              {social}
-            </a>
-          ))}
+          {socials.map((social) => {
+            const Icon = social.icon;
+
+            return (
+              <a
+                key={social.name}
+                href="#"
+                aria-label={social.name}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e2bd76] text-[#1d2d19] transition hover:bg-white hover:scale-110"
+              >
+                <Icon size={18} color="#000" />
+              </a>
+            );
+          })}
         </div>
 
         <div className="border-t border-[#203318] py-8 text-center text-sm font-semibold text-white/90">

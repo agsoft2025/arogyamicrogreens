@@ -1,6 +1,9 @@
+"use client";
+
 import Image, { type StaticImageData } from "next/image";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
+import { useCart } from "@/app/_components/cart/cart-context";
 import alfalfaImage from "@/assests/Alfalfa-Microgreen-3-300x300.jpg";
 import amaranthusImage from "@/assests/Amaranthus-Microgreen-1-1-300x300.jpg";
 import basilImage from "@/assests/Basil-Microgreen-4-300x300.jpg";
@@ -41,6 +44,8 @@ type Product = {
 };
 
 export function SeasonalItemsSection() {
+  const { addToCart } = useCart();
+
   return (
     <section className="bg-[#f7f6f1] py-20 md:py-24">
       <div className="mx-auto w-full max-w-5xl px-6">
@@ -63,7 +68,12 @@ export function SeasonalItemsSection() {
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product, index) => (
-            <ProductCard key={product.name} product={product} index={index} />
+            <ProductCard 
+              key={product.name} 
+              product={product} 
+              index={index} 
+              onAddToCart={() => addToCart(product)}
+            />
           ))}
         </div>
       </div>
@@ -71,7 +81,7 @@ export function SeasonalItemsSection() {
   );
 }
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+function ProductCard({ product, index, onAddToCart }: { product: Product; index: number; onAddToCart: () => void }) {
   return (
     <FadeIn delay={0.08 * (index + 1)} distance={18}>
       <article>
@@ -89,12 +99,21 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         <p className="mt-8 text-sm font-medium text-[#ff6b35]">
           {product.price}
         </p>
-        <a
-          href="#"
-          className="mt-4 flex h-11 w-full items-center justify-center rounded-full bg-[#6ead3d] px-5 text-xs font-extrabold uppercase tracking-[0.03em] text-white shadow-[0_10px_18px_rgba(105,173,56,0.2)] transition hover:bg-[#5e9d31]"
-        >
-          {product.action}
-        </a>
+        {product.action === "Add To Cart" ? (
+          <button
+            onClick={onAddToCart}
+            className="mt-4 flex h-11 w-full items-center justify-center rounded-full bg-[#6ead3d] px-5 text-xs font-extrabold uppercase tracking-[0.03em] text-white shadow-[0_10px_18px_rgba(105,173,56,0.2)] transition hover:bg-[#5e9d31]"
+          >
+            {product.action}
+          </button>
+        ) : (
+          <a
+            href="#"
+            className="mt-4 flex h-11 w-full items-center justify-center rounded-full bg-[#6ead3d] px-5 text-xs font-extrabold uppercase tracking-[0.03em] text-white shadow-[0_10px_18px_rgba(105,173,56,0.2)] transition hover:bg-[#5e9d31]"
+          >
+            {product.action}
+          </a>
+        )}
       </article>
     </FadeIn>
   );
