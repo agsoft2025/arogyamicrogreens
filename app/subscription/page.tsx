@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
+import { useCart } from "@/app/_components/cart/cart-context";
 import heroImage from "@/assests/mg-header-01.jpg";
-import benefitsImage from "@/assests/seed1.jpg";
+import benefitsImage from "@/assests/subscription-plan.jpg";
 
 const planGroups = ["Single", "Couple", "Family"];
 
@@ -60,6 +64,111 @@ const plans = [
       "Save 25% vs monthly",
     ],
   },
+  {
+    billing: "Monthly",
+    audience: "Couple",
+    price: "1,799",
+    suffix: "/month",
+    accent: "bg-[#e74c3c]",
+    bullets: [
+      "Double portions for two people",
+      "Perfect for couples and small families",
+      "Flexible delivery schedule",
+      "Great value for sharing",
+    ],
+  },
+  {
+    billing: "Quarterly",
+    audience: "Couple",
+    price: "5,299",
+    suffix: "/3 mo",
+    accent: "bg-[#dc2626]",
+    featured: true,
+    bullets: [
+      "6 double-portion deliveries",
+      "Priority access for couples",
+      "Locked pricing for 3 months",
+      "Save 12% vs monthly",
+    ],
+  },
+  {
+    billing: "Half Yearly",
+    audience: "Couple",
+    price: "9,999",
+    suffix: "/6 mo",
+    accent: "bg-[#059669]",
+    bullets: [
+      "12 double-portion deliveries",
+      "Planned supply for couples",
+      "Exclusive couple recipes",
+      "Save 17% vs monthly",
+    ],
+  },
+  {
+    billing: "Yearly",
+    audience: "Couple",
+    price: "16,999",
+    suffix: "/year",
+    accent: "bg-[#7c2d12]",
+    bullets: [
+      "24 double-portion deliveries",
+      "Best value for couples",
+      "First access to couple packages",
+      "Save 22% vs monthly",
+    ],
+  },
+  {
+    billing: "Monthly",
+    audience: "Family",
+    price: "3,499",
+    suffix: "/month",
+    accent: "bg-[#f59e0b]",
+    bullets: [
+      "High quantity for daily family use",
+      "Weekly reliable deliveries",
+      "Mix of multiple varieties",
+      "Designed for a household of 4",
+    ],
+  },
+  {
+    billing: "Quarterly",
+    audience: "Family",
+    price: "9,999",
+    suffix: "/3 mo",
+    accent: "bg-[#d97706]",
+    bullets: [
+      "Curated weekly nutrition supply",
+      "Flexible scheduling options",
+      "Built for uninterrupted usage",
+      "Save 17% vs monthly",
+    ],
+  },
+  {
+    billing: "Half Yearly",
+    audience: "Family",
+    price: "17,999",
+    suffix: "/6 mo",
+    accent: "bg-[#9333ea]",
+    bullets: [
+      "Stable uninterrupted long-term supply",
+      "No gaps, no reordering needed",
+      "Ideal for consistent healthy eating",
+      "Save 25% vs monthly",
+    ],
+  },
+  {
+    billing: "Yearly",
+    audience: "Family",
+    price: "24,999",
+    suffix: "/year",
+    accent: "bg-[#7c3aed]",
+    bullets: [
+      "Maximum savings across all plans",
+      "Fully predictable yearly supply",
+      "Best for committed health routines",
+      "Save 48% vs monthly",
+    ],
+  },
 ];
 
 const benefits = [
@@ -109,6 +218,19 @@ const faqs = [
 ];
 
 export default function SubscriptionPage() {
+  const [selectedGroup, setSelectedGroup] = useState("Single");
+  const { addToCart } = useCart();
+
+  const filteredPlans = plans.filter(plan => plan.audience === selectedGroup);
+
+  const handleSubscribe = (plan: typeof plans[0]) => {
+    addToCart({
+      name: `${plan.audience} ${plan.billing} Subscription`,
+      price: `₹${plan.price}${plan.suffix}`,
+      image: benefitsImage,
+    });
+  };
+
   return (
     <>
       <section className="relative min-h-[315px] overflow-hidden bg-black">
@@ -163,7 +285,8 @@ export default function SubscriptionPage() {
                   <button
                     key={group}
                     type="button"
-                    className={`px-8 py-6 text-center text-3xl font-extrabold uppercase tracking-[0.04em] text-white transition ${index === 0 ? "bg-[#acd6bd]" : "hover:bg-white/5"
+                    onClick={() => setSelectedGroup(group)}
+                    className={`px-8 py-6 text-center text-3xl font-extrabold uppercase tracking-[0.04em] text-white transition ${selectedGroup === group ? "bg-[#acd6bd]" : "hover:bg-white/5"
                       }`}
                   >
                     {group}
@@ -174,9 +297,9 @@ export default function SubscriptionPage() {
           </FadeIn>
 
           <div className="mx-auto mt-12 grid max-w-4xl gap-0 md:grid-cols-2 lg:grid-cols-4">
-            {plans.map((plan, index) => (
+            {filteredPlans.map((plan, index) => (
               <FadeIn
-                key={plan.billing}
+                key={`${plan.audience}-${plan.billing}`}
                 delay={0.05 * index}
                 distance={20}
                 className="h-full"
@@ -230,6 +353,7 @@ export default function SubscriptionPage() {
 
                   <button
                     type="button"
+                    onClick={() => handleSubscribe(plan)}
                     className={`mt-8 self-center rounded-full px-6 py-3 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-[0_12px_20px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 ${plan.accent}`}
                   >
                     Subscribe
