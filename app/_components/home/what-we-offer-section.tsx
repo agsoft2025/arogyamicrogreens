@@ -5,6 +5,7 @@ import dummyImage from "@/assests/mg-header-01.jpg";
 import seed1 from "@/assests/seed1.jpg";
 import seed2 from "@/assests/seed2.jpg";
 import seed3 from "@/assests/seed3.jpg";
+import Link from "next/link";
 
 const offerCards = [
   {
@@ -13,6 +14,7 @@ const offerCards = [
     action: "Shop Now",
     image: seed1,
     variant: "split",
+    link: "/microgreen",
   },
   {
     title: "Microgreen Seeds",
@@ -20,6 +22,7 @@ const offerCards = [
     action: "Shop Now",
     image: seed2,
     variant: "overlay",
+    link: "/microgreen",
   },
   {
     title: "Subscription Plans",
@@ -27,6 +30,7 @@ const offerCards = [
     action: "Subscribe Now",
     image: seed3,
     variant: "wide",
+    link: "/subscription",
   },
   {
     title: "Workshops",
@@ -34,6 +38,7 @@ const offerCards = [
     action: "Know More",
     image: dummyImage,
     variant: "overlay",
+    link: "/microgreen",
   },
 ] as const;
 
@@ -43,6 +48,7 @@ type OfferCard = {
   action: string;
   image: StaticImageData;
   variant: "split" | "overlay" | "wide";
+  link: string;
 };
 
 export function WhatWeOfferSection() {
@@ -86,12 +92,12 @@ function OfferCard({ card }: { card: OfferCard }) {
           <p className="mt-2 text-sm font-semibold uppercase tracking-[0.04em] text-[#25252a]">
             {card.subtitle}
           </p>
-          <a
-            href="#"
+          <Link
+            href={card.link}
             className="mt-5 rounded-full bg-[#6ead3d] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.05em] text-white transition hover:bg-[#5e9d31]"
           >
             {card.action}
-          </a>
+          </Link>
         </div>
         <Image
           src={card.image}
@@ -130,12 +136,12 @@ function OfferCard({ card }: { card: OfferCard }) {
         <p className="mt-3 max-w-sm text-sm font-bold uppercase leading-5 tracking-[0.02em]">
           {card.subtitle}
         </p>
-        <a
-          href="#"
+        <Link
+          href={card.link}
           className="mt-5 inline-flex rounded-full bg-white/55 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.05em] text-black transition hover:bg-[#e2bd76]"
         >
           {card.action}
-        </a>
+        </Link>
       </div>
     </FadeIn>
   );

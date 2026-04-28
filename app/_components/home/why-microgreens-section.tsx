@@ -2,6 +2,7 @@ import { FadeIn } from "@/app/_components/animations/fade-in";
 import Image from "next/image";
 import atOne from "@/assests/at-1-01.png";
 import atTwo from "@/assests/at-2-01.png";
+import Link from "next/link";
 
 const microgreenBenefits = [
   {
@@ -29,9 +30,12 @@ export function WhyMicrogreensSection() {
           <h2 className="max-w-sm font-serif text-5xl font-bold leading-[1.28] text-black md:text-[52px]">
             Why Add Microgreens to Your Daily Diet?
           </h2>
-          <button className="rounded-sm bg-[#6ead3d] px-8 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#5e9d31]">
+          <Link
+            href="/microgreen"
+            className="inline-block rounded-sm bg-[#6ead3d] px-8 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#5e9d31]"
+          >
             Know More
-          </button>
+          </Link>
         </FadeIn>
 
         <FadeIn

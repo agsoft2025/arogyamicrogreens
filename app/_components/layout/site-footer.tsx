@@ -2,7 +2,11 @@ import Image from "next/image";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
 import logo from "@/assests/mg-logo-01.png";
-import { FaInstagram, FaFacebookF, FaYoutube, FaLinkedinIn } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaYoutube, FaLinkedinIn, FaWhatsapp, FaMapPin, FaMapMarkerAlt } from "react-icons/fa";
+import { BsFillTelephoneFill } from "react-icons/bs";
+import { IoMailOutline } from "react-icons/io5";
+import { CiMapPin } from "react-icons/ci";
+
 
 const mgmLinks = [
   "Subscription Plans",
@@ -48,19 +52,25 @@ export function SiteFooter() {
             </h2>
             <ul className="mt-5 space-y-5 text-[17px] font-bold leading-6">
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">TEL</span>
+                <span className="text-[#e2bd76]">
+                  <BsFillTelephoneFill />
+                </span>
                 <a href="tel:+917416417391" className="transition hover:text-[#e2bd76]">
                   +91 741 641 7391
                 </a>
               </li>
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">WA</span>
+                <span className="text-[#e2bd76]">
+                  <FaWhatsapp />
+                </span>
                 <a href="tel:+918885553486" className="transition hover:text-[#e2bd76]">
                   +91 888 555 3486
                 </a>
               </li>
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">MAIL</span>
+                <span className="text-[#e2bd76]">
+                  <IoMailOutline />
+                </span>
                 <a
                   href="mailto:info@mgmhyd.com"
                   className="transition hover:text-[#e2bd76]"
@@ -69,7 +79,9 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">PIN</span>
+                <span className="text-[#e2bd76]">
+                  <FaMapMarkerAlt />
+                </span>
                 <address className="not-italic">
                   4th Floor, Plot No: 84,
                   <br />
@@ -81,7 +93,9 @@ export function SiteFooter() {
                 </address>
               </li>
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">MAP</span>
+                <span className="text-[#e2bd76]">
+                  <FaMapPin />
+                </span>
                 <a href="#" className="transition hover:text-[#e2bd76]">
                   Location (Click Here)
                 </a>

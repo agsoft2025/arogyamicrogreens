@@ -4,6 +4,7 @@ import { SeasonalItemsSection } from "@/app/_components/home/seasonal-items-sect
 import { SubscriptionCtaSection } from "@/app/_components/home/subscription-cta-section";
 import { WhatWeOfferSection } from "@/app/_components/home/what-we-offer-section";
 import { WhyMicrogreensSection } from "@/app/_components/home/why-microgreens-section";
+import { FarmHome } from "@/app/_components/home/farm-home";
 import Image from "next/image";
 import homeImg from "@/assests/mg-header-01.jpg";
 import fssai from "@/assests/fssai-n.png";
@@ -11,6 +12,7 @@ import msme from "@/assests/msme-1-01.png";
 import gmo from "@/assests/non-gmo.png";
 import organic from "@/assests/organic.png";
 import { HomeImgContainer } from "./_components/home/home-img-container";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -30,13 +32,18 @@ export default function Home() {
                 doorstep in Hyderabad.
               </p>
 
-              <div className="flex gap-8">
-                <button className="rounded-sm bg-[#71AC43] px-6 py-4 font-bold text-white uppercase">
-                  Start A Subscription
-                </button>
-                <button className="rounded-sm border-b-2 px-6 py-4 font-bold text-black uppercase hover:border-b-[#71AC43] hover:text-[#71AC43]">
-                  Shop Microgreens
-                </button>
+              <div className="flex gap-4">
+                <Link href="/subscription">
+                  <button className="rounded-sm bg-[#71AC43] px-6 py-4 font-bold text-white uppercase">
+                    Start A Subscription
+                  </button>
+                </Link>
+
+                <Link href="/microgreen">
+                  <button className="rounded-sm border-b-2 px-6 py-4 font-bold text-black uppercase hover:border-b-[#71AC43] hover:text-[#71AC43]">
+                    Shop Microgreens
+                  </button>
+                </Link>
               </div>
 
               <FadeIn className="flex items-center gap-8">
@@ -77,6 +84,7 @@ export default function Home() {
       <HomeImgContainer />
       <WhyMicrogreensSection />
       <WhatWeOfferSection />
+      <FarmHome />
       <SubscriptionCtaSection />
       <SeasonalItemsSection />
       <HowItWorksSection />

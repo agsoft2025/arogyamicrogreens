@@ -8,6 +8,7 @@ import alfalfaImage from "@/assests/Alfalfa-Microgreen-3-300x300.jpg";
 import amaranthusImage from "@/assests/Amaranthus-Microgreen-1-1-300x300.jpg";
 import basilImage from "@/assests/Basil-Microgreen-4-300x300.jpg";
 import beetrootImage from "@/assests/Beetroot-Microgreen-1-300x300.jpg";
+import Link from "next/link";
 
 const products = [
   {
@@ -68,10 +69,10 @@ export function SeasonalItemsSection() {
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product, index) => (
-            <ProductCard 
-              key={product.name} 
-              product={product} 
-              index={index} 
+            <ProductCard
+              key={product.name}
+              product={product}
+              index={index}
               onAddToCart={() => addToCart(product)}
             />
           ))}
@@ -107,12 +108,12 @@ function ProductCard({ product, index, onAddToCart }: { product: Product; index:
             {product.action}
           </button>
         ) : (
-          <a
-            href="#"
+          <Link
+            href="/microgreen"
             className="mt-4 flex h-11 w-full items-center justify-center rounded-full bg-[#6ead3d] px-5 text-xs font-extrabold uppercase tracking-[0.03em] text-white shadow-[0_10px_18px_rgba(105,173,56,0.2)] transition hover:bg-[#5e9d31]"
           >
             {product.action}
-          </a>
+          </Link>
         )}
       </article>
     </FadeIn>
