@@ -25,10 +25,10 @@ const quickLinks = [
 ];
 
 const socials = [
-  { name: "instagram", icon: FaInstagram },
-  { name: "facebook", icon: FaFacebookF },
-  { name: "youtube", icon: FaYoutube },
-  { name: "linkedin", icon: FaLinkedinIn },
+  { name: "instagram", icon: FaInstagram, route: "https://www.instagram.com/mgmhyd" },
+  { name: "facebook", icon: FaFacebookF, route: "https://www.facebook.com/mgmhyd" },
+  { name: "youtube", icon: FaYoutube, route: "https://www.youtube.com/@mgmhyd" },
+  { name: "linkedin", icon: FaLinkedinIn, route: "https://www.linkedin.com/company/microgreens-de-manikonda/" },
 ];
 export function SiteFooter() {
   return (
@@ -96,7 +96,12 @@ export function SiteFooter() {
                 <span className="text-[#e2bd76]">
                   <FaMapPin />
                 </span>
-                <a href="#" className="transition hover:text-[#e2bd76]">
+                <a
+                  href="https://www.google.com/maps/place/MicroGreens+de+Manikonda/@17.4067272,78.3654684,14z/data=!4m10!1m2!2m1!1s4th+Floor,+Plot+no:+84,+above+Yes+bank,+Tanasha+Nagar,+Manikonda,+Hyderabad,+Telangana+500089!3m6!1s0x3bcb95007f048c41:0x4eb8d9d7be7614e7!8m2!3d17.4036156!4d78.3864481!15sCl00dGggRmxvb3IsIFBsb3Qgbm86IDg0LCBhYm92ZSBZZXMgYmFuaywgVGFuYXNoYSBOYWdhciwgTWFuaWtvbmRhLCBIeWRlcmFiYWQsIFRlbGFuZ2FuYSA1MDAwODkiA4gBAVpYIlY0dGggZmxvb3IgcGxvdCBubyA4NCBhYm92ZSB5ZXMgYmFuayB0YW5hc2hhIG5hZ2FyIG1hbmlrb25kYSBoeWRlcmFiYWQgdGVsYW5nYW5hIDUwMDA4OZIBDG9yZ2FuaWNfZmFybeABAA!16s%2Fg%2F11xg5v6sl0?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-[#e2bd76]"
+                >
                   Location (Click Here)
                 </a>
               </li>
@@ -111,7 +116,9 @@ export function SiteFooter() {
             return (
               <a
                 key={social.name}
-                href="#"
+                href={social.route}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.name}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e2bd76] text-[#1d2d19] transition hover:bg-white hover:scale-110"
               >
