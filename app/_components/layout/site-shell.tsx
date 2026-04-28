@@ -4,8 +4,9 @@ import type { ReactNode } from "react";
 
 import { SiteFooter } from "@/app/_components/layout/site-footer";
 import { SiteHeader } from "@/app/_components/layout/site-header";
-import { CartProvider, useCart } from "@/app/_components/cart/cart-context";
+import { CartProvider } from "@/app/_components/cart/cart-context";
 import { CartModal } from "@/app/_components/cart/cart-modal";
+import { useCart } from "@/app/_components/cart/cart-context";
 
 type SiteShellProps = {
   children: ReactNode;

@@ -2,6 +2,7 @@
 
 import Image, { type StaticImageData } from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { MdAdd, MdDeleteOutline, MdRemove } from "react-icons/md";
 
 export type CartItem = {
   id: string;
@@ -197,18 +198,18 @@ function CartItemComponent({
             onClick={() =>
               onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))
             }
-            className="h-8 w-8 rounded-full border"
+            className="h-8 w-8 rounded-full border flex items-center justify-center"
           >
-            -
+            <MdRemove />
           </button>
           <span className="w-8 text-center">{item.quantity}</span>
           <button
             onClick={() =>
               onUpdateQuantity(item.id, item.quantity + 1)
             }
-            className="h-8 w-8 rounded-full border"
+            className="h-8 w-8 rounded-full border flex items-center justify-center"
           >
-            +
+            <MdAdd />
           </button>
         </div>
       </div>
@@ -217,7 +218,7 @@ function CartItemComponent({
         onClick={() => onRemoveItem(item.id)}
         className="text-red-500"
       >
-        ✕
+        <MdDeleteOutline  />
       </button>
     </motion.div>
   );
