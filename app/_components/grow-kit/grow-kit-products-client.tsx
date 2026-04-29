@@ -1,18 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
 import { useCart } from "@/app/_components/cart/cart-context";
-
-type Product = {
-  name: string;
-  price: string;
-  image: any;
-};
+import {
+  type GrowKitProduct,
+  formatInrPrice,
+} from "@/app/_data/grow-kit-products";
 
 type GrowKitProductsClientProps = {
-  products: Product[];
+  products: GrowKitProduct[];
 };
 
 export function GrowKitProductsClient({ products }: GrowKitProductsClientProps) {
@@ -23,29 +22,31 @@ export function GrowKitProductsClient({ products }: GrowKitProductsClientProps) 
       <div className="mx-auto w-full max-w-5xl px-6">
         <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product, index) => (
-            <FadeIn key={product.name} delay={0.06 * index} distance={18}>
+            <FadeIn key={product.slug} delay={0.06 * index} distance={18}>
               <article className="group">
-                <div className="relative aspect-square overflow-hidden rounded-[14px] bg-[#31552b] shadow-[0_8px_18px_rgba(15,23,42,0.18)]">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    placeholder="blur"
-                    sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) calc((100vw - 80px) / 2), 300px"
-                    className="object-cover transition duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <h2 className="mt-5 min-h-[56px] font-serif text-xl font-semibold leading-7 text-[#312f2b]">
-                  {product.name}
-                </h2>
+                <Link href={`/grow-kit/${product.slug}`} className="block">
+                  <div className="relative aspect-square overflow-hidden rounded-[14px] bg-[#31552b] shadow-[0_8px_18px_rgba(15,23,42,0.18)]">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      placeholder="blur"
+                      sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) calc((100vw - 80px) / 2), 300px"
+                      className="object-cover transition duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <h2 className="mt-5 min-h-[56px] font-serif text-xl font-semibold leading-7 text-[#312f2b] transition group-hover:text-[#31552b]">
+                    {product.name}
+                  </h2>
+                </Link>
                 <p className="mt-2 text-xl font-extrabold text-[#69ad38]">
-                  {product.price}
+                  {formatInrPrice(product.price)}
                 </p>
                 <button
                   onClick={() =>
                     addToCart({
                       name: product.name,
-                      price: product.price,
+                      price: formatInrPrice(product.price),
                       image: product.image,
                     })
                   }
