@@ -14,7 +14,7 @@ export const primaryNavigation: NavigationItem[] = [
     label: "FRESH INSIGHTS",
     children: [
       { href: "/blog-and-recipes", label: "BLOG & RECIPES" },
-      { href: "/stories-insights", label: "STORIES & INSIGHTS" },
+      { href: "/stories-and-insights", label: "STORIES & INSIGHTS" },
       { href: "/news-media", label: "NEWS & MEDIA" },
     ],
   },
