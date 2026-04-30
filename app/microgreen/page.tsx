@@ -1,66 +1,17 @@
-import Image, { type StaticImageData } from "next/image";
-import Link from "next/link";
+import Image from "next/image";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
-import products from "@/app/_data/microseeds-products.json";
-import heroImage from "@/assests/mg-header-01.jpg";
-import seedImg1 from "@/assests/microgreen1.jpg";
-import seedImg2 from "@/assests/microgreen2.jpg";
-import seedImg3 from "@/assests/microgreen3.jpg";
-import seedImg4 from "@/assests/microgreen4.jpg";
-import seedImg5 from "@/assests/microgreen5.jpg";
-import seedImg6 from "@/assests/microgreen6.png";
-import seedImg7 from "@/assests/microgreen7.jpg";
-import seedImg8 from "@/assests/microgreen8.jpg";
-import seedImg9 from "@/assests/microgreen9.png";
-import seedImg10 from "@/assests/microgreen10.jpg";
-import seedImg11 from "@/assests/microgreen11.jpg";
-import seedImg12 from "@/assests/microgreen12.png";
-import seedImg13 from "@/assests/microgreen13.png";
-import seedImg14 from "@/assests/microgreen14.jpg";
-import seedImg15 from "@/assests/microgreen15.png";
-import seedImg16 from "@/assests/microgreen16.jpg";
-import seedImg17 from "@/assests/microgreen17.png";
-import seedImg18 from "@/assests/microgreen18.jpg";
-import seedImg19 from "@/assests/microgreen19.jpg";
-import seedImg20 from "@/assests/microgreen20.png";
-import seedImg21 from "@/assests/microgreen21.jpg";
-import seedImg22 from "@/assests/microgreen22.jpg";
-import seedImg23 from "@/assests/microgreen23.jpg";
-import seedImg24 from "@/assests/microgreen24.jpg";
 import { MicrogreenProductsClient } from "@/app/_components/microgreen/microgreen-products-client";
+import {
+  microgreenImages,
+  microgreenProducts,
+} from "@/app/_data/microgreen-products";
+import heroImage from "@/assests/mg-header-01.jpg";
 
 const productsPerPage = 18;
-const totalPages = Math.ceil(products.length / productsPerPage);
+const totalPages = Math.ceil(microgreenProducts.length / productsPerPage);
 
-const seedImages: Record<string, StaticImageData> = {
-  "seed-1": seedImg1,
-  "seed-2": seedImg2,
-  "seed-3": seedImg3,
-  "seed-4": seedImg4,
-  "seed-5": seedImg5,
-  "seed-6": seedImg6,
-  "seed-7": seedImg7,
-  "seed-8": seedImg8,
-  "seed-9": seedImg9,
-  "seed-10": seedImg10,
-  "seed-11": seedImg11,
-  "seed-12": seedImg12,
-  "seed-13": seedImg13,
-  "seed-14": seedImg14,
-  "seed-15": seedImg15,
-  "seed-16": seedImg16,
-  "seed-17": seedImg17,
-  "seed-18": seedImg18,
-  "seed-19": seedImg19,
-  "seed-20": seedImg20,
-  "seed-21": seedImg21,
-  "seed-22": seedImg22,
-  "seed-23": seedImg23,
-  "seed-24": seedImg24,
-};
-
-type SeedsPageProps = {
+type MicrogreenPageProps = {
   searchParams: Promise<{ page?: string | string[] }>;
 };
 
@@ -75,10 +26,12 @@ function getPageNumber(pageParam: string | string[] | undefined) {
   return Math.min(Math.max(pageNumber, 1), totalPages);
 }
 
-export default async function SeedsPage({ searchParams }: SeedsPageProps) {
+export default async function MicrogreenPage({
+  searchParams,
+}: MicrogreenPageProps) {
   const { page } = await searchParams;
   const currentPage = getPageNumber(page);
-  const pageProducts = products.slice(
+  const pageProducts = microgreenProducts.slice(
     (currentPage - 1) * productsPerPage,
     currentPage * productsPerPage,
   );
@@ -113,9 +66,9 @@ export default async function SeedsPage({ searchParams }: SeedsPageProps) {
         </div>
       </section>
 
-      <MicrogreenProductsClient 
+      <MicrogreenProductsClient
         pageProducts={pageProducts}
-        seedImages={seedImages}
+        seedImages={microgreenImages}
         currentPage={currentPage}
         totalPages={totalPages}
       />

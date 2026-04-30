@@ -28,7 +28,7 @@ export function CartModal({
   onRemoveItem,
 }: CartModalProps) {
   const subtotal = items.reduce((total, item) => {
-    const price = parseFloat(item.price.replace("₹", "").replace(",", ""));
+    const price = parseFloat(item.price.replace(/[^\d.]/g, ""));
     return total + price * item.quantity;
   }, 0);
 
