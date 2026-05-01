@@ -1,0 +1,880 @@
+{
+  "faqs": [
+    {
+      "question": "How long do microgreens take to grow?",
+      "answer": "Most microgreen varieties are ready to harvest in about 7-14 days depending on the seed type and growing conditions."
+    },
+    {
+      "question": "Are these organic?",
+      "answer": "These are non-GMO seeds suitable for microgreen cultivation."
+    },
+    {
+      "question": "Do I need sunlight?",
+      "answer": "Indirect sunlight is sufficient after germination."
+    },
+    {
+      "question": "Can I grow these in soil?",
+      "answer": "Yes. You can grow them in soil, cocopeat, or other clean microgreen growing media."
+    },
+    {
+      "question": "Can beginners grow these?",
+      "answer": "Yes. These seeds are suitable for beginners and experienced growers alike."
+    },
+    {
+      "question": "What is the shelf life of seeds?",
+      "answer": "When stored in a cool, dry place, most seeds remain viable for many months and often up to a year."
+    }
+  ],
+  "defaults": {
+    "packSizeLabel": "100 Gms",
+    "bulkOrdersTitle": "Bulk Orders?",
+    "bulkOrdersText": "WhatsApp us @ +917416417391",
+    "scientificName": "Selected premium seed stock",
+    "flavorProfile": "Chosen for clean, vigorous microgreen harvests with consistent flavour expression.",
+    "growingTime": "Typically 7-14 days depending on variety",
+    "difficulty": "Beginner to intermediate",
+    "description": [
+      "{baseName} seeds are selected for reliable germination, strong early growth, and dense tray coverage for microgreen production.",
+      "These seeds are a practical choice for home growers, cafes, and repeated sowing schedules where consistency matters as much as flavour."
+    ],
+    "growingNotes": [
+      "Sow {baseName} densely in trays for even canopy growth and clean harvests.",
+      "Keep the medium evenly moist with good airflow to support uniform germination.",
+      "Expect harvest in {growingTimeNote}, depending on temperature, humidity, and light."
+    ],
+    "bestFor": [
+      "Daily home microgreen growing",
+      "Restaurant garnish production",
+      "Trial trays and repeat sowing",
+      "Fresh cut-to-order harvests"
+    ],
+    "healthHighlights": [
+      "Supports fresh, nutrient-dense harvests",
+      "Suitable for consistent small-batch growing",
+      "Useful for salad, garnish, and bowl production",
+      "Works well across beginner and repeat growers"
+    ]
+  },
+  "products": {
+    "radish-pink-microgreens-seeds": {
+      "id": 1,
+      "name": "Radish Pink Microgreens Seeds",
+      "price": "170.00",
+      "image": "seed-1",
+      "scientificName": "Raphanus sativus",
+      "flavorProfile": "Sharp, spicy radish flavor",
+      "growingTime": "5-8 days",
+      "difficulty": "Easy",
+      "description": [
+        "Pink radish microgreen seeds produce crisp, tender greens with a distinctive spicy kick and vibrant color.",
+        "These seeds are selected for rapid germination and consistent flavor development in microgreen cultivation."
+      ],
+      "growingNotes": [
+        "Sow seeds densely in trays for even canopy growth and clean harvests.",
+        "Keep the medium evenly moist with good airflow to support uniform germination.",
+        "Expect harvest in 5-8 days, depending on temperature, humidity, and light."
+      ],
+      "bestFor": [
+        "Spicy salad additions",
+        "Restaurant garnish production",
+        "Quick harvest cycles",
+        "Flavor-intensive dishes"
+      ],
+      "healthHighlights": [
+        "High in vitamin C and antioxidants",
+        "Supports immune health and cellular protection",
+        "Natural detoxification properties",
+        "Quick-growing nutrition source"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "90%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Radish Purple Sango Microgreens Seeds",
+        "Radish White Microgreens Seeds",
+        "Arugula Microgreens Seeds",
+        "Mustard Microgreens Seeds"
+      ]
+    },
+    "radish-purple-sango-microgreens-seeds": {
+      "id": 2,
+      "name": "Radish Purple Sango Microgreens Seeds",
+      "price": "190.00",
+      "image": "seed-2",
+      "scientificName": "Raphanus sativus var. niger",
+      "flavorProfile": "Spicy with earthy undertones",
+      "growingTime": "5-8 days",
+      "difficulty": "Easy",
+      "description": [
+        "Purple Sango radish seeds produce stunning purple-stemmed microgreens with intense spicy flavor.",
+        "Selected for vibrant color development and robust growth in controlled environments."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for uniform purple color development.",
+        "Maintain consistent moisture for even germination.",
+        "Harvest when true leaves appear for best color and flavor."
+      ],
+      "bestFor": [
+        "Visual appeal in dishes",
+        "Gourmet restaurant presentations",
+        "Colorful salad mixes",
+        "High-end garnish production"
+      ],
+      "healthHighlights": [
+        "Rich in anthocyanins and vitamin C",
+        "Powerful antioxidant properties",
+        "Anti-inflammatory benefits",
+        "Cellular protection support"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "85%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Radish Pink Microgreens Seeds",
+        "Radish White Microgreens Seeds",
+        "Beetroot Microgreens Seeds",
+        "Red Cabbage Microgreens Seeds"
+      ]
+    },
+    "radish-white-microgreens-seeds": {
+      "id": 3,
+      "name": "Radish White Microgreens Seeds",
+      "price": "150.00",
+      "image": "seed-3",
+      "scientificName": "Raphanus sativus",
+      "flavorProfile": "Classic spicy radish flavor",
+      "growingTime": "5-8 days",
+      "difficulty": "Easy",
+      "description": [
+        "White radish microgreen seeds produce crisp, tender greens with classic spicy radish flavor.",
+        "Ideal for consistent harvests and reliable germination in various growing conditions."
+      ],
+      "growingNotes": [
+        "Sow seeds evenly for uniform growth.",
+        "Maintain moderate humidity for best results.",
+        "Quick-growing variety suitable for frequent harvesting."
+      ],
+      "bestFor": [
+        "Traditional radish flavor",
+        "Consistent commercial production",
+        "Beginner-friendly growing",
+        "Reliable crop rotation"
+      ],
+      "healthHighlights": [
+        "High in vitamin C and minerals",
+        "Supports digestive health",
+        "Natural immune system booster",
+        "Low-calorie nutrition source"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "90%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Radish Pink Microgreens Seeds",
+        "Radish Purple Sango Microgreens Seeds",
+        "Turnip Purple Top Microgreens Seeds",
+        "Daikon Radish Microgreens Seeds"
+      ]
+    },
+    "red-cabbage-microgreens-seeds": {
+      "id": 4,
+      "name": "Red Cabbage Microgreens Seeds",
+      "price": "330.00",
+      "image": "seed-4",
+      "scientificName": "Brassica oleracea var. capitata",
+      "flavorProfile": "Mild cabbage with slight peppery notes",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Red cabbage microgreen seeds produce vibrant purple-red greens with mild cabbage flavor.",
+        "Selected for intense color development and nutritional density in microgreen form."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for rich color development.",
+        "Provide adequate light for vibrant purple coloration.",
+        "Maintain consistent moisture for uniform growth."
+      ],
+      "bestFor": [
+        "Colorful salad additions",
+        "Nutritional supplementation",
+        "Visual food presentation",
+        "Health-focused products"
+      ],
+      "healthHighlights": [
+        "Extremely high in vitamins C and K",
+        "Rich in anthocyanins and antioxidants",
+        "Powerful anti-inflammatory properties",
+        "Supports detoxification and immune health"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "85%+",
+      "seedingRate": "2-3 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Broccoli Microgreens Seeds",
+        "Kale Microgreens Seeds",
+        "Radish Microgreens Seeds",
+        "Beetroot Microgreens Seeds"
+      ]
+    },
+    "red-carrot-microgreens-seeds": {
+      "id": 5,
+      "name": "Red Carrot Microgreens Seeds",
+      "price": "200.00",
+      "image": "seed-5",
+      "scientificName": "Daucus carota",
+      "flavorProfile": "Mild carrot flavor with slight sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Red carrot microgreen seeds produce delicate, feathery greens with mild carrot flavor and red accents.",
+        "Selected for unique color development and tender texture in microgreen cultivation."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain even moisture for delicate seedlings.",
+        "Longer growing time requires patience and care."
+      ],
+      "bestFor": [
+        "Gourmet garnish applications",
+        "Unique visual presentations",
+        "Delicate flavor profiles",
+        "Specialty microgreen mixes"
+      ],
+      "healthHighlights": [
+        "High in beta-carotene and vitamin A",
+        "Rich in antioxidants and minerals",
+        "Supports eye health and immunity",
+        "Natural anti-inflammatory properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "75%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Yellow Carrot Microgreens Seeds",
+        "Black Carrot Microgreens Seeds",
+        "Spinach Microgreens Seeds",
+        "Swiss Chard Microgreens Seeds"
+      ]
+    },
+    "red-kale-microgreens-seeds": {
+      "id": 6,
+      "name": "Red Kale Microgreens Seeds",
+      "price": "375.00",
+      "image": "seed-6",
+      "scientificName": "Brassica oleracea var. acephala",
+      "flavorProfile": "Mild kale with slight bitterness",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Red kale microgreen seeds produce nutrient-dense greens with red stems and mild kale flavor.",
+        "Selected for exceptional nutritional content and vibrant color development."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for nutritional density.",
+        "Provide adequate light for red stem development.",
+        "Maintain consistent moisture for optimal growth."
+      ],
+      "bestFor": [
+        "Nutritional supplementation",
+        "Health-focused products",
+        "Colorful salad ingredients",
+        "Premium microgreen blends"
+      ],
+      "healthHighlights": [
+        "Extremely high in vitamins K and A",
+        "Rich in antioxidants and minerals",
+        "Powerful anti-inflammatory properties",
+        "Supports bone health and detoxification"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "85%+",
+      "seedingRate": "2-3 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Kale Microgreens Seeds",
+        "Broccoli Microgreens Seeds",
+        "Red Cabbage Microgreens Seeds",
+        "Swiss Chard Microgreens Seeds"
+      ]
+    },
+    "red-lentil-masoor-microgreens-seeds": {
+      "id": 7,
+      "name": "Red Lentil (Masoor) Microgreens Seeds",
+      "price": "70.00",
+      "image": "seed-7",
+      "scientificName": "Lens culinaris",
+      "flavorProfile": "Mild, nutty with legume sweetness",
+      "growingTime": "8-12 days",
+      "difficulty": "Easy",
+      "description": [
+        "Red lentil microgreen seeds produce tender, nutritious greens with mild nutty flavor.",
+        "Selected for high protein content and reliable germination in microgreen production."
+      ],
+      "growingNotes": [
+        "Soak seeds for 4-6 hours before sowing.",
+        "Sow seeds densely for protein-rich harvests.",
+        "Maintain even moisture for optimal growth."
+      ],
+      "bestFor": [
+        "Protein-rich microgreens",
+        "Budget-friendly nutrition",
+        "Beginner growing projects",
+        "Sustainable food production"
+      ],
+      "healthHighlights": [
+        "High in plant protein and iron",
+        "Rich in folate and dietary fiber",
+        "Supports energy and cell development",
+        "Affordable nutrition source"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "90%+",
+      "seedingRate": "3-4 oz per 10x20 tray",
+      "soakingRequired": true,
+      "relatedProducts": [
+        "Peas Microgreens Seeds",
+        "Moong Bean Microgreens Seeds",
+        "Black Bengal Gram Microgreens Seeds",
+        "Black Gram Microgreens Seeds"
+      ]
+    },
+    "rocket-arugula-microgreens-seeds": {
+      "id": 8,
+      "name": "Rocket (Arugula) Microgreens Seeds",
+      "price": "210.00",
+      "image": "seed-8",
+      "scientificName": "Eruca vesicaria",
+      "flavorProfile": "Peppery, spicy with nutty undertones",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Arugula microgreen seeds produce peppery, flavorful greens with distinctive spicy character.",
+        "Selected for intense flavor development and reliable germination in controlled environments."
+      ],
+      "growingNotes": [
+        "Sow seeds evenly for consistent growth.",
+        "Maintain moderate humidity for best flavor.",
+        "Harvest when true leaves develop for optimal taste."
+      ],
+      "bestFor": [
+        "Gourmet salad ingredients",
+        "Intense flavor profiles",
+        "Restaurant garnish applications",
+        "Mediterranean cuisine"
+      ],
+      "healthHighlights": [
+        "Rich in glucosinolates and vitamins",
+        "High in antioxidants and minerals",
+        "Supports detoxification and metabolism",
+        "Natural anti-inflammatory properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "85%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Radish Microgreens Seeds",
+        "Mustard Microgreens Seeds",
+        "Watercress Microgreens Seeds",
+        "Cress Microgreens Seeds"
+      ]
+    },
+    "sesame-microgreens-seeds": {
+      "id": 9,
+      "name": "Sesame Microgreens Seeds",
+      "price": "150.00",
+      "image": "seed-9",
+      "scientificName": "Sesamum indicum",
+      "flavorProfile": "Nutty, mild with sesame undertones",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Sesame microgreen seeds produce tender greens with distinctive nutty flavor and nutritional benefits.",
+        "Selected for unique flavor profile and healthy oil content in microgreen form."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Longer growing time requires patience."
+      ],
+      "bestFor": [
+        "Unique flavor applications",
+        "Nutritional supplementation",
+        "Asian cuisine ingredients",
+        "Specialty microgreen products"
+      ],
+      "healthHighlights": [
+        "Rich in healthy fats and minerals",
+        "High in antioxidants and vitamins",
+        "Supports heart health and inflammation",
+        "Natural energy source"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "75%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Sunflower Microgreens Seeds",
+        "Pumpkin Seed Microgreens Seeds",
+        "Corn Microgreens Seeds",
+        "Oat Grass Microgreens Seeds"
+      ]
+    },
+    "sorghum-jowar-microgreens-seeds": {
+      "id": 10,
+      "name": "Sorghum (Jowar) Microgreens Seeds",
+      "price": "75.00",
+      "image": "seed-10",
+      "scientificName": "Sorghum bicolor",
+      "flavorProfile": "Mild, slightly sweet grassy notes",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Sorghum microgreen seeds produce nutritious greens with mild flavor and high nutritional value.",
+        "Selected for drought tolerance and reliable growth in various conditions."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for nutritional density.",
+        "Maintain consistent moisture for optimal growth.",
+        "Warm temperature preferred for germination."
+      ],
+      "bestFor": [
+        "Nutritional supplementation",
+        "Budget-friendly growing",
+        "Sustainable agriculture",
+        "Traditional grain alternatives"
+      ],
+      "healthHighlights": [
+        "High in protein and dietary fiber",
+        "Rich in minerals and B vitamins",
+        "Gluten-free nutrition source",
+        "Supports energy and digestion"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "80%+",
+      "seedingRate": "2-3 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Pearl Millet Microgreens Seeds",
+        "Corn Microgreens Seeds",
+        "Wheatgrass Microgreens Seeds",
+        "Oat Grass Microgreens Seeds"
+      ]
+    },
+    "spinach-microgreens-seeds": {
+      "id": 11,
+      "name": "Spinach Microgreens Seeds",
+      "price": "115.00",
+      "image": "seed-11",
+      "scientificName": "Spinacia oleracea",
+      "flavorProfile": "Mild spinach with slight sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Spinach microgreen seeds produce tender, nutrient-dense greens with mild spinach flavor.",
+        "Selected for high iron content and reliable germination in controlled environments."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain even moisture for delicate seedlings.",
+        "Provide adequate light for optimal nutrition."
+      ],
+      "bestFor": [
+        "Nutritional supplementation",
+        "Iron-rich diets",
+        "Delicate salad ingredients",
+        "Health-focused products"
+      ],
+      "healthHighlights": [
+        "High in iron, folate, and vitamins A, K",
+        "Rich in antioxidants and minerals",
+        "Supports energy production and bone health",
+        "Natural anti-inflammatory properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "80%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Swiss Chard Microgreens Seeds",
+        "Kale Microgreens Seeds",
+        "Amaranthus Microgreens Seeds",
+        "Beetroot Microgreens Seeds"
+      ]
+    },
+    "sunflower-microgreens-seeds": {
+      "id": 12,
+      "name": "Sunflower Microgreens Seeds",
+      "price": "100.00",
+      "image": "seed-12",
+      "scientificName": "Helianthus annuus",
+      "flavorProfile": "Nutty, slightly sweet with sunflower seed flavor",
+      "growingTime": "10-14 days",
+      "difficulty": "Easy",
+      "description": [
+        "Sunflower microgreen seeds produce crunchy, nutritious greens with distinctive nutty flavor.",
+        "Selected for high protein content and robust growth in microgreen production."
+      ],
+      "growingNotes": [
+        "Soak seeds for 4-8 hours before sowing.",
+        "Sow seeds densely for protein-rich harvests.",
+        "Maintain consistent moisture for optimal growth."
+      ],
+      "bestFor": [
+        "Protein-rich microgreens",
+        "Nutty flavor profiles",
+        "Beginner-friendly growing",
+        "Sustainable nutrition source"
+      ],
+      "healthHighlights": [
+        "High in protein, healthy fats, and vitamin E",
+        "Rich in minerals and B vitamins",
+        "Supports heart health and energy",
+        "Natural antioxidant properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "85%+",
+      "seedingRate": "3-4 oz per 10x20 tray",
+      "soakingRequired": true,
+      "relatedProducts": [
+        "Peas Microgreens Seeds",
+        "Corn Microgreens Seeds",
+        "Sesame Microgreens Seeds",
+        "Pumpkin Seed Microgreens Seeds"
+      ]
+    },
+    "swiss-chard-microgreens-seeds": {
+      "id": 13,
+      "name": "Swiss Chard Microgreens Seeds",
+      "price": "255.00",
+      "image": "seed-13",
+      "scientificName": "Beta vulgaris subsp. cicla",
+      "flavorProfile": "Mild beet-like with slight earthiness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Swiss chard microgreen seeds produce colorful, nutritious greens with mild beet-like flavor.",
+        "Selected for vibrant stem color and high nutritional content in microgreen form."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain even moisture for optimal growth.",
+        "Provide adequate light for color development."
+      ],
+      "bestFor": [
+        "Colorful salad ingredients",
+        "Nutritional supplementation",
+        "Visual food presentation",
+        "Health-focused products"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and C",
+        "Rich in minerals and antioxidants",
+        "Supports bone health and immunity",
+        "Natural anti-inflammatory properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "80%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Spinach Microgreens Seeds",
+        "Kale Microgreens Seeds",
+        "Beetroot Microgreens Seeds",
+        "Red Carrot Microgreens Seeds"
+      ]
+    },
+    "turnip-purple-top-microgreens-seeds": {
+      "id": 14,
+      "name": "Turnip Purple Top Microgreens Seeds",
+      "price": "110.00",
+      "image": "seed-14",
+      "scientificName": "Brassica rapa",
+      "flavorProfile": "Mild turnip with slight peppery notes",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Purple top turnip microgreen seeds produce tender greens with mild turnip flavor and purple accents.",
+        "Selected for reliable germination and consistent flavor development in microgreen cultivation."
+      ],
+      "growingNotes": [
+        "Sow seeds evenly for consistent growth.",
+        "Maintain moderate humidity for best results.",
+        "Quick-growing variety suitable for frequent harvesting."
+      ],
+      "bestFor": [
+        "Mild flavor profiles",
+        "Beginner-friendly growing",
+        "Consistent commercial production",
+        "Reliable crop rotation"
+      ],
+      "healthHighlights": [
+        "High in vitamin C and minerals",
+        "Supports digestive health",
+        "Natural immune system booster",
+        "Low-calorie nutrition source"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "85%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Radish Microgreens Seeds",
+        "Mustard Microgreens Seeds",
+        "Arugula Microgreens Seeds",
+        "Cabbage Microgreens Seeds"
+      ]
+    },
+    "wheatgrass-microgreens-seeds": {
+      "id": 15,
+      "name": "Wheatgrass Microgreens Seeds",
+      "price": "125.00",
+      "image": "seed-15",
+      "scientificName": "Triticum aestivum",
+      "flavorProfile": "Grassy, slightly sweet with earthy notes",
+      "growingTime": "10-14 days",
+      "difficulty": "Easy",
+      "description": [
+        "Wheatgrass seeds produce nutrient-dense grass blades with concentrated nutritional content.",
+        "Selected for high chlorophyll content and reliable germination in controlled environments."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for nutritional density.",
+        "Maintain consistent moisture for optimal growth.",
+        "Provide adequate light for chlorophyll development."
+      ],
+      "bestFor": [
+        "Nutritional supplementation",
+        "Juice and smoothie ingredients",
+        "Detoxification support",
+        "Health-focused products"
+      ],
+      "healthHighlights": [
+        "Extremely high in chlorophyll and vitamins",
+        "Rich in minerals and antioxidants",
+        "Supports detoxification and energy",
+        "Natural immune system booster"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "85%+",
+      "seedingRate": "2-3 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Barley Grass Microgreens Seeds",
+        "Oat Grass Microgreens Seeds",
+        "Sorghum Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ]
+    },
+    "yellow-carrot-microgreens-seeds": {
+      "id": 16,
+      "name": "Yellow Carrot Microgreens Seeds",
+      "price": "300.00",
+      "image": "seed-16",
+      "scientificName": "Daucus carota",
+      "flavorProfile": "Mild carrot with sweet undertones",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Yellow carrot microgreen seeds produce delicate, feathery greens with mild carrot flavor.",
+        "Selected for unique color development and tender texture in microgreen cultivation."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain even moisture for delicate seedlings.",
+        "Longer growing time requires patience and care."
+      ],
+      "bestFor": [
+        "Unique visual presentations",
+        "Delicate flavor profiles",
+        "Gourmet garnish applications",
+        "Specialty microgreen mixes"
+      ],
+      "healthHighlights": [
+        "High in beta-carotene and vitamin A",
+        "Rich in antioxidants and minerals",
+        "Supports eye health and immunity",
+        "Natural anti-inflammatory properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "75%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Red Carrot Microgreens Seeds",
+        "Black Carrot Microgreens Seeds",
+        "Spinach Microgreens Seeds",
+        "Swiss Chard Microgreens Seeds"
+      ]
+    },
+    "alfalfa-microgreens-seeds": {
+      "id": 17,
+      "name": "Alfalfa Microgreens Seeds",
+      "price": "165.00",
+      "image": "seed-17",
+      "scientificName": "Medicago sativa",
+      "flavorProfile": "Delicate, mild and slightly nutty",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Alfalfa microgreen seeds produce tender, mild-flavored greens with high nutritional value.",
+        "Selected for reliable germination and consistent growth in various growing conditions."
+      ],
+      "growingNotes": [
+        "Soak seeds for 4-6 hours before sowing.",
+        "Sow seeds densely for nutritional density.",
+        "Maintain even moisture for optimal growth."
+      ],
+      "bestFor": [
+        "Mild flavor profiles",
+        "Beginner-friendly growing",
+        "Nutritional supplementation",
+        "Versatile culinary applications"
+      ],
+      "healthHighlights": [
+        "Rich in vitamins K, C, and minerals",
+        "High in calcium, potassium, iron, and zinc",
+        "Supports immune function and bone health",
+        "Natural detoxification properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "90%+",
+      "seedingRate": "2-3 oz per 10x20 tray",
+      "soakingRequired": true,
+      "relatedProducts": [
+        "Clover Microgreens Seeds",
+        "Red Lentil Microgreens Seeds",
+        "Mung Bean Microgreens Seeds",
+        "Fenugreek Microgreens Seeds"
+      ]
+    },
+    "amaranthus-red-garnet-microgreens-seeds": {
+      "id": 18,
+      "name": "Amaranthus Red Garnet Microgreens Seeds",
+      "price": "210.00",
+      "image": "seed-18",
+      "scientificName": "Amaranthus tricolor",
+      "flavorProfile": "Earthy, slightly sweet with beet-like notes",
+      "growingTime": "8-12 days",
+      "difficulty": "Easy",
+      "description": [
+        "Red Garnet amaranth seeds produce vibrant red and green foliage with earthy flavor.",
+        "Selected for intense color development and high protein content in microgreen form."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for rich color development.",
+        "Maintain consistent moisture for optimal growth.",
+        "Provide adequate light for vibrant coloration."
+      ],
+      "bestFor": [
+        "Visual appeal in dishes",
+        "Protein-rich nutrition",
+        "Colorful salad ingredients",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in protein, iron, and vitamins A, C",
+        "Rich in antioxidants and minerals",
+        "Supports muscle health and immunity",
+        "Natural anti-inflammatory properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "80%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Amaranthus Red Microgreens Seeds",
+        "Broccoli Microgreens Seeds",
+        "Red Cabbage Microgreens Seeds",
+        "Spinach Microgreens Seeds"
+      ]
+    },
+    "amaranthus-red-microgreens-seeds": {
+      "id": 19,
+      "name": "Amaranthus Red Microgreens Seeds",
+      "price": "130.00",
+      "image": "seed-19",
+      "scientificName": "Amaranthus tricolor",
+      "flavorProfile": "Earthy, slightly sweet with beet-like notes",
+      "growingTime": "8-12 days",
+      "difficulty": "Easy",
+      "description": [
+        "Red amaranth seeds produce vibrant red foliage with earthy flavor and high nutrition.",
+        "Selected for consistent color development and reliable growth in microgreen production."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for uniform color development.",
+        "Maintain consistent moisture for optimal growth.",
+        "Provide adequate light for vibrant red coloration."
+      ],
+      "bestFor": [
+        "Colorful salad ingredients",
+        "Nutritional supplementation",
+        "Visual food presentation",
+        "Budget-friendly color variety"
+      ],
+      "healthHighlights": [
+        "High in protein, iron, and vitamins",
+        "Rich in antioxidants and minerals",
+        "Supports overall health and immunity",
+        "Natural anti-inflammatory properties"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "80%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Amaranthus Red Garnet Microgreens Seeds",
+        "Broccoli Microgreens Seeds",
+        "Red Cabbage Microgreens Seeds",
+        "Beetroot Microgreens Seeds"
+      ]
+    },
+    "basil-green-microgreens-seeds": {
+      "id": 20,
+      "name": "Basil Green Microgreens Seeds",
+      "price": "300.00",
+      "image": "seed-20",
+      "scientificName": "Ocimum basilicum",
+      "flavorProfile": "Intense basil flavor with sweet and peppery notes",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Green basil microgreen seeds produce aromatic greens with concentrated basil flavor.",
+        "Selected for intense aroma and essential oil content in microgreen form."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "storage": "Store in cool, dry place for up to 12 months",
+      "germinationRate": "75%+",
+      "seedingRate": "1-2 oz per 10x20 tray",
+      "soakingRequired": false,
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ]
+    }
+  }
+}
