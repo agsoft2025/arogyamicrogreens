@@ -88,6 +88,71 @@ import alfalfaseedview from "@/assests/alfalfaseedview.png";
 import alfalfaseedview1 from "@/assests/alfalfaseedview1.png";
 import amranthusseedview from "@/assests/amranthusseedview.png";
 import amranthusseedview1 from "@/assests/amranthusseedview1.png";
+import amaranthusseedview from "@/assests/amaranthusseedview.png";
+import amaranthusseedview1 from "@/assests/amaranthusseedview1.png";
+import basilgreenseedview from "@/assests/basilgreenseedview.png";
+import basilgreenseedview1 from "@/assests/basilgreenseedview1.png";
+import beetrootseedview from "@/assests/beetrootseedview.png";
+import beetrootseedview1 from "@/assests/beetrootseedview1.png";
+import blackbengalgramview from "@/assests/blackbengalgramview.png";
+import blackbengalgramview1 from "@/assests/blackbengalgramview1.png";
+import blackcarrotseedview from "@/assests/blackcarrotseedview.png";
+import blackcarrotseedview1 from "@/assests/blackcarrotseedview1.png";
+import blackgramseedview from "@/assests/blackgramseedview.png";
+import blackgramseedview1 from "@/assests/blackgramseedview1.png";
+import brocoliseedview from "@/assests/brocoliseedview.png";
+import brocoliseedview1 from "@/assests/brocoliseedview1.png";
+import bullsbloodseedview from "@/assests/bullsbloodseedview.png";
+import bullsbloodseedview1 from "@/assests/bullsbloodseedview1.png";
+import cabbageseedview from "@/assests/cabbageseedview.png";
+import cabbageseedview1 from "@/assests/cabbageseedview1.png";
+import cloverseedview from "@/assests/cloverseedview.png";
+import cloverseedview1 from "@/assests/cloverseedview1.png";
+import corianderseedview from "@/assests/corianderseedview.png";
+import corianderseedview1 from "@/assests/corianderseedview1.png";
+import cornseedview from "@/assests/cornseedview.png";
+import cornseedview1 from "@/assests/cornseedview1.png";
+import fenugreekseedview from "@/assests/fenugreekseedview.png";
+import fenugreekseedview1 from "@/assests/fenugreekseedview1.png";
+import flaxseedview from "@/assests/flaxseedview.png";
+import flaxseedview1 from "@/assests/flaxseedview1.png";
+import gardencressview from "@/assests/gardencressview.png";
+import gardencressview1 from "@/assests/gardencressview1.png";
+import greenmustardview from "@/assests/greenmustardview.png";
+import greenmustardview1 from "@/assests/greenmustardview1.png";
+import KaleMicrogreenseedview from "@/assests/KaleMicrogreenseedview.jpg";
+import KaleMicrogreenseedview1 from "@/assests/KaleMicrogreenseedview1.png";
+import kohlrabiseedview from "@/assests/kohlrabiseedview.png";
+import kohlrabiseedview1 from "@/assests/kohlrabiseedview1.png";
+import kohlrabipurpleviewseed from "@/assests/kohlrabipurpleviewseed.png";
+import kohlrabipurpleviewseed1 from "@/assests/kohlrabipurpleviewseed1.png";
+import komatsunaseedview from "@/assests/komatsunaseedview.png";
+import komatsunaseedview1 from "@/assests/komatsunaseedview1.png";
+import maplepeasseedview from "@/assests/maplepeasseedview.png";
+import maplepeasseedview1 from "@/assests/maplepeasseedview1.png";
+import mizunaseedview from "@/assests/mizunaseedview.png";
+import mizunaseedview1 from "@/assests/mizunaseedview1.png";
+import moongdalseedview from "@/assests/moongdalseedview.png";
+import moongdalseedview1 from "@/assests/moongdalseedview1.png";
+import oatgrassseedview from "@/assests/oatgrassseedview.png";
+import oatgrassseedview1 from "@/assests/oatgrassseedview1.png";
+import onionseedview from "@/assests/onionseedview.png";
+import onionseedview1 from "@/assests/onionseedview1.png";
+import pakchoiseedview from "@/assests/pakchoiseedview.png";
+import pakchoiseedview1 from "@/assests/pakchoiseedview1.png";
+import pakchoiredseedview from "@/assests/pakchoiredseedview.png";
+import pakchoiredseedview1 from "@/assests/pakchoiredseedview1.png";
+import parsleyseedview from "@/assests/parsleyseedview.png";
+import parsleyseedview1 from "@/assests/parsleyseedview1.png";
+import pearlmilletseedview from "@/assests/pearlmilletseedview.png";
+import pearlmilletseedview1 from "@/assests/pearlmilletseedview1.png";
+import peasmicrogreenseedview from "@/assests/peasmicrogreenseedview.png";
+import peasmicrogreenseedview1 from "@/assests/peasmicrogreenseedview1.png";
+import pigeonpeaseedview from "@/assests/pigeonpeaseedview.png";
+import pigeonpeaseedview1 from "@/assests/pigeonpeaseedview1.png";
+import radhishchinaseedview from "@/assests/radhishchinaseedview.png";
+import radhishchinaseedview1 from "@/assests/radhishchinaseedview1.png";
+
 
 type SeedRecord = {
   id: number;
@@ -278,7 +343,71 @@ export const seedImages: Record<string, StaticImageData> = {
   "alfalfaseedview": alfalfaseedview,
   "alfalfaseedview1": alfalfaseedview1,
   "amranthusseedview": amranthusseedview,
-  "amranthusseedview1": amranthusseedview1
+  "amranthusseedview1": amranthusseedview1,
+  "amaranthusseedview": amaranthusseedview,
+  "amaranthusseedview1": amaranthusseedview1,
+  "basilgreenseedview": basilgreenseedview,
+  "basilgreenseedview1": basilgreenseedview1,
+  "beetrootseedview": beetrootseedview,
+  "beetrootseedview1": beetrootseedview1,
+  "blackbengalgramview": blackbengalgramview,
+  "blackbengalgramview1":blackbengalgramview1,
+  "blackcarrotseedview": blackcarrotseedview,
+  "blackcarrotseedview1": blackcarrotseedview1,
+  "blackgramseedview": blackgramseedview,
+  "blackgramseedview1": blackgramseedview1,
+  "brocoliseedview": brocoliseedview,
+  "brocoliseedview1": brocoliseedview1,
+  "bullsbloodseedview": bullsbloodseedview,
+  "bullsbloodseedview1": bullsbloodseedview1,
+  "cabbageseedview": cabbageseedview,
+  "cabbageseedview1": cabbageseedview1,
+  "cloverseedview": cloverseedview,
+  "cloverseedview1": cloverseedview1,
+  "corianderseedview": corianderseedview,
+  "corianderseedview1": corianderseedview1,
+  "cornseedview": cornseedview,
+  "cornseedview1": cornseedview1,
+  "fenugreekseedview": fenugreekseedview,
+  "fenugreekseedview1": fenugreekseedview1,
+  "flaxseedview": flaxseedview,
+  "flaxseedview1": flaxseedview1,
+  "gardencressview": gardencressview,
+  "gardencressview1": gardencressview1,
+  "greenmustardview": greenmustardview,
+  "greenmustardview1": greenmustardview1,
+  "KaleMicrogreenseedview": KaleMicrogreenseedview,
+  "KaleMicrogreenseedview1": KaleMicrogreenseedview1,
+  "kohlrabiseedview": kohlrabiseedview,
+  "kohlrabiseedview1": kohlrabiseedview1,
+  "kohlrabipurpleviewseed": kohlrabipurpleviewseed,
+  "kohlrabipurpleviewseed1": kohlrabipurpleviewseed1,
+  "komatsunaseedview": komatsunaseedview,
+  "komatsunaseedview1": komatsunaseedview1,
+  "maplepeasseedview": maplepeasseedview,
+  "maplepeasseedview1": maplepeasseedview1,
+  "mizunaseedview": mizunaseedview,
+  "mizunaseedview1": mizunaseedview1,
+  "moongdalseedview": moongdalseedview,
+  "moongdalseedview1": moongdalseedview1,
+  "oatgrassseedview": oatgrassseedview,
+  "oatgrassseedview1": oatgrassseedview1,
+  "onionseedview": onionseedview,
+  "onionseedview1": onionseedview1,
+  "pakchoiseedview": pakchoiseedview,
+  "pakchoiseedview1": pakchoiseedview1,
+  "pakchoiredseedview": pakchoiredseedview,
+  "pakchoiredseedview1": pakchoiredseedview1,
+  "parsleyseedview": parsleyseedview,
+  "parsleyseedview1": parsleyseedview1,
+  "pearlmilletseedview": pearlmilletseedview,
+  "pearlmilletseedview1": pearlmilletseedview1,
+  peasmicrogreenseedview: peasmicrogreenseedview,
+  "peasmicrogreenseedview1": peasmicrogreenseedview1,
+  "pigeonpeaseedview": pigeonpeaseedview,
+  "pigeonpeaseedview1": pigeonpeaseedview1,
+  "radhishchinaseedview": radhishchinaseedview,
+  "radhishchinaseedview1": radhishchinaseedview1
 };
 
 const seedSinglePageData = seedSinglePage as SeedSinglePageData;

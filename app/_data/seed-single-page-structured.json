@@ -1758,7 +1758,7 @@
         "Yellow carrot seeds grow into delicate microgreens with soft feathery leaves and a mild carrot flavor. These microgreens add freshness and color to dishes like salads, sandwiches, vegetable bowls, and healthy wraps.",
         "Yellow carrot microgreens grow slowly compared to many other microgreens and are typically ready to harvest in 12–16 days."
       ],
-      "description1":[
+      "description1": [
         "Yellow carrot microgreens are the young shoots of carrot plants harvested early when their nutrients and natural plant compounds are concentrated. These microgreens develop thin stems and delicate feathery leaves with a subtle carrot flavor.",
         "Because of their mild sweetness and fresh aroma, carrot microgreens work well in salads, sandwiches, wraps, and vegetable bowls, adding both flavor and visual appeal.",
         "Carrot microgreens are rich in carotenoids, vitamins, and antioxidants, making them beneficial for eye health, immunity, and overall wellness.",
@@ -1792,7 +1792,7 @@
         "yellowcarrotseedsingleview",
         "yellowcarrotseedsingleview1"
       ],
-       "infoSections": [
+      "infoSections": [
         {
           "title": "Flavor Profile",
           "description": "Yellow carrot microgreens have a mild sweet carrot flavor with delicate leafy texture.",
@@ -1876,7 +1876,7 @@
         "Alfalfa seeds produce delicate, mild-flavored microgreens that are rich in vitamins, minerals, and digestive enzymes. Known for their gentle nutty taste and tender texture, Alfalfa microgreens are perfect for salads, sandwiches, wraps, smoothies, and light meals.",
         "These seeds are easy to grow and beginner-friendly, producing fresh microgreens in about 7–10 days, making them ideal for home growers and urban kitchens."
       ],
-      "description1":[
+      "description1": [
         "Alfalfa microgreens seeds grow into tender young greens harvested early when their nutritional concentration is at its peak. These microgreens are known for their mild flavor, crisp texture, and subtle nutty taste that blends easily into everyday meals.",
         "Because of their delicate flavor, Alfalfa microgreens are often used in salads, sandwiches, wraps, smoothies, and yogurt-based dishes, adding freshness and nutrition without overpowering other ingredients.",
         "They are especially valued for their high mineral content and natural enzymes, which support digestion, metabolism, and overall wellness.",
@@ -1910,7 +1910,7 @@
         "alfalfaseedview",
         "alfalfaseedview1"
       ],
-        "infoSections": [
+      "infoSections": [
         {
           "title": "Flavor Profile",
           "description": "Alfalfa microgreens have a mild, fresh, and slightly nutty flavor.",
@@ -1995,7 +1995,7 @@
         "Amaranthus Red Garnet seeds grow into vibrant deep-red microgreens with a delicate texture and mild earthy flavor. These colorful greens are packed with essential vitamins, minerals, and antioxidants, making them a beautiful and nutritious addition to salads, grain bowls, and gourmet dishes.",
         "These microgreens are moderately easy to grow and are typically ready to harvest in 8–12 days, making them a favorite among home growers and chefs."
       ],
-      "description1":[
+      "description1": [
         "Amaranthus Red Garnet microgreens are known for their striking deep red color and delicate leaves. Harvested young when their nutrients are highly concentrated, these microgreens bring both visual appeal and nutritional value to a wide range of dishes.",
         "Their mild earthy taste pairs particularly well with grain bowls, salads, roasted vegetables, and gourmet plating, making them popular in both home kitchens and restaurants.",
         "Amaranthus microgreens are naturally rich in antioxidants, minerals, and plant compounds, helping support immune health and overall vitality.",
@@ -2029,7 +2029,7 @@
         "amranthusseedview",
         "amranthusseedview1"
       ],
-        "infoSections": [
+      "infoSections": [
         {
           "title": "Flavor Profile",
           "description": "Amaranthus Red Garnet microgreens have a mild, earthy, and slightly sweet flavor.",
@@ -2112,8 +2112,14 @@
       "growingTime": "8-12 days",
       "difficulty": "Easy",
       "description": [
-        "Red amaranth seeds produce vibrant red foliage with earthy flavor and high nutrition.",
-        "Selected for consistent color development and reliable growth in microgreen production."
+        "Amaranthus Red seeds produce vibrant red microgreens known for their tender texture and mild earthy flavor. These nutrient-dense greens are rich in vitamins and minerals and are commonly used in salads, gourmet dishes, and grain bowls.",
+        "They grow quickly and are typically ready for harvest in 9–12 days, making them ideal for home microgreens growers."
+      ],
+      "description1": [
+        "Amaranthus Red microgreens are young shoots harvested when their nutritional content and color are at their peak. Their vibrant red leaves make them especially popular for enhancing the presentation of dishes.",
+        "Their flavor is mild and earthy, allowing them to complement salads, sushi bowls, vegetable platters, and rice dishes without overpowering other ingredients.",
+        "Amaranthus is naturally rich in essential vitamins and plant antioxidants, supporting immune health and overall nutrition.",
+        "Microgreens de Manikonda provides high-quality Amaranthus Red seeds with excellent germination rates, ensuring reliable growth for both beginners and experienced growers."
       ],
       "growingNotes": [
         "Sow seeds densely for uniform color development.",
@@ -2140,9 +2146,82 @@
       ],
       "gallery": [
         "seed-19",
-        "seed-23",
-        "seed-21",
-        "seed-24"
+        "amaranthusseedview",
+        "amaranthusseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Amaranthus Red microgreens offer a mild, earthy flavor with a soft leafy texture.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Soft and delicate leaves",
+            "Mild earthy undertone",
+            "Subtle sweetness"
+          ],
+          "conclusion": "They work well with grain bowls, salads, roasted vegetables, sushi bowls, and gourmet plating."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Amaranthus Red microgreens are rich in:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Iron",
+            "Calcium",
+            "Magnesium",
+            "Plant antioxidants"
+          ],
+          "conclusion": "These nutrients support immunity, metabolism, and overall health."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Amaranthus Red seeds can produce 500–700 grams of microgreens, depending on tray density."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Best grown in:",
+            "Temperature: 22°C – 30°C",
+            "Light: Indirect sunlight or LED grow lights",
+            "Humidity: Moderate humidity with good ventilation",
+            "Amaranthus thrives in warm indoor environments."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
       ]
     },
     "basil-green-microgreens-seeds": {
@@ -2152,8 +2231,14 @@
       "growingTime": "10-14 days",
       "difficulty": "Moderate",
       "description": [
-        "Green basil microgreen seeds produce aromatic greens with concentrated basil flavor.",
-        "Selected for intense aroma and essential oil content in microgreen form."
+        "Basil Green seeds produce aromatic microgreens with a fresh herbal flavor. These fragrant greens are rich in antioxidants and vitamins and are widely used in salads, pasta dishes, sandwiches, and Mediterranean meals.",
+        "They typically take 14–18 days to grow, making them a flavorful addition to home microgreens gardens."
+      ],
+      "description1": [
+        "Green Basil microgreens are harvested early from basil plants, offering the same aromatic flavor in a smaller and more concentrated form. Their vibrant green leaves and herbal fragrance make them popular in both home cooking and restaurant dishes.",
+        "These microgreens pair especially well with Italian dishes, salads, sandwiches, and tomato-based recipes, adding freshness and aroma.",
+        "Basil microgreens are rich in vitamins, antioxidants, and essential plant compounds, supporting immunity and overall wellness.",
+        "Microgreens de Manikonda offers premium basil seeds selected for strong germination and aromatic growth."
       ],
       "growingNotes": [
         "Sow seeds sparingly for better air circulation.",
@@ -2180,9 +2265,3911 @@
       ],
       "gallery": [
         "seed-20",
-        "seed-23",
-        "seed-21",
-        "seed-24"
+        "basilgreenseedview",
+        "basilgreenseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Green Basil microgreens have a sweet, herbal, and slightly peppery flavor.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Fresh herbal aroma",
+            "Sweet basil notes",
+            "Mild peppery finish"
+          ],
+          "conclusion": "They complement pasta, salads, sandwiches, pizzas, and Mediterranean dishes."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Green Basil microgreens are rich in:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Iron",
+            "Calcium",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients support immune health and anti-inflammatory benefits."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Basil seeds can produce 200–300 grams of microgreens, depending on tray conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Best grown in:",
+            "Temperature: 22°C – 30°C",
+            "Light: Bright indirect sunlight",
+            "Humidity: Low humidity with good airflow",
+            "Basil prefers warm and well-lit environments."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "basil-purple-microgreens-seeds": {
+      "baseName": "Basil Purple",
+      "scientificName": "Ocimum basilicum",
+      "flavorProfile": "Intense basil flavor with sweet and peppery notes",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Purple Basil seeds grow into aromatic microgreens with deep purple leaves and a sweet herbal flavor. These colorful greens are widely used in salads, pasta dishes, gourmet plating, and Mediterranean cuisine.",
+        "They typically reach harvest in 14–20 days, producing flavorful microgreens perfect for home kitchens."
+      ],
+      "description1": [
+        "Purple Basil microgreens are young basil shoots harvested when their aroma and nutrients are most concentrated. Their striking purple leaves make them especially popular for gourmet dishes and culinary presentation.",
+        "Their sweet herbal flavor pairs beautifully with salads, pasta, sandwiches, tomato dishes, and Mediterranean meals.",
+        "Purple Basil microgreens are naturally rich in vitamins, antioxidants, and essential plant compounds, supporting immune health and cellular protection.",
+        "Microgreens de Manikonda provides high-quality Purple Basil seeds known for strong germination and vibrant color development."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-20",
+        "basilgreenseedview",
+        "basilgreenseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Purple Basil microgreens have a sweet herbal flavor with mild spice notes.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Sweet basil aroma",
+            "Light clove-like undertone",
+            "Fresh herbal taste"
+          ],
+          "conclusion": "They pair well with pasta, tomato dishes, salads, sandwiches, and pizzas."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Purple Basil microgreens are rich in:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Iron",
+            "Calcium",
+            "Polyphenol antioxidants"
+          ],
+          "conclusion": "These nutrients support immunity and anti-inflammatory health benefits."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Purple Basil seeds can produce 200–280 grams of microgreens."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Temperature: 22°C – 30°C",
+            "Light: Bright indirect sunlight",
+            "Humidity: Low to moderate humidity",
+            "Purple Basil prefers warm and well-lit growing environments."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "beetroot-microgreens-seeds": {
+      "baseName": "Beetroot microgreens seeds",
+      "scientificName": "Beta vulgaris",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Beetroot seeds grow into vibrant microgreens with deep red stems and tender green leaves. These microgreens have a mild earthy flavor with a subtle sweetness and are commonly used in salads, sandwiches, smoothies, and grain bowls.",
+        "Beetroot microgreens typically reach harvest in 10–14 days and are ideal for growers who want colorful, nutrient-dense greens."
+      ],
+      "description1": [
+        "Beetroot microgreens are young shoots harvested when their nutrients and natural pigments are highly concentrated. Known for their vibrant color and earthy flavor, they are widely used in fresh dishes where both nutrition and visual appeal matter.",
+        "These microgreens add color and flavor to salads, wraps, grain bowls, smoothies, roasted vegetables, and detox juices. Their natural sweetness balances well with savory dishes.",
+        "Beetroot microgreens are especially valued for their betalain antioxidants, which support detoxification and cardiovascular health.",
+        "At Microgreens de Manikonda, our beetroot seeds are carefully sourced to ensure strong germination and healthy growth for both beginner and experienced growers."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-20",
+        "beetrootseedview",
+        "beetrootseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Beetroot microgreens have a mild earthy flavor with gentle sweetness.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Earthy flavor",
+            "Subtle natural sweetness",
+            "Tender leafy texture"
+          ],
+          "conclusion": "They pair well with salads, hummus bowls, wraps, sandwiches, and smoothies."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Beetroot microgreens are rich in:",
+          "items": [
+            "Vitamin A",
+            "Vitamin B complex",
+            "Vitamin C",
+            "Vitamin E",
+            "Vitamin K",
+            "Calcium",
+            "Magnesium",
+            "Iron",
+            "Potassium",
+            "Zinc"
+          ],
+          "conclusion": "These nutrients support detoxification, immune health, circulation, and metabolic function."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of beetroot seeds can produce 450–600 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Temperature: 20°C – 28°C",
+            "Light: Bright indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "Beetroot microgreens grow well in indoor trays, balcony gardens, and small urban farming setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "black-bengal-gram-microgreens-seeds": {
+      "baseName": "Black Bengal Gram Microgreens Seeds",
+      "scientificName": "Beta vulgaris",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Kala Chana seeds grow into protein-rich microgreens with a nutty flavor and crunchy texture. These microgreens are ideal for sprouts salads, chaat bowls, wraps, and protein-rich meals.",
+        "Kala Chana microgreens are ready to harvest in 8–10 days."
+      ],
+      "description1": [
+        "Black Bengal Gram seeds produce nutrient-rich microgreens with thick stems and soft green leaves. These microgreens have a mild nutty flavor and are commonly used in protein-rich salads and Indian dishes.",
+        "Kala Chana microgreens are an excellent source of plant protein, fiber, and minerals, making them popular among health-conscious consumers and fitness-focused diets.",
+        "They are commonly added to sprout salads, chaat bowls, wraps, and grain bowls, where they add texture and nutrition."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-20",
+        "blackbengalgramview",
+        "blackbengalgramview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Kala Chana microgreens have a nutty and mildly earthy flavor.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Nutty flavor",
+            "Soft crunchy stems",
+            "Fresh legume taste"
+          ]
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Kala Chana microgreens are rich in:",
+          "items": [
+            "Plant-based protein",
+            "Iron",
+            "Magnesium",
+            "Calcium",
+            "Potassium",
+            "Dietary fiber"
+          ],
+          "conclusion": "These nutrients support energy metabolism, muscle health, and digestive wellness."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Kala Chana seeds can produce 500–650 grams of microgreens."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Temperature: 22°C – 30°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity"
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "black-carrot-microgreens-seeds": {
+      "baseName": "Black Carrot Microgreens Seeds",
+      "scientificName": "Beta vulgaris",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Black Carrot seeds grow into vibrant purple microgreens with delicate leaves and a mild sweet-earthy flavor. These visually striking microgreens are rich in antioxidants and essential nutrients, making them a great addition to salads, grain bowls, wraps, and fresh vegetable dishes.",
+        "Black Carrot microgreens typically reach harvest in 10–14 days, offering colorful and nutrient-dense greens for home growers and urban kitchens."
+      ],
+      "description1": [
+        "Black Carrot microgreens are the young shoots of purple carrot varieties harvested early when their nutrients and pigments are highly concentrated. Known for their deep purple stems and tender leaves, these microgreens bring both visual appeal and nutritional value to everyday meals.",
+        "Their mild earthy taste with a gentle natural sweetness makes them versatile in the kitchen. Black Carrot microgreens work well in salads, wraps, grain bowls, smoothies, and gourmet vegetable dishes, adding vibrant color and fresh flavor.",
+        "These microgreens are particularly valued for their anthocyanin antioxidants, the same natural compounds responsible for their deep purple color. These antioxidants support cellular health and help protect the body from oxidative stress.",
+        "At Microgreens de Manikonda, our Black Carrot seeds are carefully sourced to ensure strong germination and healthy growth, producing consistent microgreens suitable for both beginner growers and experienced microgreens enthusiasts."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-20",
+        "blackcarrotseedview",
+        "blackcarrotseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Black Carrot microgreens have a mild earthy flavor with a subtle natural sweetness and fresh carrot notes.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild earthy taste",
+            "Light natural sweetness",
+            "Tender leafy texture"
+          ],
+          "conclusion": "They pair well with salads, wraps, sandwiches, smoothies, and grain bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Black Carrot microgreens contain:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Calcium",
+            "Iron",
+            "Potassium",
+            "Anthocyanin antioxidants"
+          ],
+          "conclusion": "These nutrients support immune health, cellular protection, and overall vitality."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Black Carrot seeds can produce 250–350 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Black Carrot microgreens grow best in:",
+            "Temperature: 20°C – 26°C",
+            "Light: Bright indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and small urban growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "black-gram-kaali-urad-microgreens-seeds": {
+      "baseName": "Black Gram (Kaali Urad) Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Black Gram seeds grow into tender microgreens with soft green leaves and thick shoots, offering a mild earthy flavor with subtle nutty notes. These microgreens are rich in plant-based protein and minerals, making them a nutritious addition to salads, wraps, sprout bowls, and protein-rich meals.",
+        "Black Gram microgreens grow quickly and are typically ready for harvest in 8–10 days, making them suitable for beginners and home growers."
+      ],
+      "description1": [
+        "Black Gram microgreens are the young shoots of urad seeds harvested early when their nutrients are concentrated and easily digestible. These microgreens develop thick stems and tender leaves, providing a satisfying texture and mild earthy flavor that works well in everyday meals.",
+        "Their subtle nutty taste blends well with sprout salads, wraps, chaat bowls, grain bowls, and protein-rich vegetarian dishes, adding both texture and nutritional value.",
+        "Black Gram microgreens are valued for their high plant protein content along with essential minerals such as iron, calcium, and magnesium, which help support energy levels and muscle health.",
+        "At Microgreens de Manikonda, our Black Gram seeds are carefully sourced to ensure strong germination and healthy growth, producing robust microgreens suitable for home growers and urban gardening setups."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-20",
+        "blackgramseedview",
+        "blackgramseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Black Gram microgreens have a mild earthy flavor with light nutty undertones and tender shoots.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild earthy taste",
+            "Subtle nutty flavor",
+            "Soft crunchy stems"
+          ],
+          "conclusion": "They pair well with sprouts salads, grain bowls, wraps, vegetable dishes, and protein-rich meals."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Black Gram microgreens contain:",
+          "items": [
+            "Plant-based protein",
+            "Iron",
+            "Calcium",
+            "Magnesium",
+            "Potassium",
+            "Dietary fiber"
+          ],
+          "conclusion": "These nutrients support muscle health, energy metabolism, digestion, and overall vitality."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Black Gram seeds can produce 450–600 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Black Gram microgreens grow best in:",
+            "Temperature: 22°C – 30°C",
+            "Light: Indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and small urban farming setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "broccoli-microgreens-seeds": {
+      "baseName": "Broccoli Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Broccoli seeds produce fresh, mildly peppery microgreens that are packed with antioxidants, vitamins, and plant compounds known for supporting immunity and detoxification. These microgreens have a crisp texture and mild cabbage-like flavor that works well in salads, sandwiches, wraps, and smoothies.",
+        "Broccoli microgreens are easy to grow and are usually ready for harvest in 8–10 days, making them ideal for beginners and home growers."
+      ],
+      "description1": [
+        "Broccoli microgreens are harvested at an early stage when their nutrients are highly concentrated. They are widely considered one of the most nutritious microgreens due to their high levels of sulforaphane, a powerful antioxidant compound known for supporting detoxification and cellular health.",
+        "These microgreens have a mild, slightly peppery flavor similar to young broccoli leaves, making them easy to incorporate into everyday meals. They are commonly added to salads, wraps, sandwiches, smoothies, and grain bowls.",
+        "Broccoli microgreens are especially valued for their role in supporting immune health, reducing inflammation, and promoting natural detoxification.",
+        "At Microgreens de Manikonda, our broccoli seeds are selected for strong germination, uniform growth, and reliable yields, ensuring healthy microgreens for home growers."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-20",
+        "brocoliseedview",
+        "brocoliseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Broccoli microgreens have a mild cabbage-like flavor with a light peppery finish.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild and fresh",
+            "Light peppery bite",
+            "Crunchy tender texture"
+          ],
+          "conclusion": "They pair well with salads, wraps, sandwiches, smoothies, omelettes, and grain bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Broccoli microgreens are packed with nutrients:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Sulforaphane",
+            "Calcium",
+            "Iron",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients support detoxification, immune strength, and anti-inflammatory health benefits."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of broccoli seeds can produce 350–450 grams of fresh microgreens, depending on growing conditions and tray density."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Broccoli microgreens grow best in:",
+            "Temperature: 20°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, kitchen gardens, and balcony setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "bull-s-blood-beet-microgreens-seeds": {
+      "baseName": "Bull’s Blood Beet Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Bull’s Blood Beet seeds grow into striking deep-red microgreens known for their rich color, tender leaves, and mild earthy flavor. These microgreens add vibrant color and nutrition to salads, wraps, sandwiches, grain bowls, and gourmet dishes.",
+        "Bull’s Blood Beet microgreens typically reach harvest in 10–14 days, producing colorful and nutrient-dense greens suitable for home growers and urban kitchens."
+      ],
+      "description1": [
+        "Bull’s Blood Beet microgreens are the young shoots of a traditional beet variety known for its intense red color and earthy sweetness. Harvested early when their nutrients and pigments are highly concentrated, these microgreens provide both visual appeal and nutritional value.",
+        "Their mild earthy taste and vibrant red stems make them especially popular in salads, grain bowls, wraps, sandwiches, and vegetable platters, where they enhance both presentation and flavor.",
+        "Bull’s Blood Beet microgreens are rich in betalain pigments and natural antioxidants, which help support detoxification, cardiovascular health, and overall cellular protection.",
+        "At Microgreens de Manikonda, our Bull’s Blood Beet seeds are carefully sourced to ensure strong germination and healthy growth, producing consistent microgreens suitable for both beginners and experienced growers."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "bullsbloodseedview",
+        "bullsbloodseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Bull’s Blood Beet microgreens have a mild earthy flavor with a subtle natural sweetness and soft leafy texture.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild earthy taste",
+            "Gentle sweetness",
+            "Tender leafy texture"
+          ],
+          "conclusion": "They pair well with salads, wraps, hummus bowls, roasted vegetables, and grain bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Bull’s Blood Beet microgreens are packed with nutrients:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Iron",
+            "Magnesium",
+            "Potassium",
+            "Betalain antioxidants"
+          ],
+          "conclusion": "These nutrients support detoxification, circulation, immune health, and overall vitality."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Bull’s Blood Beet seeds can produce 450–600 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Bull’s Blood Beet microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Bright indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and small urban farming setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "cabbage-microgreens-seeds": {
+      "baseName": "Cabbage Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Cabbage seeds grow into crisp, tender microgreens with a mild cabbage flavor and soft leafy texture. These microgreens are rich in vitamins, minerals, and antioxidants and are commonly used in salads, sandwiches, wraps, and grain bowls.",
+        "Cabbage microgreens grow quickly and are typically ready to harvest in 7–10 days, making them one of the easiest microgreens for beginners to grow."
+      ],
+      "description1": [
+        "Cabbage microgreens are young shoots of cabbage plants harvested early when their nutritional concentration and flavor are at their peak. These microgreens have a mild, fresh cabbage flavor and delicate leaves that blend easily into a variety of meals.",
+        "They are commonly used in salads, wraps, sandwiches, tacos, grain bowls, and vegetable dishes, where they add a subtle crunch and fresh flavor.",
+        "Cabbage microgreens are especially valued for their high vitamin content and natural antioxidants, which help support immune health and digestive wellness.",
+        "At Microgreens de Manikonda, our cabbage seeds are selected for high germination rates and consistent growth, producing healthy microgreens ideal for home growers and urban gardens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "cabbageseedview",
+        "cabbageseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Cabbage microgreens have a mild cabbage flavor with a fresh and slightly sweet taste.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Fresh cabbage flavor",
+            "Soft crunchy stems",
+            "Tender leafy texture"
+          ],
+          "conclusion": "They pair well with salads, wraps, sandwiches, tacos, and grain bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Cabbage microgreens are packed with nutrients:",
+          "items": [
+            "Vitamin C",
+            "Vitamin K",
+            "Vitamin E",
+            "Iron",
+            "Potassium",
+            "Dietary fiber",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients support immune function, digestive health, and overall wellness."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of cabbage seeds can produce 300–400 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Cabbage microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with proper airflow",
+            "They are ideal for indoor growing, kitchen gardens, and balcony trays."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "cauliflower-microgreens-seeds": {
+      "baseName": "Cauliflower Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Cauliflower seeds grow into crisp, tender microgreens with a mild cabbage-like flavor and soft leafy texture. These microgreens are rich in vitamins, antioxidants, and essential minerals, making them a healthy addition to salads, wraps, sandwiches, and grain bowls.",
+        "Cauliflower microgreens grow quickly and are typically ready for harvest in 7–10 days, making them ideal for beginners and home growers."
+      ],
+      "description1": [
+        "Cauliflower microgreens are the young shoots of cauliflower plants harvested early when their nutrient concentration and natural antioxidants are at their peak. These microgreens develop tender stems and small leafy tops that provide a mild cabbage-like flavor with a delicate crunch.",
+        "Because of their subtle flavor, cauliflower microgreens blend easily into salads, wraps, sandwiches, grain bowls, soups, and vegetable dishes, adding both freshness and nutrition without overpowering other ingredients.",
+        "They are particularly valued for their natural antioxidants and glucosinolate compounds, which help support cellular protection, detoxification, and immune health.",
+        "At Microgreens de Manikonda, our cauliflower seeds are carefully sourced to ensure strong germination rates and healthy growth, making them ideal for both beginner growers and experienced microgreen enthusiasts."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "cabbageseedview",
+        "cabbageseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Cauliflower microgreens have a mild cabbage-like flavor with a fresh and slightly sweet taste.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Fresh",
+            "Mild sweetness",
+            "Tender crunchy stems"
+          ],
+          "conclusion": "They pair well with salads, wraps, sandwiches, grain bowls, soups, and roasted vegetable dishes."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Cauliflower microgreens contain:",
+          "items": [
+            "Vitamin C",
+            "Vitamin K",
+            "Vitamin A",
+            "Folate",
+            "Iron",
+            "Antioxidants",
+            "Glucosinolates"
+          ],
+          "conclusion": "These nutrients help support immune function, cellular protection, and digestive health."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of cauliflower seeds can produce 300–400 grams of fresh microgreens, depending on tray size and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Cauliflower microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with proper airflow",
+            "They are well suited for indoor trays, balcony gardens, and kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "clover-microgreens-seeds": {
+      "baseName": "Clover Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Clover seeds grow into delicate microgreens with tender stems and small leafy shoots, offering a mild fresh flavor with subtle sweetness. These microgreens are rich in vitamins, minerals, and natural enzymes and are commonly used in salads, sandwiches, wraps, and smoothies.",
+        "Clover microgreens are easy to grow and typically ready to harvest in 8–12 days, making them suitable for beginners and home growers."
+      ],
+      "description1": [
+        "Clover microgreens are young shoots of clover plants harvested early when their nutritional density is highest. These microgreens develop thin stems and small rounded leaves, offering a soft texture and fresh flavor that blends easily into everyday meals.",
+        "Their delicate taste makes them popular in salads, wraps, sandwiches, smoothies, and breakfast bowls, where they add light crunch and freshness.",
+        "Clover microgreens are particularly valued for their natural antioxidants, plant-based protein, and enzyme content, which help support digestion, metabolism, and overall wellness.",
+        "At Microgreens de Manikonda, our clover seeds are carefully sourced for high germination rates and consistent growth, producing healthy microgreens suitable for home growers and small urban farms."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "cloverseedview",
+        "cloverseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Clover microgreens have a fresh, mild flavor with a gentle natural sweetness.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild fresh flavor",
+            "Light sweetness",
+            "Soft tender shoots"
+          ],
+          "conclusion": "They pair well with salads, wraps, sandwiches, smoothies, and yogurt bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Clover microgreens contain:",
+          "items": [
+            "Plant-based protein",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Magnesium",
+            "Natural enzymes",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients help support digestive health, metabolism, and overall vitality."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of clover seeds can produce 300–400 grams of fresh microgreens, depending on growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Clover microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and kitchen setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "coriander-microgreens-seeds": {
+      "baseName": "Coriander Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Coriander seeds grow into aromatic microgreens with a fresh herbal flavor similar to coriander leaves but more concentrated. These microgreens add bright flavor and nutrition to everyday Indian dishes like poha, upma, dal rice, chaat, and vegetable curries.",
+        "Coriander microgreens typically take 12–16 days to harvest, as coriander seeds germinate slower than most microgreens, but they reward growers with highly aromatic greens."
+      ],
+      "description1": [
+        "Coriander microgreens are the young shoots of coriander (cilantro) plants harvested early when their essential oils and nutrients are highly concentrated. These microgreens develop delicate stems and fragrant leaves that carry the familiar fresh aroma of coriander but in a more tender form.",
+        "Because of their strong herbal flavor, coriander microgreens are widely used as a finishing garnish for Indian dishes such as dal, poha, upma, chaat, pulao, khichdi, and vegetable curries. They enhance both flavor and visual freshness when sprinkled over warm meals.",
+        "Coriander microgreens are also rich in vitamins, antioxidants, and natural detoxifying compounds, supporting digestion and overall metabolic health.",
+        "At Microgreens de Manikonda, our coriander seeds are selected for strong germination and consistent growth, producing flavorful microgreens suitable for home growers and urban kitchen gardens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "corianderseedview",
+        "corianderseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Coriander microgreens have a fresh herbal flavor with bright citrus-like notes.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Fresh coriander aroma",
+            "Herbal and slightly citrusy",
+            "Light peppery undertone"
+          ],
+          "conclusion": "They pair especially well with dal, poha, upma, chaat, vegetable pulao, khichdi, and chutneys."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Coriander microgreens contain:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Potassium",
+            "Calcium",
+            "Antioxidants",
+            "Essential oils"
+          ],
+          "conclusion": "These nutrients help support digestion, detoxification, immune health, and overall metabolic balance."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of coriander seeds can produce 250–350 grams of fresh microgreens, depending on tray size and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Coriander microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Bright indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "Because coriander seeds are larger, they grow well in indoor trays, balcony gardens, and small urban farming setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "corn-microgreens-seeds": {
+      "baseName": "Corn Microgreens Seeds",
+      "scientificName": "Vigna mungo",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Corn seeds grow into sweet, crunchy microgreens known as popcorn shoots. These microgreens have a naturally sweet flavor and bright yellow shoots, making them perfect for snacks, salads, chaat dishes, and fusion Indian meals.",
+        "Corn microgreens are usually harvested in 7–10 days, producing tender shoots with a naturally sweet taste loved by both children and adults."
+      ],
+      "description1": [
+        "Corn microgreens, often called popcorn shoots, are the young shoots of corn plants grown in the early stage when their sweetness and nutrients are concentrated. These microgreens develop pale yellow stems and tender leaves with a natural sweetness similar to fresh corn.",
+        "Because of their mild sweet flavor, corn microgreens work well in Indian snack dishes such as chaat, bhel, vegetable sandwiches, stuffed parathas, and evening snack bowls. They can also be used as a topping for soups, stir-fried vegetables, and rice dishes.",
+        "Corn microgreens are valued for their vitamins, antioxidants, and natural plant sugars, which provide quick energy and support immune health.",
+        "At Microgreens de Manikonda, our corn seeds are carefully sourced to ensure strong germination and consistent growth, producing sweet and tender popcorn shoots suitable for home growers."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "cornseedview",
+        "cornseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Corn microgreens have a naturally sweet flavor with tender crunchy shoots.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Naturally sweet taste",
+            "Tender crisp stems",
+            "Fresh corn-like flavor"
+          ],
+          "conclusion": "They pair well with chaat, vegetable sandwiches, bhel, pulao, soups, and snack bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Corn microgreens contain:",
+          "items": [
+            "Vitamin A",
+            "Vitamin B complex",
+            "Vitamin C",
+            "Magnesium",
+            "Calcium",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients help support energy production, immune health, and bone strength."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of corn seeds can produce 500–700 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Corn microgreens grow best in:",
+            "Temperature: 22°C – 30°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity",
+            "Corn microgreens are often grown in low-light conditions initially to maintain their sweet flavor and pale color."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "fenugreek-microgreens-seeds": {
+      "baseName": "Fenugreek Microgreens Seeds",
+      "scientificName": "Trigonella foenum-graecum",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Fenugreek seeds grow into aromatic microgreens with a mild bitter-sweet flavor typical of methi. These microgreens are rich in fiber, vitamins, and plant compounds and are widely used in Indian meals, salads, and smoothies.",
+        "They are easy to grow and ready for harvest in 8–12 days."
+      ],
+      "description1": [
+        "Fenugreek microgreens are the young shoots of methi seeds harvested early when their flavor, aroma, and nutrients are most concentrated. These microgreens are known for their distinctive mild bitter-sweet taste and herbal aroma that closely resembles mature fenugreek leaves.",
+        "Because of their familiar flavor in Indian cuisine, Fenugreek microgreens blend naturally into everyday meals. They can be added to salads, grain bowls, smoothies, wraps, and Indian dishes such as parathas, dal preparations, and vegetable stir-fries, providing both nutrition and flavor.",
+        "Fenugreek microgreens are widely valued for their digestive and metabolic health benefits, as they contain natural plant compounds, fiber, and essential minerals that support overall wellness.",
+        "At Microgreens de Manikonda, our Fenugreek seeds are selected for strong germination, healthy growth, and consistent yield, making them suitable for both beginners and experienced microgreens growers."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "fenugreekseedview",
+        "fenugreekseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Fenugreek microgreens have a mild bitter-sweet herbal flavor.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Distinct methi aroma",
+            "Slight bitterness",
+            "Soft leafy texture"
+          ],
+          "conclusion": "They pair well with parathas, salads, dal, smoothies, and grain bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Fenugreek microgreens are rich in:",
+          "items": [
+            "Plant-based protein",
+            "Vitamin A",
+            "Vitamin C",
+            "Iron",
+            "Calcium",
+            "Magnesium",
+            "Dietary fiber"
+          ],
+          "conclusion": "These nutrients support digestive health, blood sugar balance, metabolism, and overall vitality."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Fenugreek seeds can produce 400–550 grams of fresh microgreens, depending on tray density and growing conditions.Fenugreek seeds tend to produce dense leafy microgreens with good biomass, making them popular for home growing."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Fenugreek microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are well suited for indoor trays, balcony gardens, and small kitchen garden setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "flax-microgreens-seeds": {
+      "baseName": "Flax Microgreens Seeds",
+      "scientificName": "Linum usitatissimum",
+      "flavorProfile": "Mild earthy flavor with subtle sweetness",
+      "growingTime": "10-14 days",
+      "difficulty": "Moderate",
+      "description": [
+        "Flax seeds grow into tender microgreens with soft stems and delicate leaves, offering a mild nutty flavor and smooth texture. These microgreens are rich in plant-based omega fatty acids, fiber, and antioxidants, making them a nutritious addition to everyday meals.",
+        "Flax microgreens are easy to grow and are usually ready to harvest in 8–10 days, making them ideal for beginners growing microgreens at home."
+      ],
+      "description1": [
+        "Flax microgreens are young shoots of flax seeds harvested early when their nutrients are highly concentrated and easily digestible. These microgreens develop soft stems and delicate leaves that provide a mild nutty flavor and tender texture.",
+        "Their gentle taste allows them to blend easily into Indian breakfast and daily meals such as poha, vegetable upma, curd rice, dal rice, and stuffed parathas, adding both nutrition and freshness.",
+        "Flax microgreens are especially valued for their omega-3 fatty acids, dietary fiber, and natural antioxidants, which support heart health, digestion, and overall metabolic balance.",
+        "At Microgreens de Manikonda, our flax seeds are selected for high germination rates and consistent growth, ensuring healthy microgreens suitable for home growers and urban kitchens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Intense flavor applications",
+        "Aromatic garnish uses",
+        "Mediterranean cuisine",
+        "Gourmet presentations"
+      ],
+      "healthHighlights": [
+        "High in vitamins K, A, and antioxidants",
+        "Rich in essential oils and compounds",
+        "Anti-inflammatory and antibacterial properties",
+        "Supports digestive health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "flaxseedview",
+        "flaxseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Flax microgreens have a mild nutty flavor with soft tender leaves.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild nutty taste",
+            "Soft leafy texture",
+            "Light earthy undertone"
+          ],
+          "conclusion": "They pair well with poha, vegetable upma, parathas, dal rice, smoothies, and yogurt bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Flax microgreens contain:",
+          "items": [
+            "Omega-3 fatty acids",
+            "Vitamin B complex",
+            "Magnesium",
+            "Calcium",
+            "Iron",
+            "Dietary fiber",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients help support heart health, digestion, metabolism, and overall wellness.Approximately 50 grams of flax seeds can produce 250–350 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of flax seeds can produce 250–350 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Flax microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, kitchen gardens, and balcony growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Alfalfa seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "garden-cress-microgreens-seeds": {
+      "baseName": "Garden Cress Microgreens Seeds",
+      "scientificName": "Lepidium sativum",
+      "flavorProfile": "Peppery, slightly tangy flavor",
+      "growingTime": "6-8 days",
+      "difficulty": "Easy",
+      "description": [
+        "Garden Cress seeds grow into fast-growing microgreens with a peppery, slightly tangy flavor. These microgreens are packed with vitamins, iron, and antioxidants and are widely used in salads, chutneys, sandwiches, and traditional Indian preparations.",
+        "Garden Cress microgreens grow quickly and are usually ready to harvest in 6–8 days, making them one of the fastest microgreens to grow at home."
+      ],
+      "description1": [
+        "Garden Cress microgreens are young shoots of garden cress seeds harvested early when their nutrients and natural pungent flavor are most concentrated. These microgreens grow rapidly and develop tender stems and small leafy shoots with a distinctive peppery taste.",
+        "Because of their bold flavor, garden cress microgreens work particularly well in Indian dishes such as chutneys, dal rice, stuffed parathas, sprout chaat, and vegetable sandwiches, adding both spice and nutrition.",
+        "Garden cress is traditionally valued for its high iron content, vitamins, and natural antioxidants, which support energy levels, immunity, and digestion.",
+        "At Microgreens de Manikonda, our garden cress seeds are carefully selected to ensure strong germination and healthy growth, producing robust microgreens suitable for home growers and urban farming setups."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Salads and chutneys",
+        "Indian traditional dishes",
+        "Sandwiches and wraps",
+        "Quick harvest needs"
+      ],
+      "healthHighlights": [
+        "High in iron and vitamins",
+        "Rich in antioxidants",
+        "Supports energy levels",
+        "Boosts immunity and digestion"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "gardencressview",
+        "gardencressview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Garden Cress microgreens have a distinctive peppery, slightly tangy flavor.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Peppery taste",
+            "Slightly tangy",
+            "Tender stems and leaves"
+          ],
+          "conclusion": "They pair well with salads, chutneys, dal rice, stuffed parathas, sprout chaat, and vegetable sandwiches."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Garden Cress microgreens are packed with:",
+          "items": [
+            "Iron",
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Antioxidants",
+            "Calcium",
+            "Protein"
+          ],
+          "conclusion": "These nutrients support energy levels, immunity, digestion, and overall wellness."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of garden cress seeds can produce 300–400 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Garden Cress microgreens grow best in:",
+            "Temperature: 18°C – 25°C",
+            "Light: Indirect sunlight or indoor grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are ideal for indoor trays, kitchen gardens, and quick-growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Garden Cress seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 1-2 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 6–8 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "green-mustard-microgreens-seeds": {
+      "baseName": "Green Mustard Microgreens Seeds",
+      "scientificName": "Brassica juncea",
+      "flavorProfile": "Bold peppery flavor",
+      "growingTime": "7-9 days",
+      "difficulty": "Easy",
+      "description": [
+        "Green Mustard seeds grow into vibrant microgreens with tender leaves and a bold peppery flavor. These microgreens add a natural spicy kick to everyday meals such as parathas, dal rice, chaat, and vegetable dishes.",
+        "Mustard microgreens grow quickly and are usually ready to harvest in 7–9 days, making them an excellent choice for home growers and beginners."
+      ],
+      "description1": [
+        "Green Mustard microgreens are young shoots of mustard plants harvested early when their nutrients and natural pungency are concentrated. These microgreens develop delicate stems and bright green leaves that deliver a distinctive peppery flavor.",
+        "Because of their bold taste, mustard microgreens work especially well in Indian meals such as stuffed parathas, dal tadka, khichdi, poha, and chaat preparations, where they add both freshness and a mild spicy note.",
+        "Mustard microgreens are rich in vitamins, minerals, and glucosinolates, natural plant compounds known to support detoxification and overall health.",
+        "At Microgreens de Manikonda, our mustard seeds are carefully sourced to ensure strong germination and healthy growth, producing robust microgreens ideal for home growers and urban kitchens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Indian traditional dishes",
+        "Spicy flavor applications",
+        "Parathas and dal rice",
+        "Chaat and vegetable dishes"
+      ],
+      "healthHighlights": [
+        "Rich in vitamins and minerals",
+        "High in glucosinolates",
+        "Supports detoxification",
+        "Boosts overall health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "greenmustardview",
+        "greenmustardview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Green Mustard microgreens have a bold peppery flavor with tender leaves.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Peppery and mildly spicy",
+            "Fresh green flavor",
+            "Lightly pungent finish"
+          ],
+          "conclusion": "They pair well with parathas, dal rice, poha, khichdi, chaat, and vegetable stir-fries."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Green Mustard microgreens are rich in:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Iron",
+            "Potassium",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients support immune health, digestion, bone strength, and cellular protection."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Green Mustard seeds can produce 450–600 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Green Mustard microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and small kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Green Mustard seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "kale-microgreens-seeds": {
+      "baseName": "Kale Microgreens Seeds",
+      "scientificName": "Brassica oleracea",
+      "flavorProfile": "Mild earthy flavor with fresh leafy taste",
+      "growingTime": "8-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Kale seeds grow into tender microgreens with soft green leaves and a mild earthy flavor. These nutrient-dense greens are rich in vitamins and antioxidants and can be easily added to everyday meals such as vegetable pulao, dal rice, omelettes, and sandwiches.",
+        "Kale microgreens usually grow ready for harvest in 8–10 days, making them ideal for home growers and beginners."
+      ],
+      "description1": [
+        "Kale microgreens are young shoots of kale plants harvested early when their nutrients are highly concentrated. These microgreens develop delicate stems and leafy greens that offer a mild earthy taste and tender texture.",
+        "Because of their gentle flavor, kale microgreens blend easily into Indian meals such as vegetable pulao, dal rice, omelettes, vegetable sandwiches, and upma, adding both nutrition and freshness.",
+        "Kale microgreens are widely valued for their high levels of antioxidants, vitamins, and natural plant compounds, which support immunity, heart health, and eye health.",
+        "At Microgreens de Manikonda, our kale seeds are selected for high germination rates and consistent growth, ensuring healthy microgreens suitable for home growers and urban kitchens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Everyday Indian meals",
+        "Nutrient-dense applications",
+        "Pulao and dal rice",
+        "Omelettes and sandwiches"
+      ],
+      "healthHighlights": [
+        "High in antioxidants",
+        "Rich in vitamins",
+        "Supports immunity",
+        "Promotes heart and eye health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "KaleMicrogreenseedview",
+        "KaleMicrogreenseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Kale microgreens have a mild earthy flavor with a fresh leafy taste.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild earthy flavor",
+            "Fresh green taste",
+            "Soft tender leaves"
+          ],
+          "conclusion": "They pair well with pulao, dal rice, vegetable omelettes, sandwiches, and grain bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Kale microgreens are packed with:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Iron",
+            "Antioxidants",
+            "Lutein and carotenoids"
+          ],
+          "conclusion": "These nutrients help support eye health, immunity, heart health, and bone strength."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Kale seeds can produce 300–400 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Kale microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with proper airflow",
+            "They are ideal for indoor trays, balcony gardens, and kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Kale seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 8–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "kohlrabi-green-microgreens-seeds": {
+      "baseName": "Kohlrabi Green Microgreens Seeds",
+      "scientificName": "Brassica oleracea var. gongylodes",
+      "flavorProfile": "Mild cabbage-like flavor with fresh, slightly sweet finish",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Kohlrabi Green seeds grow into crisp microgreens with bright green leaves and tender stems. These microgreens have a mild cabbage-like flavor and add freshness and nutrition to everyday dishes such as vegetable pulao, dal rice, poha, and sandwiches.",
+        "Kohlrabi microgreens grow quickly and are typically ready to harvest in 7–10 days, making them an excellent choice for beginners growing microgreens at home."
+      ],
+      "description1": [
+        "Kohlrabi Green microgreens are young shoots of the kohlrabi plant harvested early when their nutrients and antioxidants are highly concentrated. These microgreens develop delicate stems and vibrant green leaves with a mild cabbage-like flavor.",
+        "Because of their subtle taste, kohlrabi microgreens blend easily into everyday Indian meals such as vegetable pulao, dal rice, upma, poha, and vegetable sandwiches, adding both freshness and nutrition.",
+        "Kohlrabi microgreens are rich in vitamins, minerals, and glucosinolates, plant compounds known for supporting detoxification and overall wellness.",
+        "At Microgreens de Manikonda, our kohlrabi seeds are carefully selected to ensure high germination rates and healthy growth, producing strong and consistent microgreens suitable for home growers and urban gardens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Everyday Indian meals",
+        "Fresh flavor applications",
+        "Pulao and dal rice",
+        "Poha and sandwiches"
+      ],
+      "healthHighlights": [
+        "Rich in vitamins and minerals",
+        "High in glucosinolates",
+        "Supports detoxification",
+        "Promotes overall wellness"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-27",
+        "kohlrabiseedview",
+        "kohlrabiseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Kohlrabi Green microgreens have a mild cabbage-like flavor with a fresh, slightly sweet finish.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild vegetable flavor",
+            "Fresh leafy taste",
+            "Tender crunchy stems"
+          ],
+          "conclusion": "They pair well with poha, vegetable pulao, omelettes, dal rice, sandwiches, and grain bowls."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Kohlrabi Green microgreens are packed with:",
+          "items": [
+            "Vitamin C",
+            "Vitamin A",
+            "Vitamin K",
+            "Calcium",
+            "Iron",
+            "Anthocyanin antioxidants"
+          ],
+          "conclusion": "These nutrients support immune health, heart health, and cellular protection."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Kohlrabi Purple seeds can produce 300–400 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Kohlrabi Green microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are well suited for indoor trays, balcony gardens, and small urban growing spaces."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Kohlrabi Green seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "kohlrabi-purple-microgreens-seeds": {
+      "baseName": "Kohlrabi Purple Microgreens Seeds",
+      "scientificName": "Brassica oleracea var. gongylodes",
+      "flavorProfile": "Mild cabbage-like flavor with vibrant color",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Kohlrabi Purple seeds grow into vibrant microgreens with striking purple stems and tender green leaves. These colorful microgreens have a mild cabbage-like flavor and add both nutrition and visual appeal to meals such as vegetable pulao, poha, omelettes, and sandwiches.",
+        "Kohlrabi Purple microgreens are usually ready to harvest in 7–10 days, making them ideal for beginners growing microgreens at home."
+      ],
+      "description1": [
+        "Kohlrabi Purple microgreens are young shoots of the purple kohlrabi plant harvested early when their nutrients and antioxidants are highly concentrated. These microgreens develop delicate purple stems and leafy greens that add vibrant color to meals.",
+        "Because of their mild flavor, kohlrabi purple microgreens blend easily into Indian meals such as vegetable pulao, omelettes, poha, dal rice, and sandwiches, providing both nutrition and visual appeal.",
+        "They are particularly valued for their anthocyanins, natural antioxidants responsible for their deep purple color, which support cellular protection and overall wellness.",
+        "At Microgreens de Manikonda, our kohlrabi purple seeds are selected to ensure strong germination and healthy growth, producing vibrant microgreens suitable for home growers and urban kitchens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for color development."
+      ],
+      "bestFor": [
+        "Colorful meal presentations",
+        "Visual appeal applications",
+        "Pulao and omelettes",
+        "Poha and sandwiches"
+      ],
+      "healthHighlights": [
+        "Rich in anthocyanins",
+        "High in antioxidants",
+        "Supports cellular protection",
+        "Promotes overall wellness"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-39",
+        "kohlrabipurpleviewseed",
+        "kohlrabipurpleviewseed1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Kohlrabi Purple microgreens have a mild cabbage-like flavor with striking purple stems.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild cabbage flavor",
+            "Vibrant purple stems",
+            "Tender green leaves"
+          ],
+          "conclusion": "They pair well with vegetable pulao, omelettes, poha, dal rice, and sandwiches."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Kohlrabi Purple microgreens are packed with:",
+          "items": [
+            "Anthocyanins",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Iron",
+            "Antioxidants",
+            "Fiber"
+          ],
+          "conclusion": "These nutrients support cellular protection, immune health, and overall wellness."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Kohlrabi Purple seeds can produce 350–450 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Kohlrabi Purple microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are ideal for indoor trays, balcony gardens, and kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Kohlrabi Purple seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "komatsuna-microgreens-seeds": {
+      "baseName": "Komatsuna Microgreens Seeds",
+      "scientificName": "Brassica rapa var. komatsuna",
+      "flavorProfile": "Mild mustard-spinach flavor with fresh leafy taste",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Komatsuna seeds grow into tender microgreens with soft green leaves and a mild mustard-spinach flavor. These nutrient-rich greens add freshness and flavor to everyday meals such as vegetable pulao, dal rice, omelettes, stir-fried vegetables, and soups.",
+        "Komatsuna microgreens grow quickly and are usually ready to harvest in 7–10 days, making them ideal for beginners and home growers."
+      ],
+      "description1": [
+        "Komatsuna microgreens are young shoots of the Japanese mustard spinach plant harvested early when their nutrients and antioxidants are highly concentrated. These microgreens develop delicate stems and leafy greens with a mild mustard-like flavor that is softer than traditional mustard greens.",
+        "Because of their balanced taste, komatsuna microgreens blend easily into Indian dishes such as vegetable pulao, dal rice, upma, vegetable stir-fries, and omelettes, adding both nutrition and freshness without overpowering the meal.",
+        "Komatsuna microgreens are valued for their high levels of vitamins, calcium, and antioxidants, which support bone health, immunity, and overall wellness.",
+        "At Microgreens de Manikonda, our komatsuna seeds are selected for strong germination and healthy growth, producing vibrant microgreens suitable for home growers and urban kitchen gardens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain warm temperature for optimal germination.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Everyday Indian meals",
+        "Balanced flavor applications",
+        "Pulao and dal rice",
+        "Omelettes and stir-fries"
+      ],
+      "healthHighlights": [
+        "High in vitamins and calcium",
+        "Rich in antioxidants",
+        "Supports bone health",
+        "Boosts immunity"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-40",
+        "komatsunaseedview",
+        "komatsunaseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Komatsuna microgreens have a mild mustard-spinach flavor with a fresh leafy taste.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild mustard note",
+            "Fresh leafy flavor",
+            "Soft tender stems"
+          ],
+          "conclusion": "They pair well with vegetable pulao, dal rice, omelettes, stir-fried vegetables, and soups."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Komatsuna microgreens are packed with:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Iron",
+            "Potassium",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients support bone health, immunity, and overall wellness."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of komatsuna seeds can produce 300–400 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Komatsuna microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are well suited for indoor trays, balcony gardens, and kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Komatsuna seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "maple-peas-microgreens-seeds": {
+      "baseName": "Maple Peas Microgreens Seeds",
+      "scientificName": "Pisum sativum var. arvense",
+      "flavorProfile": "Naturally sweet flavor similar to fresh green peas",
+      "growingTime": "10-12 days",
+      "difficulty": "Easy",
+      "description": [
+        "Maple Pea seeds grow into tender pea shoots with curly tendrils and a naturally sweet flavor similar to fresh green peas. These microgreens add texture and nutrition to meals such as poha, vegetable pulao, sandwiches, chaat, and stir-fried dishes.",
+        "Pea microgreens usually grow ready to harvest in 10–12 days, producing crunchy and flavorful shoots loved by both children and adults."
+      ],
+      "description1": [
+        "Maple Pea microgreens are young pea shoots harvested early when their nutrients and natural sweetness are concentrated. These microgreens develop tender stems, leafy shoots, and delicate tendrils that add a crisp texture and fresh pea flavor to meals.",
+        "Because of their mild sweetness, pea shoots work especially well in Indian snack dishes such as poha, vegetable pulao, chaat bowls, sandwiches, and stir-fried vegetables, enhancing both taste and texture.",
+        "Pea microgreens are rich in plant-based protein, vitamins, and antioxidants, making them a popular choice for healthy meals and balanced diets.",
+        "At Microgreens de Manikonda, our maple pea seeds are carefully sourced to ensure strong germination and healthy growth, producing vigorous shoots suitable for home growers and urban gardens."
+      ],
+      "growingNotes": [
+        "Soak seeds for 8-10 hours before sowing.",
+        "Sow seeds densely for better yield.",
+        "Maintain consistent moisture for vigorous growth."
+      ],
+      "bestFor": [
+        "Snack dishes and chaat",
+        "Texture enhancement",
+        "Poha and pulao",
+        "Sandwiches and stir-fries"
+      ],
+      "healthHighlights": [
+        "High in plant-based protein",
+        "Rich in vitamins and antioxidants",
+        "Supports balanced nutrition",
+        "Natural sweetness without sugar"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-41",
+        "maplepeasseedview",
+        "maplepeasseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Maple Pea microgreens have a naturally sweet flavor similar to fresh green peas with tender shoots and curly tendrils.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Naturally sweet taste",
+            "Tender crunchy stems",
+            "Fresh pea flavor"
+          ],
+          "conclusion": "They pair well with poha, vegetable pulao, sandwiches, chaat, and stir-fried vegetables."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Maple Pea microgreens are packed with:",
+          "items": [
+            "Plant-based protein",
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Folate",
+            "Iron",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients support energy levels, immunity, muscle health, and digestion."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Maple Pea seeds can produce 400–500 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Maple Pea microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Maple Pea seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 10–12 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "mizuna-green-microgreens-seeds": {
+      "baseName": "Mizuna Green Microgreens Seeds",
+      "scientificName": "Brassica rapa var. nipposinica",
+      "flavorProfile": "Mild peppery flavor with fresh leafy taste",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Mizuna Green seeds grow into delicate microgreens with finely cut leaves and a mild peppery flavor. These microgreens add freshness and a subtle mustard-like taste to everyday dishes such as vegetable pulao, poha, dal rice, omelettes, and stir-fried vegetables.",
+        "Mizuna microgreens grow quickly and are typically ready to harvest in 7–10 days, making them ideal for beginners growing microgreens at home."
+      ],
+      "description1": [
+        "Mizuna Green microgreens are young shoots of the Japanese mustard plant harvested early when their nutrients and flavor compounds are highly concentrated. These microgreens develop delicate stems and feathery leaves that provide a mild peppery taste without being overpowering.",
+        "Because of their balanced flavor, mizuna microgreens blend well into Indian meals such as poha, vegetable pulao, dal rice, vegetable upma, and omelettes, adding both texture and nutritional value.",
+        "Mizuna microgreens are valued for their high levels of vitamins, antioxidants, and plant compounds, which help support digestion, immune health, and overall wellness.",
+        "At Microgreens de Manikonda, our mizuna seeds are selected to ensure high germination rates and consistent growth, producing vibrant microgreens suitable for home growers and urban kitchens."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain consistent moisture for tender growth.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Everyday Indian meals",
+        "Balanced peppery flavor",
+        "Poha and pulao",
+        "Omelettes and stir-fries"
+      ],
+      "healthHighlights": [
+        "High in vitamins and antioxidants",
+        "Rich in plant compounds",
+        "Supports digestion",
+        "Boosts immune health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-42",
+        "mizunaseedview",
+        "mizunaseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Mizuna Green microgreens have a mild peppery flavor with a fresh leafy taste.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild mustard-like note",
+            "Fresh leafy flavor",
+            "Tender delicate leaves"
+          ],
+          "conclusion": "They pair well with poha, pulao, dal rice, omelettes, vegetable stir-fries, and soups."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Mizuna Green microgreens are packed with:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Antioxidants",
+            "Iron",
+            "Potassium"
+          ],
+          "conclusion": "These nutrients support digestion, immune health, and overall wellness."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of mizuna seeds can produce 350–450 grams of fresh microgreens, depending on tray density and growing conditions.  "
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Mizuna Green microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Mizuna Green seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "moong-bean-microgreens-seeds": {
+      "baseName": "Moong Bean Microgreens Seeds",
+      "scientificName": "Vigna radiata",
+      "flavorProfile": "Mild bean flavor with thick crunchy stems",
+      "growingTime": "8-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Moong Bean seeds grow into thick, crunchy microgreens with tender stems and a mild bean flavor. These microgreens are commonly used in everyday Indian dishes such as sprout salads, chaat, vegetable pulao, and stir-fried vegetables.",
+        "Moong Bean microgreens grow quickly and are typically ready to harvest in 8–10 days, making them easy to grow for beginners."
+      ],
+      "description1": [
+        "Moong Bean microgreens are young shoots of green gram seeds harvested early when their nutrients and plant proteins are concentrated. These microgreens develop thick crunchy stems and leafy shoots that provide a mild nutty flavor.",
+        "Because of their familiar taste and texture, moong bean microgreens work well in Indian dishes such as sprout chaat, vegetable pulao, dal rice, and stir-fried vegetables, adding both nutrition and crunch.",
+        "Moong microgreens are rich in plant-based protein, vitamins, and essential minerals, making them a popular choice for balanced vegetarian diets.",
+        "At Microgreens de Manikonda, our moong bean seeds are selected for strong germination and healthy growth, producing vigorous microgreens suitable for home growers and urban kitchens."
+      ],
+      "growingNotes": [
+        "Soak seeds for 8-10 hours before sowing.",
+        "Sow seeds densely for better yield.",
+        "Maintain consistent moisture for vigorous growth."
+      ],
+      "bestFor": [
+        "Sprout salads and chaat",
+        "Everyday Indian dishes",
+        "Vegetable pulao and dal rice",
+        "Stir-fried vegetables"
+      ],
+      "healthHighlights": [
+        "Rich in plant-based protein",
+        "High in vitamins and minerals",
+        "Supports balanced diet",
+        "Essential nutrients for vegetarians"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-43",
+        "moongdalseedview",
+        "moongdalseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Moong Bean microgreens have a mild bean flavor with thick crunchy stems and tender shoots.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild nutty flavor",
+            "Thick crunchy stems",
+            "Fresh bean taste"
+          ],
+          "conclusion": "They pair well with sprout salads, chaat, vegetable pulao, dal rice, and stir-fried vegetables."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Moong Bean microgreens are packed with:",
+          "items": [
+            "Plant-based protein",
+            "Vitamin A",
+            "Vitamin C",
+            "Iron",
+            "Folate",
+            "Magnesium",
+            "Folate"
+          ],
+          "conclusion": "These nutrients help support energy levels, digestion, and muscle health."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 200 grams of Moong Bean seeds can produce 600–800 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Moong Bean microgreens grow best in:",
+            "Temperature: 20°C – 30°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are ideal for indoor trays, kitchen gardens, and beginner growers."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Moong Bean seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 8–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "oat-grass-microgreens-seeds": {
+      "baseName": "Oat Grass Microgreens Seeds",
+      "scientificName": "Avena sativa",
+      "flavorProfile": "Fresh grassy flavor with bright green blades",
+      "growingTime": "9-12 days",
+      "difficulty": "Easy",
+      "description": [
+        "Oat grass seeds grow into vibrant green shoots known for their fresh grassy flavor and exceptional nutritional benefits. These young greens are commonly consumed as wheatgrass-style juice shots or blended into smoothies for daily wellness.",
+        "Oat grass grows quickly and is typically ready to harvest in 9–12 days, making it a popular choice for home growers looking to produce fresh health greens indoors."
+      ],
+      "description1": [
+        "Oat grass microgreens are young shoots of oat grains harvested early when their chlorophyll, vitamins, and antioxidants are highly concentrated. These microgreens are known for their bright green blades and fresh grassy taste.",
+        "Oat grass is most commonly consumed as fresh juice, blended smoothies, or wellness shots, and is often used as part of daily detox routines. It can also be blended into green juices with cucumber, apple, or lemon for refreshing health drinks.",
+        "Oat grass is valued for its high chlorophyll content and plant nutrients, which support detoxification, digestion, and overall vitality.",
+        "At Microgreens de Manikonda, our oat grass seeds are carefully sourced for strong germination and healthy growth, producing lush green blades ideal for juicing and wellness routines."
+      ],
+      "growingNotes": [
+        "Soak seeds for 8-10 hours before sowing.",
+        "Sow seeds densely for lush growth.",
+        "Maintain consistent moisture for tender blades."
+      ],
+      "bestFor": [
+        "Fresh juice and smoothies",
+        "Wellness shots and detox",
+        "Health drinks",
+        "Daily nutrition routines"
+      ],
+      "healthHighlights": [
+        "High in chlorophyll content",
+        "Rich in vitamins and antioxidants",
+        "Supports detoxification",
+        "Promotes digestion and vitality"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-44",
+        "oatgrassseedview",
+        "oatgrassseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Oat grass microgreens have a fresh grassy flavor with bright green blades and tender texture.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Fresh grassy taste",
+            "Mild earthy notes",
+            "Smooth grassy flavor"
+          ],
+          "conclusion": "They are commonly consumed as juice shots, green smoothies, or blended wellness drinks."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Oat grass microgreens are packed with:",
+          "items": [
+            "Chlorophyll",
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin E",
+            "Antioxidants",
+            "Iron",
+            "Calcium",
+            "Magnesium"
+          ],
+          "conclusion": "These nutrients help support detoxification, digestion, and energy metabolism."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 150 grams of Oat Grass seeds can produce 500–700 grams of fresh oat grass, depending on tray size and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Oat grass microgreens grow best in:",
+            "Temperature: 18°C – 28°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and kitchen growing setups."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Oat Grass seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 9–12 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "onion-microgreens-seeds": {
+      "baseName": "Onion Microgreens Seeds",
+      "scientificName": "Allium cepa",
+      "flavorProfile": "Mild onion flavor with fresh green taste",
+      "growingTime": "12-15 days",
+      "difficulty": "Easy",
+      "description": [
+        "Onion seeds grow into slender green microgreens with a mild onion flavor that enhances everyday dishes such as poha, upma, omelettes, vegetable pulao, and soups.",
+        "Onion microgreens grow steadily and are typically ready to harvest in 12–15 days, producing aromatic shoots that add flavor and nutrition to meals."
+      ],
+      "description1": [
+        "Onion microgreens are young shoots of onion plants harvested early when their flavor compounds and nutrients are concentrated. These microgreens develop thin green blades with a mild onion taste that is lighter than mature onions.",
+        "Because of their familiar flavor, onion microgreens blend naturally into Indian dishes such as poha, upma, omelettes, vegetable pulao, and soups, adding both aroma and freshness.",
+        "Onion microgreens contain natural plant compounds and antioxidants that support heart health, immunity, and digestion.",
+        "At Microgreens de Manikonda, our onion seeds are selected for reliable germination and consistent growth, producing flavorful microgreens ideal for home growing."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain consistent moisture for tender growth.",
+        "Provide adequate light for flavor development."
+      ],
+      "bestFor": [
+        "Everyday Indian dishes",
+        "Flavor enhancement",
+        "Poha and upma",
+        "Omelettes and soups"
+      ],
+      "healthHighlights": [
+        "Rich in natural plant compounds",
+        "High in antioxidants",
+        "Supports heart health",
+        "Boosts immunity and digestion"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-45",
+        "onionseedview",
+        "onionseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Onion microgreens have a mild onion flavor with a fresh green taste.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Light onion aroma",
+            "Fresh green flavor",
+            "Mild savory taste"
+          ],
+          "conclusion": "They pair well with poha, upma, omelettes, vegetable pulao, soups, and savory snacks."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Onion microgreens are packed with:",
+          "items": [
+            "Vitamin C",
+            "Vitamin A",
+            "Folate",
+            "Antioxidants",
+            "Potassium",
+            "Sulfur compounds"
+          ],
+          "conclusion": "These nutrients support immune health, heart health, and metabolic balance."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Onion seeds can produce 350–450 grams of fresh microgreens, depending on growing conditions and tray size."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Onion microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are ideal for indoor trays and kitchen gardens."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Onion seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 3-4 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 12–15 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "pak-choi-microgreens-seeds": {
+      "baseName": "Pak Choi Microgreens Seeds",
+      "scientificName": "Brassica rapa chinensis",
+      "flavorProfile": "Mild cabbage-like flavor with tender leafy greens",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Pak Choi seeds grow into tender microgreens with soft stems and delicate green leaves that carry a mild cabbage-like flavor. These microgreens add freshness and nutrition to everyday meals such as vegetable pulao, fried rice, noodles, soups, and omelettes.",
+        "Pak Choi microgreens grow quickly and are typically ready to harvest in 7–10 days, making them a great option for beginners and home growers."
+      ],
+      "description1": [
+        "Pak Choi microgreens are young shoots of the bok choy plant harvested early when their nutrients and natural plant compounds are highly concentrated. These microgreens produce tender stems and leafy greens with a mild cabbage-like taste.",
+        "Because of their subtle flavor and soft texture, pak choi microgreens work well in vegetable pulao, fried rice, noodle bowls, soups, and stir-fried vegetables, adding both freshness and nutritional value.",
+        "Pak choi microgreens are rich in vitamins, minerals, and antioxidants, making them a nutritious addition to balanced diets.",
+        "At Microgreens de Manikonda, our Pak Choi seeds are carefully selected to ensure strong germination and consistent growth, producing vibrant microgreens ideal for home cultivation."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain consistent moisture for tender growth.",
+        "Provide adequate light for leaf development."
+      ],
+      "bestFor": [
+        "Everyday Asian dishes",
+        "Mild flavor applications",
+        "Fried rice and noodles",
+        "Soups and stir-fries"
+      ],
+      "healthHighlights": [
+        "Rich in vitamins and minerals",
+        "High in antioxidants",
+        "Supports balanced nutrition",
+        "Promotes overall wellness"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-46",
+        "pakchoiseedview",
+        "pakchoiseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Pak Choi microgreens have a mild cabbage-like flavor with tender leafy greens.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild cabbage flavor",
+            "Fresh leafy taste",
+            "Soft tender stems"
+          ],
+          "conclusion": "They pair well with fried rice, noodle dishes, vegetable pulao, soups, and stir-fried vegetables."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Pak Choi microgreens are packed with:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Iron",
+            "Antioxidants",
+            "Potassium"
+          ],
+          "conclusion": "These nutrients support bone health, immune function, and cellular protection."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Pak Choi seeds can produce 400–500 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Pak Choi microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and kitchen growing setups. "
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Pak Choi seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "pak-choi-red-microgreens-seeds": {
+      "baseName": "Pak Choi Red Microgreens Seeds",
+      "scientificName": "Brassica rapa chinensis var. purpurea",
+      "flavorProfile": "Mild cabbage flavor with subtle mustard undertones",
+      "growingTime": "7-10 days",
+      "difficulty": "Easy",
+      "description": [
+        "Pak Choi Red seeds grow into striking purple-stemmed microgreens with tender leaves and a mild cabbage-like flavor. These colorful microgreens add both visual appeal and nutrition to dishes such as vegetable fried rice, noodles, soups, stir-fried vegetables, and pulao.",
+        "Pak Choi Red microgreens grow quickly and are typically ready to harvest in 7–10 days, making them an excellent option for home growers and beginners."
+      ],
+      "description1": [
+        "Pak Choi Red microgreens are young shoots of the red bok choy plant harvested early when their nutrients and antioxidants are highly concentrated. These microgreens develop vibrant purple stems and delicate green leaves that provide a mild cabbage-like flavor.",
+        "Because of their gentle taste and attractive color, Pak Choi Red microgreens work well in vegetable pulao, fried rice, noodle dishes, soups, and stir-fried vegetables, adding freshness, texture, and visual appeal.",
+        "These microgreens are rich in vitamins, minerals, and antioxidant compounds, which help support immune health and cellular protection.",
+        "At Microgreens de Manikonda, our Pak Choi Red seeds are carefully sourced for strong germination and healthy growth, ensuring vibrant microgreens for home growing."
+      ],
+      "growingNotes": [
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain consistent moisture for tender growth.",
+        "Provide adequate light for color development."
+      ],
+      "bestFor": [
+        "Colorful meal presentations",
+        "Visual appeal applications",
+        "Fried rice and noodles",
+        "Soups and stir-fries"
+      ],
+      "healthHighlights": [
+        "Rich in anthocyanins",
+        "High in antioxidants",
+        "Supports immune health",
+        "Promotes cellular protection"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-47",
+        "pakchoiredseedview",
+        "pakchoiredseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Pak Choi Red microgreens have a mild cabbage flavor with subtle mustard undertones.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild cabbage taste",
+            "Fresh leafy flavor",
+            "Light peppery note"
+          ],
+          "conclusion": "They pair well with fried rice, noodle bowls, vegetable pulao, soups, and stir-fried vegetables."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Pak Choi Red microgreens are packed with:",
+          "items": [
+            "Anthocyanins",
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Calcium",
+            "Antioxidants",
+            "Iron",
+            "Anthocyanins (natural plant pigments)"
+          ],
+          "conclusion": "These nutrients support immune health, bone strength, and cellular protection."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Pak Choi Red seeds can produce 300–350 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Pak Choi Red microgreens grow best in:",
+            "Temperature: 18°C – 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are well suited for indoor trays, balcony gardens, and kitchen growing spaces."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Pak Choi Red seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 7–10 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "parsley-microgreens-seeds": {
+      "baseName": "Parsley Microgreens Seeds",
+      "scientificName": "Petroselinum crispum",
+      "flavorProfile": "Fresh herbaceous flavor with mild peppery undertones",
+      "growingTime": "14-18 days",
+      "difficulty": "Easy",
+      "description": [
+        "Parsley seeds grow into aromatic microgreens with delicate leaves and a fresh herbaceous flavor. These microgreens add fragrance and nutrition to dishes such as vegetable pulao, omelettes, soups, dal preparations, and salads.",
+        "Parsley microgreens take slightly longer to grow and are usually ready to harvest in 14–18 days, producing flavorful greens ideal for home kitchens."
+      ],
+      "description1": [
+        "Parsley microgreens are young shoots of parsley plants harvested early when their nutrients and essential oils are highly concentrated. These microgreens develop small green leaves and tender stems that carry the familiar fresh flavor of parsley.",
+        "Because of their aromatic profile, parsley microgreens are commonly used in soups, vegetable pulao, omelettes, dal preparations, and savory snacks, adding both flavor and nutritional value.",
+        "Parsley microgreens are valued for their vitamin-rich composition and antioxidant content, supporting immunity, digestion, and overall wellness.",
+        "At Microgreens de Manikonda, our parsley seeds are selected to ensure healthy germination and strong growth, producing flavorful microgreens suitable for indoor growing."
+      ],
+      "growingNotes": [
+        "Soak seeds for 8-10 hours before sowing.",
+        "Sow seeds sparingly for better air circulation.",
+        "Maintain consistent moisture for tender growth."
+      ],
+      "bestFor": [
+        "Aromatic herb applications",
+        "Flavor enhancement",
+        "Soups and omelettes",
+        "Dal preparations and salads"
+      ],
+      "healthHighlights": [
+        "Rich in vitamins and antioxidants",
+        "High in essential oils",
+        "Supports immunity and digestion",
+        "Promotes overall wellness"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-48",
+        "parsleyseedview",
+        "parsleyseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Parsley microgreens have a fresh herbaceous flavor with mild peppery undertones.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Fresh herbal aroma",
+            "Light peppery notes",
+            "Bright green flavor"
+          ],
+          "conclusion": "They pair well with soups, omelettes, dal dishes, pulao, and savory snacks."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Parsley microgreens are packed with:",
+          "items": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin K",
+            "Folate",
+            "Iron",
+            "Antioxidants",
+            "Folate"
+          ],
+          "conclusion": "These nutrients support immune health, digestion, and blood circulation."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Parsley seeds can produce 250–350 grams of fresh microgreens, depending on growing conditions and tray density."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Parsley microgreens grow best in:",
+            "Temperature: 18°C – 24°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays, balcony gardens, and kitchen growing spaces."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Parsley seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 3-4 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 14–18 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "pearl-millet-bajra-microgreens-seeds": {
+      "baseName": "Pearl Millet (Bajra) Microgreens Seeds",
+      "scientificName": "Pennisetum glaucum",
+      "flavorProfile": "Mild grassy flavor with tender green shoots",
+      "growingTime": "9-12 days",
+      "difficulty": "Easy",
+      "description": [
+        "Pearl millet (bajra) seeds grow into tender green shoots with a mild grassy flavor and excellent nutritional value. Bajra microgreens can be blended into smoothies or green juices or added to healthy breakfast bowls for daily nutrition.",
+        "These microgreens grow steadily and are usually ready to harvest in 9–12 days, making them suitable for home growers looking to produce fresh nutrient-rich greens."
+      ],
+      "description1": [
+        "Pearl millet (bajra) microgreens are young shoots of bajra grains harvested early when their nutrients and plant compounds are highly concentrated. These microgreens develop slender green blades similar to other cereal grass microgreens.",
+        "Bajra microgreens are commonly used in green smoothies, fresh juices, and wellness drinks, offering a convenient way to add nutrients to daily diets.",
+        "Because pearl millet (bajra) is a traditional Indian grain, these microgreens can also complement millet bowls, healthy breakfast porridges, and vegetable dishes, adding freshness and nutritional value.",
+        "Pearl millet (bajra) microgreens are valued for their fiber, minerals, and antioxidant content, supporting energy levels, digestion, and overall health.",
+        "At Microgreens de Manikonda, our bajra seeds are carefully sourced for strong germination and healthy growth, producing vibrant microgreens suitable for home cultivation."
+      ],
+      "growingNotes": [
+        "Soak seeds for 8-10 hours before sowing.",
+        "Sow seeds densely for lush growth.",
+        "Maintain consistent moisture for tender shoots."
+      ],
+      "bestFor": [
+        "Green smoothies and juices",
+        "Wellness drinks",
+        "Healthy breakfast bowls",
+        "Millet bowls and porridges"
+      ],
+      "healthHighlights": [
+        "Rich in fiber and minerals",
+        "High in antioxidants",
+        "Supports energy levels",
+        "Promotes digestion and health"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-49",
+        "pearlmilletseedview",
+        "pearlmilletseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Pearl millet (bajra) microgreens have a mild grassy flavor with tender green shoots.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild grassy taste",
+            "Light earthy flavor",
+            "Soft tender shoots"
+          ],
+          "conclusion": "They pair well with smoothies, green juices, millet bowls, and healthy breakfast dishes."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Pearl millet (bajra) microgreens are packed with:",
+          "items": [
+            "Dietary fiber",
+            "Iron",
+            "Magnesium",
+            "Antioxidants",
+            "Vitamin B complex",
+            "Minerals"
+          ],
+          "conclusion": "These nutrients support energy levels, digestion, and overall health."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 50 grams of Bajra seeds can produce 250–350 grams of fresh microgreens, depending on tray size and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Pearl millet (bajra) microgreens grow best in:",
+            "Temperature: 20°C – 30°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are ideal for indoor trays and balcony gardens."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Pearl Millet (Bajra) seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 9–12 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "peas-microgreens-seeds": {
+      "baseName": "Peas Microgreens Seeds",
+      "scientificName": "Pisum sativum",
+      "flavorProfile": "Fresh sweet flavor similar to green peas",
+      "growingTime": "10-12 days",
+      "difficulty": "Easy",
+      "description": [
+        "Pea seeds grow into tender pea shoots with curly tendrils and a naturally sweet flavor similar to fresh green peas. These crunchy microgreens add freshness and nutrition to meals such as vegetable pulao, poha, sandwiches, chaat, and stir-fried vegetables.",
+        "Pea microgreens grow quickly and are typically ready to harvest in 10–12 days, making them a popular choice for home growers."
+      ],
+      "description1": [
+        "Pea microgreens are young shoots of pea plants harvested early when their nutrients and plant proteins are concentrated. These microgreens develop thick stems, leafy shoots, and delicate tendrils that provide a fresh pea flavor and satisfying crunch.",
+        "Because of their mild sweetness, pea microgreens work well in vegetable pulao, poha, chaat bowls, sandwiches, and stir-fried vegetables, adding both flavor and texture.",
+        "Pea microgreens are valued for their high plant-based protein and vitamin content, making them a nutritious addition to everyday diets.",
+        "At Microgreens de Manikonda, our pea seeds are carefully sourced to ensure high germination rates and healthy growth for home growers."
+      ],
+      "growingNotes": [
+        "Soak seeds for 8-10 hours before sowing.",
+        "Sow seeds densely for better yield.",
+        "Maintain consistent moisture for vigorous growth."
+      ],
+      "bestFor": [
+        "Everyday meals",
+        "Fresh crunch applications",
+        "Pulao and poha",
+        "Sandwiches and chaat"
+      ],
+      "healthHighlights": [
+        "High in plant-based protein",
+        "Rich in vitamins and minerals",
+        "Supports balanced nutrition",
+        "Promotes healthy growth"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Maple Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-50",
+        "pigeonpeaseedview",
+        "pigeonpeaseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Pea microgreens have a fresh sweet flavor similar to green peas.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Naturally sweet taste",
+            "Tender crunchy stems",
+            "Fresh pea flavor"
+          ],
+          "conclusion": "They pair well with poha, vegetable pulao, chaat, sandwiches, and stir-fried vegetables."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Pea microgreens are packed with:",
+          "items": [
+            " Plant-based protein",
+            "Vitamin A",
+            " Vitamin C",
+            "Vitamin K",
+            "Folate",
+            "Iron",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients help support energy levels, immunity, and muscle health."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of Pea seeds can produce 500–600 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Pea microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They grow well in indoor trays and balcony gardens."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Pea seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 10–12 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "pigeon-pea-arhar-microgreens-seeds": {
+      "baseName": "Pigeon Pea (Arhar) Microgreens Seeds",
+      "scientificName": "Cajanus cajan",
+      "flavorProfile": "Mild earthy flavor with soft leafy greens",
+      "growingTime": "10-14 days",
+      "difficulty": "Easy",
+      "description": [
+        "Pigeon pea (Arhar) seeds grow into tender microgreens with a mild earthy flavor and soft leafy shoots. These microgreens can be added to dishes such as dal rice, vegetable upma, stir-fried vegetables, and grain bowls for extra nutrition.",
+        "Pigeon pea microgreens grow steadily and are typically ready to harvest in 10–14 days."
+      ],
+      "description1": [
+        "Pigeon pea (Arhar) microgreens are young shoots of arhar plants harvested early when their nutrients and plant proteins are highly concentrated. These microgreens develop soft leaves and sturdy stems with a mild earthy taste.",
+        "Because pigeon pea (Arhar) is a staple in Indian cuisine, these microgreens complement dal rice, vegetable upma, khichdi, and stir-fried vegetables, adding freshness and nutritional value.",
+        "Pigeon pea microgreens are rich in plant protein, fiber, and essential minerals, supporting balanced diets.",
+        "At Microgreens de Manikonda, our pigeon pea seeds are selected for reliable germination and healthy growth."
+      ],
+      "growingNotes": [
+        "Soak seeds for 10-12 hours before sowing.",
+        "Sow seeds densely for lush growth.",
+        "Maintain consistent moisture for tender shoots."
+      ],
+      "bestFor": [
+        "Indian cuisine staples",
+        "Nutritional enhancement",
+        "Dal rice and upma",
+        "Stir-fried vegetables"
+      ],
+      "healthHighlights": [
+        "Rich in plant protein",
+        "High in fiber",
+        "Essential minerals",
+        "Supports balanced diets"
+      ],
+      "relatedProducts": [
+        "Basil Purple Microgreens Seeds",
+        "Peas Microgreens Seeds",
+        "Sunflower Microgreens Seeds",
+        "Corn Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-51",
+        "pigeonpeaseedview",
+        "pigeonpeaseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Pigeon pea (Arhar) microgreens have a mild earthy flavor with soft leafy greens.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Mild bean flavor",
+            "Tender leafy shoots",
+            "Subtle earthy taste"
+          ],
+          "conclusion": "They pair well with dal rice, khichdi, vegetable upma, and stir-fried vegetables."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Pigeon pea (Arhar) microgreens are packed with:",
+          "items": [
+            "Plant protein",
+            "Fiber",
+            "Iron",
+            "Magnesium",
+            "Zinc",
+            "Antioxidants"
+          ],
+          "conclusion": "These nutrients support balanced diets and overall wellness."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 100 grams of pigeon pea seeds can produce 400–500 grams of fresh microgreens, depending on tray density and growing conditions."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Pigeon pea (Arhar) microgreens grow best in:",
+            "Temperature: 20°C – 28°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate humidity with good airflow",
+            "They are ideal for indoor trays, kitchen gardens, and traditional cooking."
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Pigeon Pea (Arhar) seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 3-4 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 10–14 days when microgreens reach 2–3 inches in height."
+        }
+      ]
+    },
+    "radish-china-rose-microgreens-seeds": {
+      "baseName": "Radish China Rose Microgreens Seeds",
+      "scientificName": "Raphanus sativus",
+      "flavorProfile": "Sharp peppery flavor with vibrant pink stems",
+      "growingTime": "6-8 days",
+      "difficulty": "Easy",
+      "description": [
+        "Radish China Rose seeds grow into vibrant pink-stemmed microgreens with a crisp texture and bold peppery flavor. These microgreens add color and taste to dishes such as sandwiches, salads, chaat, and vegetable bowls.",
+        "China Rose radish microgreens are typically ready to harvest in 6–8 days, making them one of the fastest-growing microgreens."
+      ],
+      "description1": [
+        "Radish China Rose microgreens are young shoots of radish plants harvested early when their nutrients and flavor compounds are highly concentrated. These microgreens develop bright pink stems and green leaves that provide a crisp peppery taste.",
+        "Because of their bold flavor and vibrant appearance, they are commonly used in chaat bowls, sandwiches, salads, and wraps, adding both texture and nutrition.",
+        "Radish microgreens are known for their high antioxidant and vitamin content, supporting digestion and immunity.",
+        "At Microgreens de Manikonda, our Radish China Rose seeds are selected to ensure high germination rates and healthy growth."
+      ],
+      "growingNotes": [
+        "Sow seeds densely for uniform pink color development.",
+        "Maintain consistent moisture for even germination.",
+        "Harvest when true leaves appear for best color and flavor."
+      ],
+      "bestFor": [
+        "Colorful salad additions",
+        "Gourmet restaurant presentations",
+        "Colorful salad mixes",
+        "High-end garnish production"
+      ],
+      "healthHighlights": [
+        "High in vitamin C and antioxidants",
+        "Supports immune health and cellular protection",
+        "Natural detoxification properties",
+        "Quick-growing nutrition source"
+      ],
+      "relatedProducts": [
+        "Radish Pink Microgreens Seeds",
+        "Radish Purple Sango Microgreens Seeds",
+        "Arugula Microgreens Seeds",
+        "Mustard Microgreens Seeds"
+      ],
+      "gallery": [
+        "seed-52",
+        "radhishchinaseedview",
+        "radhishchinaseedview1"
+      ],
+      "infoSections": [
+        {
+          "title": "Flavor Profile",
+          "description": "Radish China Rose microgreens have a sharp peppery flavor similar to radish roots.",
+          "leadIn": "Taste characteristics:",
+          "items": [
+            "Peppery bite",
+            "Crisp stems",
+            "Fresh green taste"
+          ],
+          "conclusion": "They pair well with chaat, sandwiches, salads, and wraps."
+        },
+        {
+          "title": "Nutritional Highlights",
+          "description": "Radish China Rose microgreens contain:",
+          "items": [
+            "Vitamin C",
+            "Vitamin A",
+            "Potassium",
+            "Folate",
+            "Antioxidants",
+            "Sulfur compounds"
+          ],
+          "conclusion": "These nutrients support detoxification, digestion, and immune health."
+        },
+        {
+          "title": "Yield Information",
+          "description": "Approximately 200 grams of seeds can produce 700–900 grams of fresh microgreens."
+        },
+        {
+          "title": "Ideal Growing Conditions",
+          "items": [
+            "Radish China Rose microgreens grow best in:",
+            "Temperature: 18°C - 26°C",
+            "Light: Indirect sunlight or grow lights",
+            "Humidity: Moderate airflow"
+          ]
+        }
+      ],
+      "growingSteps": [
+        {
+          "title": "Prepare the tray:",
+          "description": "Fill a shallow tray with cocopeat or another growing medium and level the surface evenly."
+        },
+        {
+          "title": "Sow the seeds:",
+          "description": "Evenly sprinkle Radish China Rose seeds across the tray without overcrowding."
+        },
+        {
+          "title": "Mist gently:",
+          "description": "Lightly mist the tray to keep the growing medium evenly moist."
+        },
+        {
+          "title": "Blackout phase:",
+          "description": "Cover the tray and keep it in a dark place for 2-3 days to allow seeds to germinate."
+        },
+        {
+          "title": "Move to light:",
+          "description": "Once sprouts appear, remove the cover and place the tray under indirect sunlight or grow lights."
+        },
+        {
+          "title": "Maintain moisture:",
+          "description": "Lightly mist the tray once or twice daily to keep the medium moist."
+        },
+        {
+          "title": "Ensure airflow:",
+          "description": "Keep the tray in a well-ventilated area to support healthy growth."
+        },
+        {
+          "title": "Harvest:",
+          "description": "Harvest in 6–8 days when microgreens reach 2–3 inches in height."
+        }
       ]
     }
   }
