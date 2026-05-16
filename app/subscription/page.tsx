@@ -7,12 +7,11 @@ import { FadeIn } from "@/app/_components/animations/fade-in";
 import { useCart } from "@/app/_components/cart/cart-context";
 import heroImage from "@/assests/mg-header-01.jpg";
 import benefitsImage from "@/assests/subscription-plan.jpg";
-
-const planGroups = ["Single", "Couple", "Family"];
+import { useRouter } from "next/navigation";
 
 const plans = [
   {
-    billing: "Monthly",
+    billing: "Weekly",
     audience: "Single",
     price: "999",
     suffix: "/month",
@@ -25,7 +24,7 @@ const plans = [
     ],
   },
   {
-    billing: "Quarterly",
+    billing: "Monthly",
     audience: "Single",
     price: "2,799",
     suffix: "/3 mo",
@@ -39,7 +38,7 @@ const plans = [
     ],
   },
   {
-    billing: "Half Yearly",
+    billing: "Quarterly",
     audience: "Single",
     price: "4,999",
     suffix: "/6 mo",
@@ -49,19 +48,6 @@ const plans = [
       "No reordering, fully planned",
       "Access to exclusive recipes",
       "Save 17% vs monthly",
-    ],
-  },
-  {
-    billing: "Yearly",
-    audience: "Single",
-    price: "8,999",
-    suffix: "/year",
-    accent: "bg-[#62696b]",
-    bullets: [
-      "52 deliveries across the year",
-      "Best value, zero effort subscription",
-      "First access to all new launches",
-      "Save 25% vs monthly",
     ],
   },
   {
@@ -76,99 +62,7 @@ const plans = [
       "Flexible delivery schedule",
       "Great value for sharing",
     ],
-  },
-  {
-    billing: "Quarterly",
-    audience: "Couple",
-    price: "5,299",
-    suffix: "/3 mo",
-    accent: "bg-[#dc2626]",
-    featured: true,
-    bullets: [
-      "6 double-portion deliveries",
-      "Priority access for couples",
-      "Locked pricing for 3 months",
-      "Save 12% vs monthly",
-    ],
-  },
-  {
-    billing: "Half Yearly",
-    audience: "Couple",
-    price: "9,999",
-    suffix: "/6 mo",
-    accent: "bg-[#059669]",
-    bullets: [
-      "12 double-portion deliveries",
-      "Planned supply for couples",
-      "Exclusive couple recipes",
-      "Save 17% vs monthly",
-    ],
-  },
-  {
-    billing: "Yearly",
-    audience: "Couple",
-    price: "16,999",
-    suffix: "/year",
-    accent: "bg-[#7c2d12]",
-    bullets: [
-      "24 double-portion deliveries",
-      "Best value for couples",
-      "First access to couple packages",
-      "Save 22% vs monthly",
-    ],
-  },
-  {
-    billing: "Monthly",
-    audience: "Family",
-    price: "3,499",
-    suffix: "/month",
-    accent: "bg-[#f59e0b]",
-    bullets: [
-      "High quantity for daily family use",
-      "Weekly reliable deliveries",
-      "Mix of multiple varieties",
-      "Designed for a household of 4",
-    ],
-  },
-  {
-    billing: "Quarterly",
-    audience: "Family",
-    price: "9,999",
-    suffix: "/3 mo",
-    accent: "bg-[#d97706]",
-    bullets: [
-      "Curated weekly nutrition supply",
-      "Flexible scheduling options",
-      "Built for uninterrupted usage",
-      "Save 17% vs monthly",
-    ],
-  },
-  {
-    billing: "Half Yearly",
-    audience: "Family",
-    price: "17,999",
-    suffix: "/6 mo",
-    accent: "bg-[#9333ea]",
-    bullets: [
-      "Stable uninterrupted long-term supply",
-      "No gaps, no reordering needed",
-      "Ideal for consistent healthy eating",
-      "Save 25% vs monthly",
-    ],
-  },
-  {
-    billing: "Yearly",
-    audience: "Family",
-    price: "24,999",
-    suffix: "/year",
-    accent: "bg-[#7c3aed]",
-    bullets: [
-      "Maximum savings across all plans",
-      "Fully predictable yearly supply",
-      "Best for committed health routines",
-      "Save 48% vs monthly",
-    ],
-  },
+  }
 ];
 
 const benefits = [
@@ -220,6 +114,7 @@ const faqs = [
 export default function SubscriptionPage() {
   const [selectedGroup, setSelectedGroup] = useState("Single");
   const { addToCart } = useCart();
+  const router = useRouter();
 
   const filteredPlans = plans.filter(plan => plan.audience === selectedGroup);
 
@@ -271,32 +166,11 @@ export default function SubscriptionPage() {
               Subscription Plans
             </h2>
             <p className="mt-5 text-sm leading-6 text-[#25352f]/80">
-              Our microgreens subscription plans are designed for individuals,
-              couples, and families who want fresh, locally grown microgreens
-              delivered regularly across Hyderabad. Choose a plan that fits your
-              household and let us handle the rest.
+              Our microgreen subscription plans are designed for every household, combining locally grown microgreens with thoughtfully curated meal plans and regular deliveries across Hyderabad.
             </p>
           </FadeIn>
 
-          <FadeIn delay={0.08} distance={16}>
-            <div className="mt-12 overflow-hidden rounded-full bg-[#303030] shadow-[0_18px_38px_rgba(15,23,42,0.16)]">
-              <div className="grid min-h-[86px] grid-cols-1 sm:grid-cols-3">
-                {planGroups.map((group, index) => (
-                  <button
-                    key={group}
-                    type="button"
-                    onClick={() => setSelectedGroup(group)}
-                    className={`px-8 py-6 text-center text-3xl font-extrabold uppercase tracking-[0.04em] text-white transition ${selectedGroup === group ? "bg-[#acd6bd]" : "hover:bg-white/5"
-                      }`}
-                  >
-                    {group}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-
-          <div className="mx-auto mt-12 grid max-w-4xl gap-0 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-12 grid max-w-4xl gap-0 md:grid-cols-2 lg:grid-cols-3">
             {filteredPlans.map((plan, index) => (
               <FadeIn
                 key={`${plan.audience}-${plan.billing}`}
@@ -353,7 +227,7 @@ export default function SubscriptionPage() {
 
                   <button
                     type="button"
-                    onClick={() => handleSubscribe(plan)}
+                    onClick={() => router.push("/contact-us")}
                     className={`mt-8 self-center rounded-full px-6 py-3 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-[0_12px_20px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 ${plan.accent}`}
                   >
                     Subscribe

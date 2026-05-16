@@ -7,7 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { FadeIn } from "@/app/_components/animations/fade-in";
 import { primaryNavigation } from "@/app/_config/navigation";
 import { useCart } from "@/app/_components/cart/cart-context";
-import logo from "@/assests/mg-logo-01.png";
+import logo from "@/assests/Logo.png";
 
 export function SiteHeader() {
   const { openCart, items } = useCart();
@@ -29,7 +29,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-emerald-950/10 bg-[#3C532B]">
+    <header className="sticky top-0 z-50 border-b border-emerald-950/10 bg-[#78e08f]">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-4">
 
         {/* Logo */}
@@ -44,7 +44,7 @@ export function SiteHeader() {
 
         {/* Navigation */}
         <nav ref={navRef} aria-label="Primary navigation">
-          <ul className="flex flex-wrap items-center justify-end gap-6 text-sm font-medium text-white/70">
+          <ul className="flex flex-wrap items-center justify-end gap-6 text-sm font-medium text-black">
 
             {primaryNavigation.map((item, index) => (
               <li key={item.href} className="relative">
@@ -57,7 +57,7 @@ export function SiteHeader() {
                           openDropdown === item.href ? null : item.href
                         )
                       }
-                      className="flex items-center gap-1 text-md font-bold text-white/70 transition hover:text-white"
+                      className="flex items-center gap-1 text-md font-bold text-black transition hover:text-white"
                     >
                       {item.label}
                       <svg
@@ -108,7 +108,7 @@ export function SiteHeader() {
             ))}
 
             {/* Cart */}
-            <li>
+            {/* <li>
               <FadeIn
                 delay={0.08 * (primaryNavigation.length + 1)}
                 distance={12}
@@ -138,7 +138,7 @@ export function SiteHeader() {
                   )}
                 </button>
               </FadeIn>
-            </li>
+            </li> */}
 
           </ul>
         </nav>

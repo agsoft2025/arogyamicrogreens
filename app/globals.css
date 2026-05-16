@@ -4,12 +4,15 @@
   --background: #f5fbf6;
   --foreground: #10281d;
   --surface: #ffffff;
+  --primary-color: #78e08f;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
+  --color-primary: var(--primary-color);
+
   --font-sans: var(--font-poppins);
   --font-serif: var(--font-playfair);
   --font-mono: "Poppins", monospace;

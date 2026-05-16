@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { FadeIn } from "@/app/_components/animations/fade-in";
-import logo from "@/assests/mg-logo-01.png";
+import logo from "@/assests/Logo.png";
 import { FaInstagram, FaFacebookF, FaYoutube, FaLinkedinIn, FaWhatsapp, FaMapPin, FaMapMarkerAlt } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { IoMailOutline } from "react-icons/io5";
@@ -33,8 +33,8 @@ const socials = [
 export function SiteFooter() {
   return (
     <FadeIn delay={0.15}>
-      <footer className="bg-[#355329] text-white">
-        <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-16 md:grid-cols-[1.1fr_0.9fr_0.9fr_1.25fr] md:py-20">
+      <footer className="bg-[#78e08f] text-black">
+        <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-16 md:grid-cols-[1.1fr_0.9fr_1.25fr] md:py-20">
           <div className="flex justify-center md:justify-start">
             <Image
               src={logo}
@@ -44,7 +44,7 @@ export function SiteFooter() {
           </div>
 
           <FooterColumn title="MGM HYD" items={mgmLinks} />
-          <FooterColumn title="Quick Links" items={quickLinks} />
+          {/* <FooterColumn title="Quick Links" items={quickLinks} /> */}
 
           <div>
             <h2 className="text-base font-extrabold uppercase tracking-[0.24em]">
@@ -52,7 +52,7 @@ export function SiteFooter() {
             </h2>
             <ul className="mt-5 space-y-5 text-[17px] font-bold leading-6">
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">
+                <span className="text-black">
                   <BsFillTelephoneFill />
                 </span>
                 <a href="tel:+917416417391" className="transition hover:text-[#e2bd76]">
@@ -60,7 +60,7 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">
+                <span className="text-black">
                   <FaWhatsapp />
                 </span>
                 <a href="tel:+918885553486" className="transition hover:text-[#e2bd76]">
@@ -68,7 +68,7 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">
+                <span className="text-black">
                   <IoMailOutline />
                 </span>
                 <a
@@ -79,7 +79,7 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="flex gap-5">
-                <span className="text-[#e2bd76]">
+                <span className="text-black">
                   <FaMapMarkerAlt />
                 </span>
                 <address className="not-italic">
@@ -92,8 +92,8 @@ export function SiteFooter() {
                   500089
                 </address>
               </li>
-              <li className="flex gap-5">
-                <span className="text-[#e2bd76]">
+              {/* <li className="flex gap-5">
+                <span className="text-black">
                   <FaMapPin />
                 </span>
                 <a
@@ -104,7 +104,7 @@ export function SiteFooter() {
                 >
                   Location (Click Here)
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -120,7 +120,7 @@ export function SiteFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.name}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e2bd76] text-[#1d2d19] transition hover:bg-white hover:scale-110"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#fff] text-[#1d2d19] transition hover:bg-white hover:scale-110"
               >
                 <Icon size={18} color="#000" />
               </a>
