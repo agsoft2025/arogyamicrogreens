@@ -90,8 +90,8 @@ export default function ContactPage() {
             <div className="flex items-start gap-3">
               <Phone className="text-primary" />
               <div>
-                <p>+91 98765 43210</p>
-                <p>+91 87654 32109</p>
+                <p>+91 00000 00000</p>
+                <p>+91 00000 00000</p>
               </div>
             </div>
 
