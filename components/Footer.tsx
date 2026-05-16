@@ -9,7 +9,6 @@ import {
     Phone,
     Mail,
     Building2,
-    MessageCircle,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { ImInstagram } from "react-icons/im";
@@ -78,24 +77,36 @@ export default function Footer() {
                             <p>Chennai, Tamil Nadu</p>
                         </div>
 
-                        <div className="flex items-start gap-3">
+                        <a
+                            href="tel:+910000000000"
+                            className="flex items-start gap-3 hover:text-green-600 transition"
+                        >
                             <Phone size={20} className="mt-1 shrink-0" />
+
                             <div>
                                 <p>+91 0000000000</p>
                             </div>
-                        </div>
+                        </a>
 
-                        <div className="flex items-start gap-3">
+                        <a
+                            href="https://api.whatsapp.com/send/?phone=918885553486&text=Hi&type=phone_number&app_absent=0"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-start gap-3 hover:text-green-600 transition"
+                        >
                             <FaWhatsapp className="text-xl mt-1 shrink-0" />
                             <div>
                                 <p>+91 0000000000</p>
                             </div>
-                        </div>
+                        </a>
 
-                        <div className="flex items-start gap-3">
+                        <a
+                            href="mailto:agrinestmicrogreens@gmail.com"
+                            className="flex items-start gap-3 hover:text-green-600 transition"
+                        >
                             <Mail size={20} className="mt-1 shrink-0" />
-                            <p>agrinest@microgreens@gmail.com</p>
-                        </div>
+                            <p>agrinestmicrogreens@gmail.com</p>
+                        </a>
 
                         <div className="flex items-start gap-3">
                             <Building2 size={20} className="mt-1 shrink-0" />

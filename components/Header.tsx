@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
@@ -11,6 +11,15 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const [clientPathname, setClientPathname] = useState("");
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setClientPathname(pathname);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [pathname]);
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -41,7 +50,7 @@ export default function Header() {
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-8 font-bold text-gray-700">
           {navItems.map((item, index) => {
-            const isActive = pathname === item.href;
+            const isActive = clientPathname === item.href;
 
             return (
               <motion.li
@@ -91,7 +100,7 @@ export default function Header() {
           >
             <ul className="flex flex-col px-6 py-4 gap-4 font-medium text-gray-700">
               {navItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = clientPathname === item.href;
 
                 return (
                   <li key={item.label} className="border-b pb-2">

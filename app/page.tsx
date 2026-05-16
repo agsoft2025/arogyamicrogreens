@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import homebg from "../assests/homepagebg.webp";
-import { div } from "framer-motion/client";
 
 const points = [
   "Packed with concentrated nutrients for maximum benefit",

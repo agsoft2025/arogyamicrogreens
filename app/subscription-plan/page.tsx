@@ -1,5 +1,6 @@
 "use client";
 
+import MealPlan from "@/components/MealPlan";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
@@ -48,7 +49,7 @@ export default function SubscriptionPlanPage() {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mt-14">
+        <div className="grid md:grid-cols-3 gap-8 mt-14 mb-10">
 
           {plans.map((plan, index) => (
             <motion.div
@@ -109,6 +110,7 @@ export default function SubscriptionPlanPage() {
           ))}
 
         </div>
+        <MealPlan />
       </div>
     </section>
   );
