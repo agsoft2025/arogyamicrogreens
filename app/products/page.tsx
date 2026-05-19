@@ -1,22 +1,18 @@
 "use client";
 
-import MealPlan from "@/components/MealPlan";
 import { products } from "@/data/products";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function ProductPage() {
   return (
-    <section className="py-20 bg-gray-50 min-h-screen relative overflow-hidden">
+    <section className="pb-20 bg-gray-50 min-h-screen relative overflow-hidden">
 
       {/* decorative background glow */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-green-200/30 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-300/20 rounded-full blur-3xl"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-
-        {/* ===== MEAL PLAN SECTION ===== */}
-        <MealPlan />
 
         {/* ===== PRODUCTS SECTION ===== */}
         <div className="pt-20">

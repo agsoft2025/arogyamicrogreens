@@ -23,14 +23,14 @@ export default function Header() {
 
   const navItems = [
     { label: "Home", href: "/" },
+    { label: "Microgreens", href: "/microgreens" },
     { label: "Subscription Plan", href: "/subscription-plan" },
-    { label: "Microgreen", href: "/microgreen" },
     { label: "Products", href: "/products" },
     { label: "Contact Us", href: "/contact-us" },
   ];
 
   return (
-    <header className="w-full shadow-md bg-white sticky top-0 z-50 border-b border-primary">
+    <header className="w-full shadow-md bg-[#f4f3ee] sticky top-0 z-50 border-b border-primary">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
@@ -48,7 +48,7 @@ export default function Header() {
         </motion.div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-8 font-bold text-gray-700">
+        <ul className="hidden md:flex items-center gap-8 font-bold text-gray-700 mr-10">
           {navItems.map((item, index) => {
             const isActive = clientPathname === item.href;
 

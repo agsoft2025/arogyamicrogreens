@@ -17,7 +17,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <footer className="bg-primary text-white mt-auto">
+        <footer className="bg-[#5e503f] text-white mt-auto">
             <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 items-center gap-10">
 
                 {/* Logo Section */}

@@ -4,6 +4,9 @@ import wheatgrass from "@/assests/wheet grass.jpg"
 import musturd from "@/assests/Musturd.webp"
 import hoursegram from "@/assests/Horse Gram.webp"
 import chia from "@/assests/Chia.webp"
+import flax from "@/assests/flax.webp"
+import greengram from "@/assests/Green Gram microgreens.jpg"
+import greenpeas from "@/assests/Green peas microgreens.webp"
 
 export const microgreens = [
     {
@@ -75,6 +78,40 @@ export const microgreens = [
             "Good source of plant-based nutrients including calcium and magnesium",
             "Contains omega-3 fatty acids in small amounts",
         ],
-    }
+    },
+    {
+        id: 7,
+        title: "Flax Microgreens",
+        image: flax,
+        benefits: [
+            "Rich in plant-based Omega-3 nutrients",
+            "Supports heart and brain health",
+            "Packed with antioxidants and fibre",
+            "Helps improve digestion naturally",
+        ],
+    },
+    {
+        id: 8,
+        title: "Green Gram Microgreens",
+        image: greengram,
+        benefits: [
+            "Rich in plant-based protein",
+            "Supports muscle strength and energy",
+            "Supports healthy metabolism",
+            "Fresh source of iron and minerals",
+        ],
+    },
+     {
+        id: 9,
+        title: "Green peas Microgreens",
+        image: greenpeas,
+        benefits: [
+            "Packed with vitamins A, C, and K ",
+            "Helps boost immunity and energy",
+            "Supports eye and skin health",
+            "Rich in plant-based protein and fibre",
+            "Fresh source of iron and essential minerals"
+        ],
+    },
 
 ];

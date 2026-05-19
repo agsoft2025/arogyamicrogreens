@@ -1,12 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import breakfast from "@/assests/Breakfast.png"
+import lunch from "@/assests/Lunch.png"
+import dinner from "@/assests/Dinner.png"
+import Image from "next/image";
 
 const mealPlan = [
   {
     time: "Breakfast",
     items: [
-      "Mixed Vegetable Juice",
+      "Mixed Vegetable Juice or Nutri mix Malt",
       "Salad with Microgreens",
       "4 varieties of Dry fruits",
       "Soaked Greens",
@@ -18,7 +22,7 @@ const mealPlan = [
   {
     time: "Lunch",
     items: [
-      "Fresh fruit juice / Flavored Butter Milk / Multigrain Java",
+      "Fresh fruit juice or Flavored Butter Milk",
       "2 Curries and Chutney",
       "Brown Rice with healthy snack",
       "Curd rice",
@@ -30,6 +34,21 @@ const mealPlan = [
     items: ["Mixed Fruit Bowl", "2 Curries", "Multigrain Pulka"],
   },
 ];
+
+const foodContainer = [
+  {
+    name: "Breakfast",
+    image: breakfast
+  },
+  {
+    name: "Lunch",
+    image: lunch
+  },
+  {
+    name: "Dinner",
+    image: dinner
+  }
+]
 
 export default function MealPlan() {
   return (
@@ -74,6 +93,62 @@ export default function MealPlan() {
                 </li>
               ))}
             </ul>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Food Container */}
+      <div className="grid md:grid-cols-3 gap-8 mt-14">
+        {foodContainer.map((food, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.6,
+              delay: index * 0.15
+            }}
+            whileHover={{
+              y: -12,
+              scale: 1.03
+            }}
+            className="group relative overflow-hidden rounded-4xl shadow-2xl"
+          >
+            {/* Image */}
+            <div className="relative h-125 overflow-hidden bg-white">
+              <Image
+                src={food.image}
+                alt={food.name}
+                fill
+                className="object-contain transition duration-700 group-hover:scale-105"
+              />
+            </div>
+
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
+
+            {/* Floating Glow */}
+            <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/20 blur-3xl group-hover:bg-primary/30 transition duration-700" />
+
+            {/* Content */}
+            <div className="absolute top-0 left-0 p-2 text-primary">
+
+              <h2 className="mt-4 text-4xl font-bold tracking-tight">
+                {food.name}
+              </h2>
+
+              {/* Animated Line */}
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "70px" }}
+                transition={{
+                  delay: 0.4 + index * 0.2,
+                  duration: 0.6
+                }}
+                className="mt-5 h-1 rounded-full bg-primary"
+              />
+            </div>
           </motion.div>
         ))}
       </div>

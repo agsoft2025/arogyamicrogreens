@@ -2,12 +2,17 @@
 
 import { motion } from "framer-motion";
 import homebg from "../assests/homepagebg.webp";
+import Image from "next/image";
+import tray from "@/assests/Tray Image.webp"
+import MicrogreenTray from "@/components/MicrogreenTray";
 
 const points = [
   "Packed with concentrated nutrients for maximum benefit",
   "Rich in antioxidants that help protect and repair the body",
   "Supports immunity, energy, and overall wellness",
   "Convenient to include in daily meals without extra effort",
+  "Freshly harvested for better taste, freshness, and nutrition",
+  "Supports a healthy lifestyle with clean and naturally grown greens"
 ];
 
 export default function Home() {
@@ -74,16 +79,22 @@ export default function Home() {
                 className="p-6 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all bg-white"
               >
                 <div className="flex items-start gap-3">
-                  <span className="text-primary text-2xl font-bold">
+                  <span className="text-primary w-6 text-2xl font-bold leading-7">
                     {index + 1}.
                   </span>
-                  <p className="text-gray-700 text-left">{item}</p>
+
+                  <p className="text-gray-700 leading-7 text-left">
+                    {item}
+                  </p>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Microgreen 40x */}
+      <MicrogreenTray />
     </div>
   );
 }
