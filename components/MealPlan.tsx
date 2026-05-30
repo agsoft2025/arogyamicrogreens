@@ -79,7 +79,7 @@ export default function MealPlan() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.15 }}
             whileHover={{ y: -10, scale: 1.03 }}
-            className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-white p-8"
+            className="rounded-2xl border border-white bg-white/92 p-8 shadow-xl"
           >
             <h2 className="text-2xl font-bold text-center text-primary mb-6">
               {meal.time}
@@ -129,7 +129,7 @@ export default function MealPlan() {
             <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
 
             {/* Floating Glow */}
-            <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/20 blur-3xl group-hover:bg-primary/30 transition duration-700" />
+            <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/20 blur-xl transition duration-700 group-hover:bg-primary/30" />
 
             {/* Content */}
             <div className="absolute top-0 left-0 p-2 text-primary">
