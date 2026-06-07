@@ -50,7 +50,7 @@ const plans: Plan[] = [
     tier: "Entry Level",
     name: "Weekly Plan",
     tagline: "Perfect for solo health enthusiasts",
-    price: "$19",
+    price: "₹1,599",
     period: "/week",
     features: [
       { text: "7 Days Supply" },
@@ -64,7 +64,7 @@ const plans: Plan[] = [
     tier: "Best Value",
     name: "Monthly Plan",
     tagline: "Great for couples and chefs",
-    price: "$59",
+    price: "₹4,899",
     period: "/month",
     features: [
       { text: "30 Days Supply" },
@@ -85,7 +85,7 @@ const plans: Plan[] = [
     tier: "Bulk Bundle",
     name: "Family Pack",
     tagline: "Ideal for large healthy households",
-    price: "$99",
+    price: "₹8,199",
     period: "/month",
     features: [
       { text: "30 Days Supply (XL)" },

@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ShopProductCard from "@/components/ui/ShopProductCard";
+import { parsePriceString } from "@/lib/currency";
 
 const allProducts = [
   {
     name: "Organic Pea Shoots",
     description: "Sweet, crunchy, and packed with Vitamin C. Perfect for salads and garnishes.",
-    price: "$12.50",
+    price: "₹1,049",
     rating: "4.9",
     badge: "Most Popular",
     badgeVariant: "popular" as const,
@@ -17,15 +18,15 @@ const allProducts = [
   {
     name: "Kitchen Starter Kit",
     description: "Everything you need to harvest your first tray in just 7 days.",
-    price: "$34.00",
+    price: "₹2,829",
     rating: "5.0",
     image: "https://lh3.googleusercontent.com/aida/AP1WRLt8nGaFNo818f0KvnBNQbD8d5xNmoJwobxCHBA6V6Jd1FjW_TYZd5kb7U8gaZbyP6leLTSyqwLd5x5WICpD8qHYbA-ma4q32PXtCO1mC7uc6QYkX8yKW2-V9vSBakYaAyMKyywbuOl3ZiYml2KfkVT2fkn-U-MGt1HOovuENDiPv__2Nhes4-TsGstMKv6mWVT7gg7cQf_7evBcGN5lA9ddyYzsh2L6naq-Jd0lwkZ10W3ThE4OFc9-5g",
   },
   {
     name: "Red Rambo Radish",
     description: "Bold, spicy flavor with a striking purple hue to elevate any dish.",
-    price: "$11.00",
-    originalPrice: "$14.50",
+    price: "₹899",
+    originalPrice: "₹1,199",
     rating: "4.8",
     badge: "Sale",
     badgeVariant: "sale" as const,
@@ -34,14 +35,14 @@ const allProducts = [
   {
     name: "Heirloom Kale Seeds",
     description: "Non-GMO, organic seeds with a 98% germination rate guarantee.",
-    price: "$6.50",
+    price: "₹549",
     rating: "4.7",
     image: "https://lh3.googleusercontent.com/aida/AP1WRLs7sNuLJI585BjSyG9b0cHU7To9eUjxwxrwXFZzHPcJqBj4Mb7fsEJ4JlFpWYwpedSWv2R-LWHCAaC8YjDRwPIiAiXvQAjxzFt-7PM_FgAMxppGfkOCU3VhQd8r-8CQ91_SwUBGspVF_k2vzEP2lsJbwcHhNJxNlRw5WPmwFWJEdZWxUdySLmmR7JcZw2HDItnWNcpyOamerYG3sbe8XQ6q3halwfKd2wY6hF7lO787xio1ZleECFFY2w",
   },
   {
     name: "Smart Grow Hub",
     description: "Automated light and water management for effortless year-round harvest.",
-    price: "$189.00",
+    price: "₹15,699",
     rating: "5.0",
     badge: "New",
     badgeVariant: "new" as const,
@@ -50,7 +51,7 @@ const allProducts = [
   {
     name: "Chef's Variety Pack",
     description: "Four different varieties in one tray to diversify your meal prep.",
-    price: "$18.00",
+    price: "₹1,499",
     rating: "4.9",
     image: "https://lh3.googleusercontent.com/aida/AP1WRLtL_QPEWymDIjNfr0d7bg8q9dT-hdJOfv8Nl8kugci9OayVKUhifPI7h8GcYDH1CsZwKKYPN5LeZ3Q5BOhr1D6UacMTPyM_T83DM3GRniAu3vLYAYQXWq3i5gPGqaksmCARrwZURSrdf-MhJw3vjKZTcOle4LqyRMuEgxu7AgFr4yOHrJVsYnqIlF1npSZaMkOnphUEq9KyWYNSumDnMJMXO-gVvJGB7dRgUwgh68k_fnOmm2VLgYqxlNWeRo",
   },
@@ -67,7 +68,7 @@ export default function ProductsGrid() {
   // Sort products client-side
   const sorted = [...allProducts].sort((a, b) => {
     if (sort === "Price: Low to High") {
-      return parseFloat(a.price.replace("$", "")) - parseFloat(b.price.replace("$", ""));
+      return parsePriceString(a.price) - parsePriceString(b.price);
     }
     if (sort === "Top Rated") {
       return parseFloat(b.rating) - parseFloat(a.rating);

@@ -18,8 +18,8 @@ const INITIAL_ITEMS: WishlistItem[] = [
     id: "radish",
     name: "Radish Microgreens",
     description: "Spicy and crisp, perfect for salads.",
-    price: "$12.50",
-    originalPrice: "$15.00",
+    price: "₹1,049",
+    originalPrice: "₹1,249",
     badge: "Organic",
     badgeVariant: "organic",
     image:
@@ -29,7 +29,7 @@ const INITIAL_ITEMS: WishlistItem[] = [
     id: "broccoli",
     name: "Broccoli Shoots",
     description: "Rich in antioxidants and nutrients.",
-    price: "$10.00",
+    price: "₹849",
     badge: "Popular",
     badgeVariant: "popular",
     image:
@@ -39,7 +39,7 @@ const INITIAL_ITEMS: WishlistItem[] = [
     id: "diy-kit",
     name: "DIY Starter Kit",
     description: "Everything you need to grow at home.",
-    price: "$45.00",
+    price: "₹3,749",
     badge: "Kit",
     badgeVariant: "kit",
     image:

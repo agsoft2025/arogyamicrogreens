@@ -21,7 +21,7 @@ const OPTIONS = [
     id: "express" as DeliveryOption,
     label: "Fresh Express",
     sublabel: "Next morning harvest delivery",
-    price: "$12.00",
+    price: "₹999",
     priceClass: "text-[#424843]",
   },
 ];

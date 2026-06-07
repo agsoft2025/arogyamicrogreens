@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
+import { formatCurrency } from "@/lib/currency";
 
 export interface SummaryItem {
   id: string;
@@ -83,7 +84,7 @@ export default function CheckoutSummary({
                   Quantity: {item.quantity}
                 </p>
                 <p className="font-bold text-sm text-[#386b00] font-[var(--font-work-sans)] mt-1">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  {formatCurrency(item.price * item.quantity)}
                 </p>
               </div>
             </div>
@@ -92,23 +93,23 @@ export default function CheckoutSummary({
 
         {/* Price breakdown */}
         <div className="flex flex-col gap-3 mb-6">
-          <PriceRow label="Subtotal" value={`$${subtotal.toFixed(2)}`} />
+          <PriceRow label="Subtotal" value={formatCurrency(subtotal)} />
 
           {discount > 0 && (
             <PriceRow
               label="Promo Discount"
-              value={`-$${discount.toFixed(2)}`}
+              value={"-" + formatCurrency(discount)}
               valueClass="text-[#386b00] font-bold"
             />
           )}
 
           <PriceRow
             label="Shipping"
-            value={shippingCost === 0 ? "FREE" : `$${shippingCost.toFixed(2)}`}
+            value={shippingCost === 0 ? "FREE" : formatCurrency(shippingCost)}
             valueClass={shippingCost === 0 ? "text-[#386b00]" : "text-[#1a1c19]"}
           />
 
-          <PriceRow label={`Tax (${TAX_RATE * 100}%)`} value={`$${tax.toFixed(2)}`} />
+          <PriceRow label={`Tax (${TAX_RATE * 100}%)`} value={formatCurrency(tax)} />
 
           <div className="flex justify-between items-center pt-4 border-t border-[#c1c8c1]">
             <span className="font-[var(--font-libre-caslon)] text-xl font-bold text-[#032616]">
@@ -116,14 +117,14 @@ export default function CheckoutSummary({
             </span>
             <AnimatePresence mode="wait">
               <motion.span
-                key={total.toFixed(2)}
+                key={total}
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 6 }}
                 transition={{ duration: 0.2 }}
                 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]"
               >
-                ${total.toFixed(2)}
+                {formatCurrency(total)}
               </motion.span>
             </AnimatePresence>
           </div>

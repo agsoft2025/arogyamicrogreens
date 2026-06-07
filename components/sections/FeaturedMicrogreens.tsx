@@ -8,27 +8,27 @@ import FadeIn from "@/components/animations/FadeIn";
 const products = [
   {
     name: "Sunflower Microgreens",
-    price: "$12.99",
-    originalPrice: "$15.99",
+    price: "₹1,079",
+    originalPrice: "₹1,329",
     badge: "20% OFF",
     image: "https://lh3.googleusercontent.com/aida/AP1WRLujAlBPvdLc_hsmGprqAO_OvxUsoCup9ovMJSiRSGWJGRQL2C9AHfimcuqO-ydJDtJ6dzECCJgoLQhg9xlHgiWsAO81P7uuFxdnX0bRuhxhhYkYT4mDhxOrZ0WuuHTplijxe5JVmJrkQaNVZSawvW3YWm8g4FqFN1l1aN-9alUxfTHfkkFqL7Uw42vdNbBfuzM4mi6SEQb6oVSINQsyF0huW0nDYM27qfb6G3XnMbXK4XVLrPfQeDhVIbw",
   },
   {
     name: "Red Amaranth",
-    price: "$14.50",
-    originalPrice: "$17.00",
+    price: "₹1,199",
+    originalPrice: "₹1,399",
     badge: "15% OFF",
     image: "https://lh3.googleusercontent.com/aida/AP1WRLvl4WezmUrsv1-jRppDQoRNKdDC1R8oAbHufywtmWlyEXEbv1McdDSZ6NNuk9KIHPTz2rrWoIcEQoK4c-iFKSDXvDP3SN4eU-CSLix3o89yN7niNdpuOIusyzkp9pq_1zXHClj2DPyhwkIcoAwjttIyS2yqI-VlAVTWjwQp-QR0hrYfSWEimli17zgnIvbwCqFkxDtVOFDMbxlVJrsPqn1PP47v94fftg-9Xnbg10bc3bY3iXHc0Wq1SuE",
   },
   {
     name: "Pea Shoots",
-    price: "$10.99",
+    price: "₹899",
     badge: "HOT",
     image: "https://lh3.googleusercontent.com/aida/AP1WRLtSBew55tdBC2F1diP_X5mV_Kl2Bh0WAQ69xpDoxKG9Pfx6rEehgxDK73n2Y5ka9orXo4ALpXtBirCEY76oOo5F1VcGiKH7XLMZvrDiEaiSLV8P-2DXDDmWsJ1T_IqJ8o2xUb4HfEEfGCfPXlHkB2Dczmnj5dgPb7cztdxyombYIuDD3-gkXtdFeSROUMQAM6nunfwFopjk_v1t9NJp-mB-zOKGO9es6GBqHCQbyRpFehBcC1_kZa-OCRY",
   },
   {
     name: "Broccoli Microgreens",
-    price: "$13.50",
+    price: "₹1,099",
     image: "https://lh3.googleusercontent.com/aida/AP1WRLvoerMy0DfJ8pYFOZ0kQSrIetQeL9NRc-w67VIQT9G8rp6dRohfmKZDAArshYdRJ2W0U3nYQnXuzrXT75yGQ5jnKI00n7ZvxNrB5UiEdNBa5tiKp-o1D79j247lUVzZ81Oqz5qt7n5qtJHmbvjwlPtqdpadQnhC6Jl_Ho8iQK_0XQTtr2UIqbuVzmUUTPK9AdgpSlgf_1pcUeWpPPaKpisxqjnhBJhH57E3XLkU02i7NvuzRHbPboKTcFw",
   },
 ];

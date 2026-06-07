@@ -16,9 +16,9 @@ interface Order {
 }
 
 const ORDERS: Order[] = [
-  { id: "#AN-8231", date: "Oct 12, 2024", items: 3, status: "delivered",  total: "$42.50" },
-  { id: "#AN-7944", date: "Sep 28, 2024", items: 1, status: "delivered",  total: "$18.00" },
-  { id: "#AN-7652", date: "Sep 14, 2024", items: 5, status: "cancelled",  total: "$64.20" },
+  { id: "#AN-8231", date: "Oct 12, 2024", items: 3, status: "delivered",  total: "₹3,529" },
+  { id: "#AN-7944", date: "Sep 28, 2024", items: 1, status: "delivered",  total: "₹1,499" },
+  { id: "#AN-7652", date: "Sep 14, 2024", items: 5, status: "cancelled",  total: "₹5,329" },
 ];
 
 const STATUS_STYLES: Record<OrderStatus, string> = {

@@ -160,7 +160,7 @@ export default function MicroCollection() {
               <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">
                 Classic Sunflower
               </h3>
-              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]">$8.50</span>
+              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]">₹699</span>
             </div>
             <p className="text-[#424843] text-sm italic mb-5 font-[var(--font-work-sans)]">
               Nutty, crunchy, and refreshing.
@@ -200,7 +200,7 @@ export default function MicroCollection() {
               <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">
                 China Rose Radish
               </h3>
-              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00] ml-2 shrink-0">$9.00</span>
+              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00] ml-2 shrink-0">₹749</span>
             </div>
             <p className="text-[#424843] mb-6 font-[var(--font-work-sans)] leading-relaxed">
               A spicy, peppery kick that transforms any dish. These beautiful magenta-stemmed greens
@@ -252,7 +252,7 @@ export default function MicroCollection() {
           <div className="p-6">
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">Vital Broccoli</h3>
-              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]">$10.00</span>
+              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]">₹849</span>
             </div>
             <p className="text-[#424843] text-sm italic mb-5 font-[var(--font-work-sans)]">
               Mild, earthy, and high in Sulforaphane.
@@ -287,7 +287,7 @@ export default function MicroCollection() {
           <div className="p-6">
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">Sweet Pea Shoots</h3>
-              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]">$8.00</span>
+              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]">₹649</span>
             </div>
             <p className="text-[#424843] text-sm italic mb-5 font-[var(--font-work-sans)]">
               Sweet, tender, and elegant tendrils.
@@ -327,7 +327,7 @@ export default function MicroCollection() {
               <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">
                 AgriNest Signature Mix
               </h3>
-              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00] ml-2 shrink-0">$12.00</span>
+              <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00] ml-2 shrink-0">₹999</span>
             </div>
             <p className="text-[#424843] text-sm italic mb-5 font-[var(--font-work-sans)]">
               Balanced, colorful, and diverse profile.

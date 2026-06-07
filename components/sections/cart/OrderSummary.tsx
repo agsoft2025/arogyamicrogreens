@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import FadeIn from "@/components/animations/FadeIn";
+import { formatCurrency } from "@/lib/currency";
 
 interface OrderSummaryProps {
   subtotal: number;
@@ -53,12 +54,12 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
 
         {/* Line items */}
         <div className="space-y-4 mb-6">
-          <SummaryRow label="Subtotal" value={`$${subtotal.toFixed(2)}`} />
+          <SummaryRow label="Subtotal" value={formatCurrency(subtotal)} />
 
           {discount > 0 && (
             <SummaryRow
               label="Promo (HARVEST15)"
-              value={`-$${discount.toFixed(2)}`}
+              value={"-" + formatCurrency(discount)}
               valueClass="text-[#386b00] font-bold"
             />
           )}
@@ -69,7 +70,7 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
             valueClass="text-[#386b00] font-medium"
           />
 
-          <SummaryRow label="Tax" value={`$${tax.toFixed(2)}`} />
+          <SummaryRow label="Tax" value={formatCurrency(tax)} />
 
           <div className="border-t border-[#c1c8c1] pt-4 flex justify-between items-end">
             <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">
@@ -77,14 +78,14 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
             </span>
             <AnimatePresence mode="wait">
               <motion.span
-                key={total.toFixed(2)}
+                key={total}
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.22 }}
                 className="font-[var(--font-libre-caslon)] text-[32px] font-bold text-[#032616]"
               >
-                ${total.toFixed(2)}
+                {formatCurrency(total)}
               </motion.span>
             </AnimatePresence>
           </div>

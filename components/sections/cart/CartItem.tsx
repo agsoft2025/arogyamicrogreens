@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatCurrency } from "@/lib/currency";
 
 export interface CartItemData {
   id: string;
   name: string;
   description: string;
-  price: number;        // unit price in dollars
+  price: number;        // unit price in INR
   quantity: number;
   badge?: string;
   badgeVariant?: "bestseller" | "subscription" | "new" | "organic";
@@ -47,7 +48,7 @@ export default function CartItem({
 
   const increment = () => onQuantityChange(item.id, item.quantity + 1);
 
-  const lineTotal = (item.price * item.quantity).toFixed(2);
+  const lineTotal = item.price * item.quantity;
   const variant = item.badgeVariant ?? "organic";
 
   return (
@@ -154,7 +155,7 @@ export default function CartItem({
               transition={{ duration: 0.2 }}
               className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]"
             >
-              ${lineTotal}
+              {formatCurrency(lineTotal)}
             </motion.span>
           </AnimatePresence>
         </div>

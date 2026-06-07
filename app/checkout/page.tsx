@@ -30,7 +30,7 @@ const DEFAULT_ITEMS: SummaryItem[] = [
     id: "gourmet-mix",
     name: "Gourmet Micro Mix",
     quantity: 2,
-    price: 12.0,
+    price: 999,
     image:
       "https://lh3.googleusercontent.com/aida/AP1WRLvC22NA1goRvJW71JaUpgVyUvo97noiLIad3EK7P47w15iVEtt84GNtBLOpk8374hbWM9iZJWInC3lMSF6cAp9xPf2wbbjRACBuyLaK4wkk9O22BBWBksMZO1fm9Y7P3byezBRVF0l0eZ-QhCI5Qvlvb-YPl1HxlhizPW7vX1tC9q3Qew-INB8Z7WZeaItNQ4tUNZHNQIhEuhIZwovytSVBqFnERyCaJhbYLbZoeopHhsfEUnsqjqDF9JE",
   },
@@ -38,7 +38,7 @@ const DEFAULT_ITEMS: SummaryItem[] = [
     id: "wheatgrass-kit",
     name: "Wheatgrass Vitality Kit",
     quantity: 1,
-    price: 18.5,
+    price: 1539,
     image:
       "https://lh3.googleusercontent.com/aida/AP1WRLvxVL-OmSx83t8sF6VUZ-osAboQLjusViw3nYPiAe1dXwwl1TkQREsv3qkmiBf3ZGguunsusgR_9UNqSZ5BxYB6PydLAx7Oc64uZ2J9kHn_yoRF80u8wngdhP9OhCAfu56Kg0elgD6m11ObyEZbPaAAi496xTsjkopppbYmtVQ310Gdp2V5WOPne-haXRmDEKhWQGFJuJ0sTr1wwOhAC1gN7Of5N93N9N2o2FvLSAjf265q95F7z_4Dkpc",
   },
@@ -97,7 +97,7 @@ export default function CheckoutPage() {
   /* ── Processing state ── */
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const shippingCost = delivery === "express" ? 12 : 0;
+  const shippingCost = delivery === "express" ? 999 : 0;
 
   /* ── Handlers ── */
   const handleShippingChange = (field: keyof ShippingData, value: string) => {

@@ -17,7 +17,7 @@ const stages = ["All Stages", "Ready to Eat", "Germinating"];
 export default function FilterSidebar({ onFiltersChange }: FilterSidebarProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["Fresh Greens"]);
   const [selectedStage, setSelectedStage] = useState("All Stages");
-  const [maxPrice, setMaxPrice] = useState(100);
+  const [maxPrice, setMaxPrice] = useState(8000);
 
   const toggleCategory = (cat: string) => {
     const updated = selectedCategories.includes(cat)
@@ -40,8 +40,8 @@ export default function FilterSidebar({ onFiltersChange }: FilterSidebarProps) {
   const resetFilters = () => {
     setSelectedCategories(["Fresh Greens"]);
     setSelectedStage("All Stages");
-    setMaxPrice(100);
-    onFiltersChange?.({ categories: ["Fresh Greens"], stage: "All Stages", maxPrice: 100 });
+    setMaxPrice(8000);
+    onFiltersChange?.({ categories: ["Fresh Greens"], stage: "All Stages", maxPrice: 8000 });
   };
 
   return (
@@ -123,14 +123,14 @@ export default function FilterSidebar({ onFiltersChange }: FilterSidebarProps) {
         <input
           type="range"
           min={0}
-          max={100}
+          max={8000}
           value={maxPrice}
           onChange={(e) => handlePrice(Number(e.target.value))}
           className="w-full accent-[#386b00] cursor-pointer"
         />
         <div className="flex justify-between mt-2">
-          <span className="text-[11px] text-[#424843] font-[var(--font-work-sans)]">$0</span>
-          <span className="text-[11px] text-[#424843] font-[var(--font-work-sans)]">$100+</span>
+          <span className="text-[11px] text-[#424843] font-[var(--font-work-sans)]">₹0</span>
+          <span className="text-[11px] text-[#424843] font-[var(--font-work-sans)]">₹8,000+</span>
         </div>
       </div>
 
