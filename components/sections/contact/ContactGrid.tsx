@@ -1,0 +1,343 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import FadeIn from "@/components/animations/FadeIn";
+
+type FormState = "idle" | "loading" | "success" | "error";
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
+function validate(name: string, email: string, message: string): FormErrors {
+  const errs: FormErrors = {};
+  if (!name.trim()) errs.name = "Full name is required.";
+  if (!email.trim()) errs.email = "Email address is required.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    errs.email = "Please enter a valid email.";
+  if (!message.trim()) errs.message = "Message cannot be empty.";
+  return errs;
+}
+
+function InputField({
+  label,
+  id,
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  error,
+}: {
+  label: string;
+  id: string;
+  type?: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+  error?: string;
+}) {
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className="block font-bold text-[11px] tracking-widest uppercase text-[#424843] mb-2 font-[var(--font-work-sans)]"
+      >
+        {label}
+      </label>
+      <input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`w-full bg-[#fafaf4] border rounded-lg px-4 py-3.5 text-[#1a1c19] text-sm outline-none transition-all font-[var(--font-work-sans)] placeholder:text-[#727973] focus:border-[#386b00] focus:ring-2 focus:ring-[#386b00]/20 ${
+          error ? "border-[#ba1a1a] ring-2 ring-[#ba1a1a]/20" : "border-[#c1c8c1]"
+        }`}
+      />
+      <AnimatePresence>
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mt-1.5 text-[11px] text-[#ba1a1a] font-[var(--font-work-sans)]"
+          >
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+export default function ContactGrid() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("General Inquiry");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [formState, setFormState] = useState<FormState>("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs = validate(name, email, message);
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
+    setErrors({});
+    setFormState("loading");
+
+    // Simulate API call
+    await new Promise((r) => setTimeout(r, 1500));
+    setFormState("success");
+    setName(""); setEmail(""); setSubject("General Inquiry"); setMessage("");
+    setTimeout(() => setFormState("idle"), 4000);
+  };
+
+  return (
+    <section className="max-w-[1280px] mx-auto px-5 md:px-16 py-20">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        {/* ── Contact Form (7 cols) ── */}
+        <FadeIn direction="left" className="lg:col-span-7">
+          <div
+            className="bg-white p-8 md:p-10 rounded-xl border border-[#e3e3dd]"
+            style={{ boxShadow: "0 4px 16px rgba(27,60,42,0.09)" }}
+          >
+            <h2 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616] mb-8">
+              Send us a Message
+            </h2>
+
+            <form onSubmit={handleSubmit} noValidate className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <InputField
+                  label="Full Name"
+                  id="name"
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={setName}
+                  error={errors.name}
+                />
+                <InputField
+                  label="Email Address"
+                  id="email"
+                  type="email"
+                  placeholder="john@example.com"
+                  value={email}
+                  onChange={setEmail}
+                  error={errors.email}
+                />
+              </div>
+
+              {/* Subject */}
+              <div>
+                <label
+                  htmlFor="subject"
+                  className="block font-bold text-[11px] tracking-widest uppercase text-[#424843] mb-2 font-[var(--font-work-sans)]"
+                >
+                  Subject
+                </label>
+                <div className="relative">
+                  <select
+                    id="subject"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    className="w-full appearance-none bg-[#fafaf4] border border-[#c1c8c1] rounded-lg px-4 py-3.5 text-[#1a1c19] text-sm outline-none focus:border-[#386b00] focus:ring-2 focus:ring-[#386b00]/20 transition-all font-[var(--font-work-sans)] cursor-pointer"
+                  >
+                    <option>General Inquiry</option>
+                    <option>Subscription Help</option>
+                    <option>Workshop Information</option>
+                    <option>Wholesale Opportunities</option>
+                    <option>Delivery Issue</option>
+                  </select>
+                  <svg
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#424843] pointer-events-none"
+                    fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Message */}
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block font-bold text-[11px] tracking-widest uppercase text-[#424843] mb-2 font-[var(--font-work-sans)]"
+                >
+                  Your Message
+                </label>
+                <textarea
+                  id="message"
+                  rows={5}
+                  placeholder="How can we help you today?"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className={`w-full bg-[#fafaf4] border rounded-lg px-4 py-3.5 text-[#1a1c19] text-sm outline-none resize-none transition-all font-[var(--font-work-sans)] placeholder:text-[#727973] focus:border-[#386b00] focus:ring-2 focus:ring-[#386b00]/20 ${
+                    errors.message ? "border-[#ba1a1a] ring-2 ring-[#ba1a1a]/20" : "border-[#c1c8c1]"
+                  }`}
+                />
+                <AnimatePresence>
+                  {errors.message && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="mt-1.5 text-[11px] text-[#ba1a1a] font-[var(--font-work-sans)]"
+                    >
+                      {errors.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Submit button */}
+              <motion.button
+                type="submit"
+                whileHover={formState === "idle" ? { scale: 1.01 } : {}}
+                whileTap={formState === "idle" ? { scale: 0.98 } : {}}
+                disabled={formState === "loading" || formState === "success"}
+                className={`w-full py-4 rounded-lg font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] flex items-center justify-center gap-2 transition-colors ${
+                  formState === "success"
+                    ? "bg-[#386b00] text-white"
+                    : formState === "loading"
+                    ? "bg-[#032616]/70 text-white cursor-wait"
+                    : "bg-[#032616] text-white hover:bg-[#386b00]"
+                }`}
+              >
+                {formState === "loading" && (
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z" />
+                  </svg>
+                )}
+                {formState === "success" && (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path d="m5 13 4 4L19 7" />
+                  </svg>
+                )}
+                {formState === "loading"
+                  ? "Sending..."
+                  : formState === "success"
+                  ? "Message Sent!"
+                  : (
+                    <>
+                      Send Message
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="m22 2-7 20-4-9-9-4 20-7z" />
+                      </svg>
+                    </>
+                  )}
+              </motion.button>
+            </form>
+          </div>
+        </FadeIn>
+
+        {/* ── Right Sidebar (5 cols) ── */}
+        <div className="lg:col-span-5 flex flex-col gap-6">
+
+          {/* Support Hub */}
+          <FadeIn direction="right" delay={0.1}>
+            <div className="bg-[#1b3c2a] text-white p-8 rounded-xl" style={{ boxShadow: "0 4px 16px rgba(27,60,42,0.2)" }}>
+              <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold mb-7">Support Hub</h3>
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                      </svg>
+                    ),
+                    label: "Email Us",
+                    value: "hello@agrinest.com",
+                  },
+                  {
+                    icon: (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z" />
+                      </svg>
+                    ),
+                    label: "Call Us",
+                    value: "+1 (555) GROW-NOW",
+                  },
+                ].map((item) => (
+                  <motion.div
+                    key={item.label}
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="bg-[#386b00] p-3 rounded-lg shrink-0">{item.icon}</div>
+                    <div>
+                      <p className="font-bold text-[10px] tracking-widest uppercase opacity-60 font-[var(--font-work-sans)] mb-0.5">
+                        {item.label}
+                      </p>
+                      <p className="font-[var(--font-work-sans)] text-base">{item.value}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Location card */}
+          <FadeIn direction="right" delay={0.2} className="flex-1">
+            <div
+              className="bg-white rounded-xl border border-[#e3e3dd] overflow-hidden flex flex-col"
+              style={{ boxShadow: "0 4px 16px rgba(27,60,42,0.09)" }}
+            >
+              {/* Map image */}
+              <div className="h-48 relative overflow-hidden">
+                <img
+                  src="https://lh3.googleusercontent.com/aida/AP1WRLuRo7_vp4g_mLRZ3HDynsF98LSQB7CtbTjW5BtPK6NDMqG9KpiP1FvX61Aw-d4CEOw2KuTufWLyDB2SeCqJ-AGZcUXgc9B8YMSu8yi_SWnPdTrF9QN8lZArQM5UoGhUXU-7uYYVI0--ZOli5eE6AN2_Ehaj8oKeT4N-Ax7AgLD0LKlOUgYJpWyE9bGPBtZGbnuEb0P0duRYUoD-SvAL3g3GIpyiOAWrznBzAw-GFeNYsdZpvPB4jMMGMNE"
+                  alt="Urban farm location map"
+                  className="w-full h-full object-cover grayscale opacity-60"
+                />
+                {/* Pin */}
+                <motion.div
+                  initial={{ y: -10, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <div className="bg-[#386b00] text-white p-3 rounded-full shadow-xl">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                    </svg>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className="p-7">
+                <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616] mb-2">
+                  The Urban Farm
+                </h3>
+                <p className="text-[#424843] font-[var(--font-work-sans)] mb-5 leading-relaxed">
+                  422 Greenway Ave, Suite 100
+                  <br />
+                  Eco-District, Portland, OR 97201
+                </p>
+                <div className="flex items-start gap-3">
+                  <svg className="w-4 h-4 text-[#386b00] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <div className="text-sm text-[#424843] font-[var(--font-work-sans)] leading-relaxed">
+                    Mon–Fri: 8am – 6pm
+                    <br />
+                    Sat: 9am – 4pm
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
