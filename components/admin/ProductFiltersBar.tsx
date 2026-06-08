@@ -5,23 +5,19 @@ import { motion } from "framer-motion";
 interface ProductFiltersBarProps {
   search: string;
   onSearchChange: (v: string) => void;
-  category: string;
-  onCategoryChange: (v: string) => void;
-  stockStatus: string;
-  onStockStatusChange: (v: string) => void;
+  status: string;
+  onStatusChange: (v: string) => void;
   onReset: () => void;
 }
 
 export default function ProductFiltersBar({
   search,
   onSearchChange,
-  category,
-  onCategoryChange,
-  stockStatus,
-  onStockStatusChange,
+  status,
+  onStatusChange,
   onReset,
 }: ProductFiltersBarProps) {
-  const hasActiveFilters = search || category || stockStatus;
+  const hasActiveFilters = search || status;
 
   return (
     <motion.section
@@ -53,42 +49,21 @@ export default function ProductFiltersBar({
         </div>
       </div>
 
-      {/* Category */}
+      {/* Status */}
       <div className="flex flex-col gap-1.5 min-w-[160px]">
         <label className="text-[11px] font-bold tracking-widest uppercase text-[#727973] font-[var(--font-work-sans)]">
-          Category
+          Status
         </label>
         <div className="relative">
           <select
-            value={category}
-            onChange={(e) => onCategoryChange(e.target.value)}
-            className="w-full appearance-none border border-[#e3e3dd] rounded-lg px-3 py-2.5 pr-8 text-sm text-[#1a1c19] font-[var(--font-work-sans)] bg-white focus:outline-none focus:border-[#386b00] focus:ring-1 focus:ring-[#386b00]/30 transition-colors cursor-pointer"
-          >
-            <option value="">All Categories</option>
-            <option value="Fresh Greens">Fresh Greens</option>
-            <option value="Seeds">Seeds</option>
-            <option value="Kits">Kits</option>
-            <option value="Herbs">Herbs</option>
-          </select>
-          <ChevronIcon />
-        </div>
-      </div>
-
-      {/* Stock Status */}
-      <div className="flex flex-col gap-1.5 min-w-[160px]">
-        <label className="text-[11px] font-bold tracking-widest uppercase text-[#727973] font-[var(--font-work-sans)]">
-          Stock Status
-        </label>
-        <div className="relative">
-          <select
-            value={stockStatus}
-            onChange={(e) => onStockStatusChange(e.target.value)}
+            value={status}
+            onChange={(e) => onStatusChange(e.target.value)}
             className="w-full appearance-none border border-[#e3e3dd] rounded-lg px-3 py-2.5 pr-8 text-sm text-[#1a1c19] font-[var(--font-work-sans)] bg-white focus:outline-none focus:border-[#386b00] focus:ring-1 focus:ring-[#386b00]/30 transition-colors cursor-pointer"
           >
             <option value="">All Statuses</option>
-            <option value="in_stock">In Stock</option>
-            <option value="low_stock">Low Stock</option>
-            <option value="out_of_stock">Out of Stock</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="draft">Draft</option>
           </select>
           <ChevronIcon />
         </div>

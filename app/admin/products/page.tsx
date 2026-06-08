@@ -1,192 +1,159 @@
 "use client";
 
 import { formatCurrency } from "@/lib/currency";
-import { useState, useMemo, useCallback, type ReactNode } from "react";
+import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import FeaturedToggle from "@/components/admin/FeaturedToggle";
 import ProductFiltersBar from "@/components/admin/ProductFiltersBar";
+import AddProductDialog from "@/components/admin/products/AddProductDialog";
+import DeleteProductDialog from "@/components/admin/products/DeleteProductDialog";
+import { useProducts } from "@/hooks/useProducts";
+import type { Product, ProductStatus } from "@/types/product.types";
 
-/* ─── Types ─────────────────────────────────────────── */
-type StockStatus = "in_stock" | "low_stock" | "out_of_stock";
-type Category = "Fresh Greens" | "Seeds" | "Kits" | "Herbs";
+/* ── Status config ───────────────────────────────────────────── */
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  sku: string;
-  category: Category;
-  price: number;
-  stockStatus: StockStatus;
-  stockCount?: number;
-  featured: boolean;
-  image: string;
+const STATUS_STYLES: Record<ProductStatus, { bg: string; text: string; dot: string; label: string }> = {
+  active:   { bg: "bg-[#d4f4a0]",       text: "text-[#386b00]",  dot: "bg-[#386b00]",  label: "Active" },
+  inactive: { bg: "bg-[#e1e4da]",       text: "text-[#444841]",  dot: "bg-[#9ca8a3]",  label: "Inactive" },
+  draft:    { bg: "bg-amber-50",        text: "text-amber-700",   dot: "bg-amber-400",  label: "Draft" },
+};
+
+function stockLabel(stock: number): { text: string; dot: string } {
+  if (stock === 0) return { text: "Out of Stock", dot: "bg-[#ba1a1a]" };
+  if (stock <= 10) return { text: `Low (${stock})`,  dot: "bg-amber-400" };
+  return { text: `${stock} in stock`, dot: "bg-[#386b00]" };
 }
 
-/* ─── Mock Data ──────────────────────────────────────── */
-const IMG = {
-  broccoli:
-    "https://lh3.googleusercontent.com/aida/AP1WRLtEukCwKJQpnTCBmrmH5qZgoMIs2PhBA_CPFbBUjRRYyjAuX25uSuoIrTp2XMD3EkB7hRzPpWojwndpb9T6UyYOMqcOi_ulO4mJCpcIrgEELPE1wQnvIgtJzMzgQ7PcKPJMLbyJG2lleMwlUMeI2o-8fihKGUKGjWVWUf_QH9AH1hck3kT1rAdB1wiscXJTxrpGT-RIrHh0P5KjZwc6_ZYvfC_qwlKsZigY2FQyT8POOUIjGIgFIR9Tr6c",
-  kale: "https://lh3.googleusercontent.com/aida/AP1WRLs4WbQAcI8dhqB_-xyb1J0CzujXCucOboTYUPnEwUPdzI0OmhbVrkxo8q5QgG_4bgBPVp8uA3djdJ1b-OanyUXGYYl9_YHYRy7hFwB-1YYEP3dlOU63PAcCGx1k0wUMr7xIOJSDvRNSRNX_o_UVl_YWnq-PaxQhLNefFsos0Wo9ayXks9F3TCS-AP9v_mN351xqYhAlIWyeUJPHWqc_vzFuhIADWF5FWHJttqgNxO65iXCqW8Vqsm3u0Q",
-  kit: "https://lh3.googleusercontent.com/aida/AP1WRLsRqGJbHRKj_9kC5uxSJnkFc1JdXKnBgt0BqlmjsHNFrAoRK-omyQbFobbxYRZLEP62RBGwr4Xej6lWfMO5cn2_JqmYwIjTKL4-MNAJFz-McZykH-ad2ybr_-eZLkPbdxXrd8A7PC7rLuVMz0vINiIPcGdn5YwrIO76rV7j23fs40X0DEwHAcSeF8ucgxp2VTTW7mI3-zrFbyF-hEbGR0p6RDN4Mvgjyf-h-jGuPYVr0W7tRYHxmkThrA",
-  radish:
-    "https://lh3.googleusercontent.com/aida/AP1WRLt5_eT7G-myuHtQv_D8uKJf0eqVqRYUTeUuIvP0WqrrhX70xN6Z6sVbX2wkehLPwru5t5AQDPZooP_efzj58CvSRwH9C2pQ6uxT0RnW8xvEoRUhkjtyYAhQa4V9531elo0FiQ7R8ffzLoaP3HOriR8XYItwMB2qKi9ZEDE1Q1ckXGdgcG-s5RbwOopZ7vP4Q7rT4bPMrKUj2OjFZ1esiLFWcazUVIK_eaKLn0F6A7gIi8SI2f9lV7tbZeY",
-  admin:
-    "https://lh3.googleusercontent.com/aida/AP1WRLtzMUGsKqS72MVxBBvmffxdhrWDhg7GqEELXCG7XyMSzVpjdts4vu4LzoLCYznxXvu4T5KP2hFSd7yFiJh_je2KeyKD8_srDGMveI8Id3kw2vc2a1NaKafWOseNhpzs5XtnZNYozQO5nGJ885v6IPQdK-I7yWx491PbaOIDmGlqIZ8vk6zO2vhAuNEU2LPZzPWlZWzHIMlFF_O-wNEiZmeVQrwwB39A729fc14wdVZJFyeivkrbrtnf9b8",
-};
+function getImageUrl(product: Product): string {
+  const src = product.featuredImage ?? product.images?.[0];
+  if (!src) return "";
+  if (src.startsWith("http")) return src;
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
+  return `${base.replace("/api/v1", "")}/uploads/${src}`;
+}
 
-const INITIAL_PRODUCTS: Product[] = [
-  { id: "1", name: "Broccoli Microgreens", description: "Tray Size: 10x20", sku: "MG-BR-001", category: "Fresh Greens", price: 1549, stockStatus: "in_stock", featured: true, image: IMG.broccoli },
-  { id: "2", name: "Red Russian Kale Seeds", description: "Organic Certified", sku: "SD-KL-042", category: "Seeds", price: 999, stockStatus: "low_stock", stockCount: 14, featured: false, image: IMG.kale },
-  { id: "3", name: "Chef's Starter Kit", description: "Includes 3 Varieties", sku: "KT-CS-005", category: "Kits", price: 3749, stockStatus: "out_of_stock", featured: true, image: IMG.kit },
-  { id: "4", name: "Purple Radish Greens", description: "Bulk Option Available", sku: "MG-PR-022", category: "Fresh Greens", price: 1399, stockStatus: "in_stock", featured: false, image: IMG.radish },
-  { id: "5", name: "Sunflower Microgreens", description: "Extra Crunchy & Nutty", sku: "MG-SF-011", category: "Fresh Greens", price: 1849, stockStatus: "in_stock", featured: true, image: IMG.broccoli },
-  { id: "6", name: "Pea Shoot Seeds", description: "Non-GMO Certified", sku: "SD-PS-019", category: "Seeds", price: 799, stockStatus: "in_stock", stockCount: 45, featured: false, image: IMG.kale },
-  { id: "7", name: "Harvest Essentials Kit", description: "5 Variety Bundle", sku: "KT-HE-003", category: "Kits", price: 5699, stockStatus: "in_stock", featured: true, image: IMG.kit },
-  { id: "8", name: "Amaranth Microgreens", description: "Rich in Protein", sku: "MG-AM-033", category: "Fresh Greens", price: 1999, stockStatus: "low_stock", stockCount: 8, featured: false, image: IMG.radish },
-  { id: "9", name: "Basil Herb Blend", description: "Italian & Thai Mix", sku: "HB-BL-007", category: "Herbs", price: 1629, stockStatus: "in_stock", featured: false, image: IMG.broccoli },
-  { id: "10", name: "Arugula Microgreens", description: "Peppery & Vibrant", sku: "MG-AR-028", category: "Fresh Greens", price: 1449, stockStatus: "in_stock", featured: false, image: IMG.radish },
-  { id: "11", name: "Wheatgrass Seeds", description: "Cold-Pressed Grade", sku: "SD-WG-055", category: "Seeds", price: 1249, stockStatus: "out_of_stock", featured: false, image: IMG.kale },
-  { id: "12", name: "Beginner Grow Kit", description: "Perfect Starter Set", sku: "KT-BG-001", category: "Kits", price: 2449, stockStatus: "in_stock", featured: true, image: IMG.kit },
-  { id: "13", name: "Cilantro Microgreens", description: "Zesty & Aromatic", sku: "MG-CL-015", category: "Herbs", price: 1349, stockStatus: "in_stock", featured: false, image: IMG.broccoli },
-  { id: "14", name: "Flax Seeds Organic", description: "Cold-Pressed Ready", sku: "SD-FL-039", category: "Seeds", price: 949, stockStatus: "low_stock", stockCount: 21, featured: false, image: IMG.kale },
-  { id: "15", name: "Watercress Greens", description: "Hydroponic Grown", sku: "MG-WC-044", category: "Fresh Greens", price: 1719, stockStatus: "in_stock", featured: false, image: IMG.radish },
-  { id: "16", name: "Farm Bundle Pro", description: "10 Tray Set + Soil", sku: "KT-FB-009", category: "Kits", price: 7449, stockStatus: "in_stock", featured: true, image: IMG.kit },
-  { id: "17", name: "Pea Shoots Fresh", description: "Sweet & Tender", sku: "MG-PS-020", category: "Fresh Greens", price: 1299, stockStatus: "in_stock", featured: false, image: IMG.broccoli },
-  { id: "18", name: "Chia Seeds Raw", description: "Superfood Grade", sku: "SD-CH-061", category: "Seeds", price: 1099, stockStatus: "in_stock", stockCount: 88, featured: false, image: IMG.kale },
-  { id: "19", name: "Dill Herb Microgreens", description: "Fresh Picked Daily", sku: "HB-DL-012", category: "Herbs", price: 1499, stockStatus: "low_stock", stockCount: 6, featured: false, image: IMG.broccoli },
-  { id: "20", name: "Kohlrabi Microgreens", description: "Mild & Crunchy", sku: "MG-KH-037", category: "Fresh Greens", price: 1749, stockStatus: "in_stock", featured: false, image: IMG.radish },
-  { id: "21", name: "Sunflower Seeds Raw", description: "Hulled & Ready", sku: "SD-SN-047", category: "Seeds", price: 729, stockStatus: "in_stock", stockCount: 120, featured: false, image: IMG.kale },
-  { id: "22", name: "Chef's Harvest Kit", description: "Restaurant Grade", sku: "KT-CH-015", category: "Kits", price: 4599, stockStatus: "out_of_stock", featured: false, image: IMG.kit },
-  { id: "23", name: "Mustard Microgreens", description: "Spicy & Nutritious", sku: "MG-MS-031", category: "Fresh Greens", price: 1199, stockStatus: "in_stock", featured: false, image: IMG.broccoli },
-  { id: "24", name: "Fennel Herb Blend", description: "Anise-Flavored Fresh", sku: "HB-FN-018", category: "Herbs", price: 1889, stockStatus: "in_stock", featured: false, image: IMG.radish },
-  { id: "25", name: "Buckwheat Microgreens", description: "Earthy & Nutritious", sku: "MG-BW-049", category: "Fresh Greens", price: 1599, stockStatus: "low_stock", stockCount: 11, featured: false, image: IMG.broccoli },
-  { id: "26", name: "Hemp Seeds Hulled", description: "High Protein Grade", sku: "SD-HM-072", category: "Seeds", price: 1379, stockStatus: "in_stock", stockCount: 34, featured: false, image: IMG.kale },
-  { id: "27", name: "Micro Garden Starter", description: "All-in-One Solution", sku: "KT-MG-021", category: "Kits", price: 3199, stockStatus: "in_stock", featured: false, image: IMG.kit },
-  { id: "28", name: "Cabbage Microgreens", description: "Sweet & Delicate", sku: "MG-CB-026", category: "Fresh Greens", price: 1149, stockStatus: "in_stock", featured: false, image: IMG.radish },
-  { id: "29", name: "Parsley Herb Tray", description: "Flat Leaf Variety", sku: "HB-PR-024", category: "Herbs", price: 1469, stockStatus: "out_of_stock", featured: false, image: IMG.broccoli },
-  { id: "30", name: "Quinoa Seeds Organic", description: "Pre-Rinsed & Ready", sku: "SD-QN-083", category: "Seeds", price: 1529, stockStatus: "in_stock", stockCount: 52, featured: false, image: IMG.kale },
-  { id: "31", name: "Deluxe Grower's Kit", description: "Pro Tier Bundle", sku: "KT-DX-031", category: "Kits", price: 9199, stockStatus: "in_stock", featured: true, image: IMG.kit },
-  { id: "32", name: "Beet Microgreens", description: "Ruby Red Stems", sku: "MG-BT-058", category: "Fresh Greens", price: 1929, stockStatus: "in_stock", featured: false, image: IMG.radish },
-];
+/* ── Page ────────────────────────────────────────────────────── */
 
-/* ─── Constants ──────────────────────────────────────── */
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 10;
 
-const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
-  "Fresh Greens": { bg: "bg-[#1b3c2a]/10", text: "text-[#1b3c2a]" },
-  Seeds: { bg: "bg-[#e1e4da]", text: "text-[#444841]" },
-  Kits: { bg: "bg-[#a5f95b]", text: "text-[#3b7100]" },
-  Herbs: { bg: "bg-[#d4f4a0]", text: "text-[#386b00]" },
-};
-
-const STOCK_CONFIG: Record<StockStatus, { dot: string; label: (count?: number) => string }> = {
-  in_stock: { dot: "bg-[#386b00]", label: () => "In Stock" },
-  low_stock: { dot: "bg-[#f59e0b]", label: (n) => `Low Stock${n ? ` (${n})` : ""}` },
-  out_of_stock: { dot: "bg-[#ba1a1a]", label: () => "Out of Stock" },
-};
-
-/* ─── Page ───────────────────────────────────────────── */
 export default function AdminProductsPage() {
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
-  const [stockStatus, setStockStatus] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
-  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [search, setSearch]             = useState("");
+  const [status, setStatus]             = useState("");
+  const [currentPage, setCurrentPage]   = useState(1);
+  const [dialogOpen, setDialogOpen]     = useState(false);
+  const [editProduct, setEditProduct]   = useState<Product | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
+  const [successMsg, setSuccessMsg]     = useState("");
+  // Local featured overrides (optimistic)
+  const [featuredOverrides, setFeaturedOverrides] = useState<Record<string, boolean>>({});
 
-  /* Filtering */
-  const filtered = useMemo(() => {
-    return products.filter((p) => {
-      const q = search.toLowerCase();
-      const matchSearch =
-        !search ||
-        p.name.toLowerCase().includes(q) ||
-        p.sku.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q);
-      const matchCategory = !category || p.category === category;
-      const matchStatus = !stockStatus || p.stockStatus === stockStatus;
-      return matchSearch && matchCategory && matchStatus;
-    });
-  }, [products, search, category, stockStatus]);
+  /* Real API */
+  const { products, pagination, loading, error, refetch, setParams } = useProducts({
+    page: 1,
+    limit: ITEMS_PER_PAGE,
+  });
 
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const safePage = Math.min(currentPage, Math.max(totalPages, 1));
-  const paginated = filtered.slice(
-    (safePage - 1) * ITEMS_PER_PAGE,
-    safePage * ITEMS_PER_PAGE
-  );
+  /* Debounce search 400ms → push to API params */
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setParams({ search: search || undefined, page: 1 });
+      setCurrentPage(1);
+    }, 400);
+    return () => clearTimeout(t);
+  }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const showingFrom = (safePage - 1) * ITEMS_PER_PAGE + 1;
-  const showingTo = Math.min(safePage * ITEMS_PER_PAGE, filtered.length);
+  /* Status filter → push to API params */
+  useEffect(() => {
+    setParams({ status: (status as ProductStatus) || undefined, page: 1 });
+    setCurrentPage(1);
+  }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* Page change → push to API params */
+  useEffect(() => {
+    setParams({ page: currentPage });
+  }, [currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const totalPages = pagination?.totalPages ?? 1;
+  const total      = pagination?.total ?? products.length;
 
   /* Handlers */
-  const handleFilterChange = useCallback(
-    (setter: (v: string) => void) => (v: string) => {
-      setter(v);
-      setCurrentPage(1);
-    },
-    []
-  );
-
   const handleReset = useCallback(() => {
     setSearch("");
-    setCategory("");
-    setStockStatus("");
+    setStatus("");
     setCurrentPage(1);
+    setParams({ search: undefined, status: undefined, page: 1 });
+  }, [setParams]);
+
+  const handleToggleFeatured = useCallback((id: string, current: boolean) => {
+    setFeaturedOverrides((prev) => ({ ...prev, [id]: !current }));
   }, []);
 
-  const handleToggleFeatured = useCallback((id: string) => {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, featured: !p.featured } : p))
-    );
-  }, []);
+  const handleAddSuccess = useCallback(() => {
+    refetch();
+    setSuccessMsg("Product created successfully!");
+    setTimeout(() => setSuccessMsg(""), 4000);
+  }, [refetch]);
 
-  const handleDeleteConfirm = useCallback(
-    async (id: string) => {
-      setConfirmDeleteId(null);
-      setDeletingIds((s) => new Set(s).add(id));
-      await new Promise((r) => setTimeout(r, 350));
-      setProducts((prev) => prev.filter((p) => p.id !== id));
-      setDeletingIds((s) => {
-        const next = new Set(s);
-        next.delete(id);
-        return next;
-      });
-    },
-    []
-  );
+  const handleEditSuccess = useCallback(() => {
+    refetch();
+    setSuccessMsg("Product updated successfully!");
+    setTimeout(() => setSuccessMsg(""), 4000);
+  }, [refetch]);
 
-  /* Pagination pages to show */
-  const pageNums = useMemo(() => {
+  const handleDeleteSuccess = useCallback(() => {
+    refetch();
+    setSuccessMsg("Product deleted successfully!");
+    setTimeout(() => setSuccessMsg(""), 4000);
+  }, [refetch]);
+
+  /* Pagination page numbers */
+  const pageNums: (number | null)[] = (() => {
     if (totalPages <= 5) return Array.from({ length: totalPages }, (_, i) => i + 1);
-    if (safePage <= 3) return [1, 2, 3, null, totalPages];
-    if (safePage >= totalPages - 2) return [1, null, totalPages - 2, totalPages - 1, totalPages];
-    return [1, null, safePage - 1, safePage, safePage + 1, null, totalPages];
-  }, [totalPages, safePage]);
+    if (currentPage <= 3) return [1, 2, 3, null, totalPages];
+    if (currentPage >= totalPages - 2) return [1, null, totalPages - 2, totalPages - 1, totalPages];
+    return [1, null, currentPage - 1, currentPage, currentPage + 1, null, totalPages];
+  })();
+
+  const showingFrom = total === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1;
+  const showingTo   = Math.min(currentPage * ITEMS_PER_PAGE, total);
 
   return (
     <div className="space-y-5 pb-20 md:pb-6">
-      {/* ─── Page Header ─────────────────────────────── */}
+
+      {/* ── Success Toast ──────────────────────────────────────── */}
+      <AnimatePresence>
+        {successMsg && (
+          <motion.div
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-6 right-6 z-[500] flex items-center gap-3 bg-[#032616] text-white text-sm font-[var(--font-work-sans)] rounded-xl px-5 py-3.5 shadow-2xl"
+          >
+            <svg className="w-4 h-4 shrink-0 text-[#a5f95b]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path d="m5 13 4 4L19 7" />
+            </svg>
+            {successMsg}
+            <button onClick={() => setSuccessMsg("")} className="ml-2 opacity-60 hover:opacity-100 transition-opacity">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Page Header ────────────────────────────────────────── */}
       <motion.header
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
       >
-        {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-[12px] font-[var(--font-work-sans)] text-[#727973] mb-4" aria-label="Breadcrumb">
-          <Link href="/admin/dashboard" className="hover:text-[#032616] transition-colors">
-            Dashboard
-          </Link>
-          <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path d="m9 18 6-6-6-6" />
-          </svg>
+          <Link href="/admin/dashboard" className="hover:text-[#032616] transition-colors">Dashboard</Link>
+          <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
           <span className="text-[#1a1c19] font-bold">Product Catalog</span>
         </nav>
 
-        {/* Title row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="font-[var(--font-libre-caslon)] text-[28px] md:text-[32px] font-bold text-[#032616] leading-tight">
@@ -196,44 +163,80 @@ export default function AdminProductsPage() {
               Manage your harvest inventory and storefront listings.
             </p>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 bg-[#386b00] text-white font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] px-5 py-3 rounded-lg shadow-md hover:bg-[#4a8a00] transition-colors shrink-0"
-          >
-            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" /><path d="M12 8v8M8 12h8" />
-            </svg>
-            Add New Product
-          </motion.button>
+          <div className="flex items-center gap-3">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={refetch}
+              title="Refresh"
+              className="p-2.5 border border-[#e3e3dd] text-[#727973] rounded-lg hover:bg-[#f4f4ee] hover:text-[#032616] transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                <path d="M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+              </svg>
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setDialogOpen(true)}
+              className="flex items-center gap-2 bg-[#386b00] text-white font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] px-5 py-3 rounded-lg shadow-md hover:bg-[#4a8a00] transition-colors shrink-0"
+            >
+              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" /><path d="M12 8v8M8 12h8" />
+              </svg>
+              Add New Product
+            </motion.button>
+          </div>
         </div>
       </motion.header>
 
-      {/* ─── Filters ─────────────────────────────────── */}
+      {/* ── Filters ────────────────────────────────────────────── */}
       <ProductFiltersBar
         search={search}
-        onSearchChange={handleFilterChange(setSearch)}
-        category={category}
-        onCategoryChange={handleFilterChange(setCategory)}
-        stockStatus={stockStatus}
-        onStockStatusChange={handleFilterChange(setStockStatus)}
+        onSearchChange={setSearch}
+        status={status}
+        onStatusChange={setStatus}
         onReset={handleReset}
       />
 
-      {/* ─── Table ───────────────────────────────────── */}
+      {/* ── Table Card ─────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
         className="bg-white rounded-xl shadow-sm border border-[#e3e3dd] overflow-hidden"
       >
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[700px]" aria-label="Products table">
-            {/* Head */}
-            <thead className="bg-[#f4f4ee] border-b border-[#e3e3dd]">
-              <tr>
-                {["Product Name", "SKU", "Category", "Price", "Stock Status", "Featured", "Actions"].map(
-                  (col, i) => (
+
+        {/* ── Error state ── */}
+        {!loading && error && (
+          <div className="flex flex-col items-center justify-center py-16 px-6 text-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-[#ffdad6] flex items-center justify-center">
+              <svg className="w-7 h-7 text-[#ba1a1a]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" />
+              </svg>
+            </div>
+            <div>
+              <p className="font-[var(--font-libre-caslon)] text-lg font-bold text-[#032616] mb-1">Failed to load products</p>
+              <p className="text-sm text-[#727973] font-[var(--font-work-sans)]">{error}</p>
+            </div>
+            <motion.button
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+              onClick={refetch}
+              className="text-[11px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] bg-[#032616] text-white px-5 py-2.5 rounded-lg hover:bg-[#386b00] transition-colors"
+            >
+              Try Again
+            </motion.button>
+          </div>
+        )}
+
+        {/* ── Table ── */}
+        {!error && (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[760px]" aria-label="Products table">
+              <thead className="bg-[#f4f4ee] border-b border-[#e3e3dd]">
+                <tr>
+                  {["Product", "SKU", "Price", "Stock", "Status", "Featured", "Actions"].map((col, i) => (
                     <th
                       key={col}
                       className={`px-6 py-4 font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] text-[#1a1c19] whitespace-nowrap ${
@@ -242,252 +245,240 @@ export default function AdminProductsPage() {
                     >
                       {col}
                     </th>
-                  )
-                )}
-              </tr>
-            </thead>
+                  ))}
+                </tr>
+              </thead>
 
-            {/* Body */}
-            <tbody>
-              <AnimatePresence mode="popLayout" initial={false}>
-                {paginated.length === 0 ? (
-                  <tr key="empty">
-                    <td colSpan={7}>
-                      <EmptyState onReset={handleReset} hasFilters={!!(search || category || stockStatus)} />
-                    </td>
-                  </tr>
-                ) : (
-                  paginated.map((product, i) => (
-                    <motion.tr
-                      key={product.id}
-                      layout
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{
-                        opacity: deletingIds.has(product.id) ? 0.4 : 1,
-                        y: 0,
-                        scale: deletingIds.has(product.id) ? 0.98 : 1,
-                      }}
-                      exit={{ opacity: 0, x: -24, transition: { duration: 0.3 } }}
-                      transition={{ delay: i * 0.04, duration: 0.35, ease: [0.25, 0.4, 0.25, 1] }}
-                      className={`border-b border-[#f4f4ee] last:border-0 transition-colors ${
-                        deletingIds.has(product.id)
-                          ? "bg-[#fff5f5]"
-                          : "hover:bg-[#fafaf4]"
-                      }`}
-                    >
-                      {/* Product Name */}
+              <tbody>
+                <AnimatePresence mode="popLayout" initial={false}>
+
+                  {/* Loading skeleton rows */}
+                  {loading && Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+                    <tr key={`skel-${i}`} className="border-b border-[#f4f4ee] last:border-0">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg overflow-hidden bg-[#f4f4ee] shrink-0">
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              className="w-full h-full object-cover"
+                          <div className="w-10 h-10 rounded-lg bg-[#f0f4f0] animate-pulse shrink-0" />
+                          <div className="space-y-1.5">
+                            <div className="h-3.5 w-32 bg-[#f0f4f0] rounded animate-pulse" />
+                            <div className="h-3 w-20 bg-[#f0f4f0] rounded animate-pulse" />
+                          </div>
+                        </div>
+                      </td>
+                      {[1, 2, 3, 4, 5, 6].map((j) => (
+                        <td key={j} className="px-6 py-4">
+                          <div className="h-3.5 w-16 bg-[#f0f4f0] rounded animate-pulse" />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+
+                  {/* Empty state */}
+                  {!loading && products.length === 0 && (
+                    <tr key="empty">
+                      <td colSpan={7}>
+                        <EmptyState onReset={handleReset} hasFilters={!!(search || status)} />
+                      </td>
+                    </tr>
+                  )}
+
+                  {/* Real product rows */}
+                  {!loading && products.map((product, i) => {
+                    const isFeatured = featuredOverrides[product._id] ?? product.isFeatured;
+                    const stockInfo  = stockLabel(product.stock);
+                    const statusCfg  = STATUS_STYLES[product.status] ?? STATUS_STYLES.draft;
+                    const imageUrl   = getImageUrl(product);
+
+                    return (
+                      <motion.tr
+                        key={product._id}
+                        layout
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, x: -24, transition: { duration: 0.3 } }}
+                        transition={{ delay: i * 0.03, duration: 0.35, ease: [0.25, 0.4, 0.25, 1] }}
+                        className="border-b border-[#f4f4ee] last:border-0 transition-colors hover:bg-[#fafaf4]"
+                      >
+                        {/* Product */}
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg overflow-hidden bg-[#f4f4ee] shrink-0">
+                              {imageUrl ? (
+                                <img src={imageUrl} alt={product.name} className="w-full h-full object-cover" />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <svg className="w-5 h-5 text-[#c1c8c1]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" />
+                                    <circle cx="9" cy="9" r="2" />
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                                  </svg>
+                                </div>
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="font-bold text-sm text-[#032616] font-[var(--font-work-sans)] leading-tight truncate max-w-[180px]">
+                                {product.name}
+                              </p>
+                              {product.shortDescription && (
+                                <p className="text-[11px] text-[#9ca8a3] font-[var(--font-work-sans)] mt-0.5 truncate max-w-[180px]">
+                                  {product.shortDescription}
+                                </p>
+                              )}
+                              {product.salePrice && product.salePrice < product.price && (
+                                <span className="inline-block text-[9px] font-bold tracking-widest uppercase text-[#ba1a1a] bg-[#ffdad6] rounded-full px-1.5 py-0.5 mt-0.5 font-[var(--font-work-sans)]">
+                                  SALE
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+
+                        {/* SKU */}
+                        <td className="px-6 py-4">
+                          <span className="text-[12px] text-[#9ca8a3] font-[var(--font-work-sans)] font-medium tabular-nums">
+                            {product.sku}
+                          </span>
+                        </td>
+
+                        {/* Price */}
+                        <td className="px-6 py-4">
+                          <div>
+                            <span className="text-sm font-bold text-[#1a1c19] font-[var(--font-work-sans)] tabular-nums">
+                              {formatCurrency(product.salePrice && product.salePrice < product.price
+                                ? product.salePrice
+                                : product.price)}
+                            </span>
+                            {product.salePrice && product.salePrice < product.price && (
+                              <span className="block text-[11px] text-[#9ca8a3] line-through font-[var(--font-work-sans)] tabular-nums">
+                                {formatCurrency(product.price)}
+                              </span>
+                            )}
+                          </div>
+                        </td>
+
+                        {/* Stock */}
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
+                            <span className={`w-2 h-2 rounded-full shrink-0 ${stockInfo.dot}`} />
+                            <span className="text-[12px] text-[#424843] font-[var(--font-work-sans)]">
+                              {stockInfo.text}
+                            </span>
+                          </div>
+                        </td>
+
+                        {/* Status */}
+                        <td className="px-6 py-4">
+                          <span className={`inline-block text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] px-2.5 py-1 rounded-full ${statusCfg.bg} ${statusCfg.text}`}>
+                            {statusCfg.label}
+                          </span>
+                        </td>
+
+                        {/* Featured */}
+                        <td className="px-6 py-4">
+                          <div className="flex justify-center">
+                            <FeaturedToggle
+                              enabled={isFeatured}
+                              onToggle={() => handleToggleFeatured(product._id, isFeatured)}
                             />
                           </div>
-                          <div>
-                            <p className="font-bold text-sm text-[#032616] font-[var(--font-work-sans)] leading-tight">
-                              {product.name}
-                            </p>
-                            <p className="text-[11px] text-[#9ca8a3] font-[var(--font-work-sans)] mt-0.5">
-                              {product.description}
-                            </p>
+                        </td>
+
+                        {/* Actions */}
+                        <td className="px-6 py-4">
+                          <div className="flex items-center justify-end gap-1">
+                            <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                              aria-label={`Edit ${product.name}`}
+                              onClick={() => setEditProduct(product)}
+                              className="p-2 text-[#9ca8a3] hover:text-[#032616] hover:bg-[#f4f4ee] rounded-lg transition-colors">
+                              <EditIcon />
+                            </motion.button>
+                            <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                              aria-label={`Delete ${product.name}`}
+                              onClick={() => setDeleteTarget(product)}
+                              className="p-2 text-[#9ca8a3] hover:text-[#ba1a1a] hover:bg-[#ffd9d5]/30 rounded-lg transition-colors">
+                              <TrashIcon />
+                            </motion.button>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      </motion.tr>
+                    );
+                  })}
+                </AnimatePresence>
+              </tbody>
+            </table>
+          </div>
+        )}
 
-                      {/* SKU */}
-                      <td className="px-6 py-4">
-                        <span className="text-[12px] text-[#9ca8a3] font-[var(--font-work-sans)] font-medium tabular-nums">
-                          {product.sku}
-                        </span>
-                      </td>
-
-                      {/* Category */}
-                      <td className="px-6 py-4">
-                        <span
-                          className={`inline-block text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] px-2.5 py-1 rounded ${
-                            CATEGORY_STYLES[product.category].bg
-                          } ${CATEGORY_STYLES[product.category].text}`}
-                        >
-                          {product.category}
-                        </span>
-                      </td>
-
-                      {/* Price */}
-                      <td className="px-6 py-4">
-                        <span className="text-sm font-bold text-[#1a1c19] font-[var(--font-work-sans)] tabular-nums">
-                          {formatCurrency(product.price)}
-                        </span>
-                      </td>
-
-                      {/* Stock Status */}
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`w-2 h-2 rounded-full shrink-0 ${STOCK_CONFIG[product.stockStatus].dot}`}
-                          />
-                          <span className="text-[12px] text-[#424843] font-[var(--font-work-sans)]">
-                            {STOCK_CONFIG[product.stockStatus].label(product.stockCount)}
-                          </span>
-                        </div>
-                      </td>
-
-                      {/* Featured Toggle */}
-                      <td className="px-6 py-4">
-                        <div className="flex justify-center">
-                          <FeaturedToggle
-                            enabled={product.featured}
-                            onToggle={() => handleToggleFeatured(product.id)}
-                            disabled={deletingIds.has(product.id)}
-                          />
-                        </div>
-                      </td>
-
-                      {/* Actions */}
-                      <td className="px-6 py-4">
-                        <div className="flex items-center justify-end gap-1">
-                          {confirmDeleteId === product.id ? (
-                            /* Inline delete confirmation */
-                            <motion.div
-                              initial={{ opacity: 0, scale: 0.95 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              className="flex items-center gap-1.5"
-                            >
-                              <span className="text-[11px] text-[#ba1a1a] font-bold font-[var(--font-work-sans)]">
-                                Delete?
-                              </span>
-                              <motion.button
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => handleDeleteConfirm(product.id)}
-                                className="text-[11px] bg-[#ba1a1a] text-white font-bold font-[var(--font-work-sans)] px-2.5 py-1 rounded-md hover:bg-[#93000a] transition-colors"
-                              >
-                                Yes
-                              </motion.button>
-                              <motion.button
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => setConfirmDeleteId(null)}
-                                className="text-[11px] border border-[#e3e3dd] text-[#424843] font-bold font-[var(--font-work-sans)] px-2.5 py-1 rounded-md hover:bg-[#f4f4ee] transition-colors"
-                              >
-                                No
-                              </motion.button>
-                            </motion.div>
-                          ) : (
-                            <>
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                aria-label={`Edit ${product.name}`}
-                                className="p-2 text-[#9ca8a3] hover:text-[#032616] hover:bg-[#f4f4ee] rounded-lg transition-colors"
-                              >
-                                <EditIcon />
-                              </motion.button>
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                aria-label={`Delete ${product.name}`}
-                                onClick={() => setConfirmDeleteId(product.id)}
-                                className="p-2 text-[#9ca8a3] hover:text-[#ba1a1a] hover:bg-[#ffd9d5]/30 rounded-lg transition-colors"
-                              >
-                                <TrashIcon />
-                              </motion.button>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                    </motion.tr>
-                  ))
-                )}
-              </AnimatePresence>
-            </tbody>
-          </table>
-        </div>
-
-        {/* ─── Pagination ──────────────────────────── */}
-        {filtered.length > 0 && (
+        {/* ── Pagination ─────────────────────────────────────────── */}
+        {!loading && !error && total > 0 && (
           <div className="px-6 py-4 flex items-center justify-between border-t border-[#f4f4ee] bg-[#fafaf4]/60 flex-wrap gap-3">
             <span className="text-[12px] text-[#9ca8a3] font-[var(--font-work-sans)]">
               Showing{" "}
-              <span className="font-bold text-[#424843]">
-                {showingFrom}–{showingTo}
-              </span>{" "}
+              <span className="font-bold text-[#424843]">{showingFrom}–{showingTo}</span>{" "}
               of{" "}
-              <span className="font-bold text-[#424843]">{filtered.length}</span> products
+              <span className="font-bold text-[#424843]">{total}</span> products
             </span>
 
-            <div className="flex items-center gap-1.5" role="navigation" aria-label="Pagination">
-              {/* Prev */}
-              <PaginationButton
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={safePage === 1}
-                aria-label="Previous page"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path d="m15 18-6-6 6-6" />
-                </svg>
-              </PaginationButton>
+            {totalPages > 1 && (
+              <div className="flex items-center gap-1.5" role="navigation" aria-label="Pagination">
+                <PaginationButton onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1} aria-label="Previous page">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
+                </PaginationButton>
 
-              {/* Pages */}
-              {pageNums.map((num, idx) =>
-                num === null ? (
-                  <span key={`ellipsis-${idx}`} className="px-2 text-[#9ca8a3] text-sm select-none">
-                    …
-                  </span>
-                ) : (
-                  <PaginationButton
-                    key={num}
-                    onClick={() => setCurrentPage(num)}
-                    active={safePage === num}
-                    aria-label={`Page ${num}`}
-                    aria-current={safePage === num ? "page" : undefined}
-                  >
-                    {num}
-                  </PaginationButton>
-                )
-              )}
+                {pageNums.map((num, idx) =>
+                  num === null ? (
+                    <span key={`ellipsis-${idx}`} className="px-2 text-[#9ca8a3] text-sm select-none">…</span>
+                  ) : (
+                    <PaginationButton key={num} onClick={() => setCurrentPage(num)} active={currentPage === num} aria-label={`Page ${num}`}>
+                      {num}
+                    </PaginationButton>
+                  )
+                )}
 
-              {/* Next */}
-              <PaginationButton
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={safePage === totalPages}
-                aria-label="Next page"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </PaginationButton>
-            </div>
+                <PaginationButton onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} aria-label="Next page">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
+                </PaginationButton>
+              </div>
+            )}
           </div>
         )}
       </motion.div>
+
+      {/* ── Create Product Dialog ──────────────────────────────── */}
+      <AddProductDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onSuccess={handleAddSuccess}
+        mode="create"
+      />
+
+      {/* ── Edit Product Dialog ─────────────────────────────────── */}
+      <AddProductDialog
+        open={editProduct !== null}
+        onClose={() => setEditProduct(null)}
+        onSuccess={handleEditSuccess}
+        mode="edit"
+        initialProduct={editProduct ?? undefined}
+      />
+
+      {/* ── Delete Product Dialog ───────────────────────────────── */}
+      <DeleteProductDialog
+        open={deleteTarget !== null}
+        product={deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onSuccess={handleDeleteSuccess}
+      />
     </div>
   );
 }
 
-/* ─── Sub-components ─────────────────────────────────── */
+/* ── Sub-components ──────────────────────────────────────────── */
 
-function PaginationButton({
-  children,
-  onClick,
-  active = false,
-  disabled = false,
-  "aria-label": ariaLabel,
-  "aria-current": ariaCurrent,
-}: {
-  children: ReactNode;
-  onClick: () => void;
-  active?: boolean;
-  disabled?: boolean;
-  "aria-label"?: string;
-  "aria-current"?: "page" | undefined;
+function PaginationButton({ children, onClick, active = false, disabled = false, "aria-label": ariaLabel }: {
+  children: ReactNode; onClick: () => void; active?: boolean; disabled?: boolean; "aria-label"?: string;
 }) {
   return (
-    <motion.button
-      onClick={disabled ? undefined : onClick}
-      whileTap={disabled ? {} : { scale: 0.9 }}
-      aria-label={ariaLabel}
-      aria-current={ariaCurrent}
-      disabled={disabled}
+    <motion.button onClick={disabled ? undefined : onClick} whileTap={disabled ? {} : { scale: 0.9 }}
+      aria-label={ariaLabel} disabled={disabled}
       className={`min-w-[34px] h-[34px] px-2 rounded-lg text-[12px] font-bold font-[var(--font-work-sans)] flex items-center justify-center transition-colors ${
         active
           ? "bg-[#386b00] text-white shadow-sm"
@@ -503,12 +494,8 @@ function PaginationButton({
 
 function EmptyState({ onReset, hasFilters }: { onReset: () => void; hasFilters: boolean }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="flex flex-col items-center justify-center py-20 px-6 text-center"
-    >
+    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
+      className="flex flex-col items-center justify-center py-20 px-6 text-center">
       <div className="w-16 h-16 rounded-2xl bg-[#f4f4ee] flex items-center justify-center mb-5">
         <svg className="w-8 h-8 text-[#c1c8c1]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path d="M7 20h10M10 20c5.5-2.5.8-6.4 3-10" />
@@ -520,17 +507,11 @@ function EmptyState({ onReset, hasFilters }: { onReset: () => void; hasFilters: 
         {hasFilters ? "No products found" : "No products yet"}
       </h3>
       <p className="text-sm text-[#9ca8a3] font-[var(--font-work-sans)] max-w-xs mb-6">
-        {hasFilters
-          ? "Try adjusting your search or filter criteria."
-          : "Add your first product to get started with your inventory."}
+        {hasFilters ? "Try adjusting your search or filter criteria." : "Add your first product to get started."}
       </p>
       {hasFilters && (
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.97 }}
-          onClick={onReset}
-          className="text-[11px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] bg-[#032616] text-white px-5 py-2.5 rounded-lg hover:bg-[#386b00] transition-colors"
-        >
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={onReset}
+          className="text-[11px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] bg-[#032616] text-white px-5 py-2.5 rounded-lg hover:bg-[#386b00] transition-colors">
           Clear Filters
         </motion.button>
       )}

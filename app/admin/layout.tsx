@@ -1,30 +1,40 @@
 import type { ReactNode } from "react";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
+import RoleGuard from "@/components/auth/RoleGuard";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#fafaf4]">
-      {/* Fixed left sidebar */}
-      <AdminSidebar />
+    /*
+     * RoleGuard wraps the entire admin shell.
+     * - isRestoring → full-screen spinner (no flash of admin UI)
+     * - Not authenticated → opens login modal, redirects to "/"
+     * - Authenticated but role !== "admin" → redirects to /unauthorized
+     * - role === "admin" → renders admin shell normally
+     */
+    <RoleGuard role="admin" loginRedirect="/" unauthorizedRedirect="/unauthorized">
+      <div className="min-h-screen bg-[#fafaf4]">
+        {/* Fixed left sidebar */}
+        <AdminSidebar />
 
-      {/* Main content — offset by sidebar width */}
-      <div className="md:pl-64 flex flex-col min-h-screen">
-        <AdminHeader />
-        <main className="flex-1 p-6 md:p-8">
-          {children}
-        </main>
+        {/* Main content — offset by sidebar width */}
+        <div className="md:pl-64 flex flex-col min-h-screen">
+          <AdminHeader />
+          <main className="flex-1 p-6 md:p-8">
+            {children}
+          </main>
+        </div>
+
+        {/* Mobile bottom nav */}
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#f4f4ee] border-t border-[#c1c8c1]/30 z-50 px-2 py-2 flex items-center justify-around">
+          <MobileNavItem href="/admin/dashboard" label="Overview" icon={<DashboardIconSm />} />
+          <MobileNavItem href="/admin/products" label="Products" icon={<PlantIconSm />} />
+          <MobileNavItem href="/admin/orders" label="Orders" icon={<ShippingIconSm />} />
+          <MobileNavItem href="/admin/customers" label="Customers" icon={<GroupIconSm />} />
+          <MobileNavItem href="/admin/settings" label="Settings" icon={<SettingsIconSm />} />
+        </nav>
       </div>
-
-      {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#f4f4ee] border-t border-[#c1c8c1]/30 z-50 px-2 py-2 flex items-center justify-around">
-        <MobileNavItem href="/admin/dashboard" label="Overview" icon={<DashboardIconSm />} />
-        <MobileNavItem href="/admin/products" label="Products" icon={<PlantIconSm />} />
-        <MobileNavItem href="/admin/orders" label="Orders" icon={<ShippingIconSm />} />
-        <MobileNavItem href="/admin/customers" label="Customers" icon={<GroupIconSm />} />
-        <MobileNavItem href="/admin/settings" label="Settings" icon={<SettingsIconSm />} />
-      </nav>
-    </div>
+    </RoleGuard>
   );
 }
 

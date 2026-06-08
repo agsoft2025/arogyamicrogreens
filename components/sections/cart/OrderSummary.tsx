@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import FadeIn from "@/components/animations/FadeIn";
 import { formatCurrency } from "@/lib/currency";
+import { useAuth } from "@/store/authStore";
+import Link from "next/link";
 
 interface OrderSummaryProps {
   subtotal: number;
@@ -18,6 +20,8 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
   const [promoState, setPromoState] = useState<PromoState>("idle");
   const [discount, setDiscount] = useState(0);
   const [paying, setPaying] = useState(false);
+  const { isAuthenticated, openLoginModal } = useAuth();
+  const router = useRouter();
 
   const shipping = 0; // FREE
   const total = subtotal - discount + tax;
@@ -37,8 +41,11 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
   };
 
   const handlePay = () => {
-    setPaying(true);
-    setTimeout(() => setPaying(false), 2000);
+    if (!isAuthenticated) {
+      openLoginModal("/checkout");
+      return;
+    }
+    router.push("/checkout");
   };
 
   return (
@@ -187,10 +194,10 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
                 Processing...
               </>
             ) : (
-              <Link href="/checkout" className="flex items-center gap-2 w-full justify-center">
+              <span className="flex items-center gap-2">
                 Proceed to Payment
                 <PaymentIcon />
-              </Link>
+              </span>
             )}
           </motion.button>
 

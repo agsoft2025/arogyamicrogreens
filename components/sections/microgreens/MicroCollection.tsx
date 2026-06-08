@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
 
 interface NutrientBarProps {
@@ -87,7 +87,7 @@ function AddToCartButton({ label = "Add to Basket", dark = false, subscribe = fa
   );
 }
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,

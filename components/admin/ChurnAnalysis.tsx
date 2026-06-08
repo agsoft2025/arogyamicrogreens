@@ -58,10 +58,11 @@ export default function ChurnAnalysis() {
                 style={{
                   background: i === 11 ? "#a5f95b" : "rgba(255,255,255,0.2)",
                   height: `${h}%`,
+                  transformOrigin: "bottom",
                 }}
                 initial={{ scaleY: 0 }}
                 animate={{ scaleY: inView ? 1 : 0 }}
-                transition={{ delay: i * 0.04 + 0.2, duration: 0.4, ease: [0.25, 0.4, 0.25, 1], originY: 1 }}
+                transition={{ delay: i * 0.04 + 0.2, duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
               />
             );
           })}

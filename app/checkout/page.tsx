@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/store/authStore";
 import { motion } from "framer-motion";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import Navbar from "@/components/layout/Navbar";
@@ -71,6 +72,15 @@ function validateCard(data: CardData): CardErrors {
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace("/cart");
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) return null;
 
   /* ── Shipping state ── */
   const [shipping, setShipping] = useState<ShippingData>({
@@ -199,7 +209,6 @@ export default function CheckoutPage() {
         </main>
       </PageTransition>
       <Footer />
-      <ChatFAB />
     </>
   );
 }

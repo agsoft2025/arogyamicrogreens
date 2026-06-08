@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/store/authStore";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -17,6 +18,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount] = useState(0);
   const pathname = usePathname();
+  const { isAuthenticated, openLoginModal } = useAuth();
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -122,22 +124,41 @@ export default function Navbar() {
                 {cartCount}
               </span>
             </Link>
-            <Link
-              href="/dashboard"
-              aria-label="My account"
-              className="hover:opacity-70 transition-opacity"
-            >
-              <svg
-                className="w-5 h-5"
-                fill={pathname === "/dashboard" ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
+            {isAuthenticated ? (
+              <Link
+                href="/profile"
+                aria-label="My profile"
+                className="hover:opacity-70 transition-opacity"
               >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </Link>
+                <svg
+                  className="w-5 h-5"
+                  fill={pathname === "/profile" ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+            ) : (
+              <button
+                onClick={() => openLoginModal("/profile")}
+                aria-label="Sign in"
+                className="hover:opacity-70 transition-opacity text-[#032616]"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </button>
+            )}
           </div>
 
           {/* Hamburger */}
