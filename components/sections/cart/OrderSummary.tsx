@@ -6,16 +6,13 @@ import { useRouter } from "next/navigation";
 import FadeIn from "@/components/animations/FadeIn";
 import { formatCurrency } from "@/lib/currency";
 import { useAuth } from "@/store/authStore";
+import { useCart } from "@/store/cartStore";
 import Link from "next/link";
-
-interface OrderSummaryProps {
-  subtotal: number;
-  tax: number;
-}
 
 type PromoState = "idle" | "loading" | "applied" | "invalid";
 
-export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
+export default function OrderSummary() {
+  const { subtotal } = useCart();
   const [promoCode, setPromoCode] = useState("");
   const [promoState, setPromoState] = useState<PromoState>("idle");
   const [discount, setDiscount] = useState(0);
@@ -23,6 +20,7 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
   const { isAuthenticated, openLoginModal } = useAuth();
   const router = useRouter();
 
+  const tax = parseFloat((subtotal * 0.08).toFixed(2));
   const shipping = 0; // FREE
   const total = subtotal - discount + tax;
 

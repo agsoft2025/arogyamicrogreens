@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { AuthProvider, useAuth } from "@/store/authStore";
+import { CartProvider } from "@/store/cartStore";
 import LoginModal from "@/components/auth/LoginModal";
 
 /**
@@ -11,14 +12,17 @@ import LoginModal from "@/components/auth/LoginModal";
  * Renders:
  *  - AuthProvider       — auth context for the whole app
  *  - SessionRestorer    — re-hydrates auth from localStorage on cold start
+ *  - CartProvider       — cart context (guest localStorage ↔ authenticated API)
  *  - LoginModal         — global modal, lives at root so it renders above everything
  */
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
       <SessionRestorer />
-      {children}
-      <LoginModal />
+      <CartProvider>
+        {children}
+        <LoginModal />
+      </CartProvider>
     </AuthProvider>
   );
 }

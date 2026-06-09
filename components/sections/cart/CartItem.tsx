@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { formatCurrency } from "@/lib/currency";
 
 export interface CartItemData {
-  id: string;
+  productId: string;
   name: string;
-  description: string;
+  description?: string;
   price: number;        // unit price in INR
   quantity: number;
   badge?: string;
@@ -18,8 +18,8 @@ export interface CartItemData {
 interface CartItemProps {
   item: CartItemData;
   index: number;
-  onRemove: (id: string) => void;
-  onQuantityChange: (id: string, qty: number) => void;
+  onRemove: (productId: string) => void;
+  onQuantityChange: (productId: string, qty: number) => void;
 }
 
 const badgeStyles: Record<string, string> = {
@@ -39,14 +39,14 @@ export default function CartItem({
 
   const handleRemove = () => {
     setRemoving(true);
-    setTimeout(() => onRemove(item.id), 300);
+    setTimeout(() => onRemove(item.productId), 300);
   };
 
   const decrement = () => {
-    if (item.quantity > 1) onQuantityChange(item.id, item.quantity - 1);
+    if (item.quantity > 1) onQuantityChange(item.productId, item.quantity - 1);
   };
 
-  const increment = () => onQuantityChange(item.id, item.quantity + 1);
+  const increment = () => onQuantityChange(item.productId, item.quantity + 1);
 
   const lineTotal = item.price * item.quantity;
   const variant = item.badgeVariant ?? "organic";

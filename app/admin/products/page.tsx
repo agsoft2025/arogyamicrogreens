@@ -1,7 +1,7 @@
 "use client";
 
 import { formatCurrency } from "@/lib/currency";
-import { useState, useEffect, useCallback, type ReactNode } from "react";
+import { useState, useEffect, useCallback, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import FeaturedToggle from "@/components/admin/FeaturedToggle";
@@ -9,6 +9,7 @@ import ProductFiltersBar from "@/components/admin/ProductFiltersBar";
 import AddProductDialog from "@/components/admin/products/AddProductDialog";
 import DeleteProductDialog from "@/components/admin/products/DeleteProductDialog";
 import { useProducts } from "@/hooks/useProducts";
+import { updateProduct } from "@/api/product.api";
 import type { Product, ProductStatus } from "@/types/product.types";
 
 /* ── Status config ───────────────────────────────────────────── */
@@ -45,8 +46,10 @@ export default function AdminProductsPage() {
   const [editProduct, setEditProduct]   = useState<Product | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
   const [successMsg, setSuccessMsg]     = useState("");
-  // Local featured overrides (optimistic)
+  // Optimistic featured overrides — keyed by product._id, cleared on refetch
   const [featuredOverrides, setFeaturedOverrides] = useState<Record<string, boolean>>({});
+  // Tracks which toggle is mid-flight so we can disable it
+  const [featuredUpdating, setFeaturedUpdating] = useState<Set<string>>(new Set());
 
   /* Real API */
   const { products, pagination, loading, error, refetch, setParams } = useProducts({
@@ -54,8 +57,17 @@ export default function AdminProductsPage() {
     limit: ITEMS_PER_PAGE,
   });
 
+  /* Skip-first-run guards — reset on cleanup so React Strict Mode remount also skips */
+  const searchMountRef  = useRef(true);
+  const statusMountRef  = useRef(true);
+  const pageMountRef    = useRef(true);
+
   /* Debounce search 400ms → push to API params */
   useEffect(() => {
+    if (searchMountRef.current) {
+      searchMountRef.current = false;
+      return () => { searchMountRef.current = true; };
+    }
     const t = setTimeout(() => {
       setParams({ search: search || undefined, page: 1 });
       setCurrentPage(1);
@@ -65,12 +77,20 @@ export default function AdminProductsPage() {
 
   /* Status filter → push to API params */
   useEffect(() => {
+    if (statusMountRef.current) {
+      statusMountRef.current = false;
+      return () => { statusMountRef.current = true; };
+    }
     setParams({ status: (status as ProductStatus) || undefined, page: 1 });
     setCurrentPage(1);
   }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /* Page change → push to API params */
   useEffect(() => {
+    if (pageMountRef.current) {
+      pageMountRef.current = false;
+      return () => { pageMountRef.current = true; };
+    }
     setParams({ page: currentPage });
   }, [currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -85,9 +105,37 @@ export default function AdminProductsPage() {
     setParams({ search: undefined, status: undefined, page: 1 });
   }, [setParams]);
 
-  const handleToggleFeatured = useCallback((id: string, current: boolean) => {
-    setFeaturedOverrides((prev) => ({ ...prev, [id]: !current }));
-  }, []);
+  const handleToggleFeatured = useCallback(async (id: string, current: boolean) => {
+    // Prevent double-tap while request is in flight
+    if (featuredUpdating.has(id)) return;
+
+    const next = !current;
+
+    // Optimistic update — flip immediately in the UI
+    setFeaturedOverrides((prev) => ({ ...prev, [id]: next }));
+    setFeaturedUpdating((prev) => new Set(prev).add(id));
+
+    try {
+      await updateProduct(id, { isFeatured: next });
+      // Re-fetch the product list so the table reflects the DB state
+      refetch();
+      // Clear the optimistic override — the fresh API data is now the source of truth
+      setFeaturedOverrides((prev) => {
+        const n = { ...prev };
+        delete n[id];
+        return n;
+      });
+    } catch {
+      // Revert optimistic update on failure
+      setFeaturedOverrides((prev) => ({ ...prev, [id]: current }));
+    } finally {
+      setFeaturedUpdating((prev) => {
+        const s = new Set(prev);
+        s.delete(id);
+        return s;
+      });
+    }
+  }, [featuredUpdating]);
 
   const handleAddSuccess = useCallback(() => {
     refetch();
@@ -378,6 +426,7 @@ export default function AdminProductsPage() {
                             <FeaturedToggle
                               enabled={isFeatured}
                               onToggle={() => handleToggleFeatured(product._id, isFeatured)}
+                              disabled={featuredUpdating.has(product._id)}
                             />
                           </div>
                         </td>

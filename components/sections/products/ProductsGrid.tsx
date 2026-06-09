@@ -40,6 +40,7 @@ function getImageUrl(product: Product): string {
 }
 
 const SORT_OPTIONS = [
+  "All Products",
   "Featured",
   "Newest Arrivals",
   "Price: Low to High",
@@ -47,26 +48,20 @@ const SORT_OPTIONS = [
 ];
 
 export default function ProductsGrid() {
-  const [sort, setSort] = useState("Featured");
-
-  // Map UI sort to API params
-  const apiParams: ProductListParams = {
-    limit: 12,
-    status: "active",
-    ...(sort === "Featured" ? { isFeatured: true } : {}),
-  };
+  const [sort, setSort] = useState("All Products");
 
   const { products, pagination, loading, error, refetch, setParams, params } =
-    useProducts(apiParams);
+    useProducts({ limit: 12, status: "active" });
 
   const currentPage = params.page ?? 1;
 
-  // Client-side sort for options that aren't supported as query params
+  // Client-side sort for options that don't map to an API param
   const sorted = [...products].sort((a, b) => {
     if (sort === "Price: Low to High") {
-      const aPrice = a.salePrice ?? a.price;
-      const bPrice = b.salePrice ?? b.price;
-      return aPrice - bPrice;
+      return (a.salePrice ?? a.price) - (b.salePrice ?? b.price);
+    }
+    if (sort === "Newest Arrivals" && a.createdAt && b.createdAt) {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     }
     return 0;
   });
@@ -82,7 +77,6 @@ export default function ProductsGrid() {
 
   const handleSortChange = (newSort: string) => {
     setSort(newSort);
-    // If switching to/from Featured, update isFeatured filter
     setParams({
       page: 1,
       isFeatured: newSort === "Featured" ? true : undefined,
@@ -235,6 +229,8 @@ export default function ProductsGrid() {
                 badgeVariant={badgeVariant}
                 image={getImageUrl(product)}
                 index={i}
+                productId={product._id}
+                numericPrice={effectivePrice}
               />
             );
           })}

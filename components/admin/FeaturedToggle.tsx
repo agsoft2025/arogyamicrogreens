@@ -11,6 +11,7 @@ interface FeaturedToggleProps {
 export default function FeaturedToggle({ enabled, onToggle, disabled = false }: FeaturedToggleProps) {
   return (
     <motion.button
+      type="button"
       role="switch"
       aria-checked={enabled}
       aria-label={enabled ? "Remove from featured" : "Mark as featured"}

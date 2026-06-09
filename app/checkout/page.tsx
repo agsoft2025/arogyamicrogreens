@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/authStore";
+import { useCart } from "@/store/cartStore";
 import { motion } from "framer-motion";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import Navbar from "@/components/layout/Navbar";
@@ -24,26 +25,6 @@ import CheckoutSummary, {
   SummaryItem,
 } from "@/components/sections/checkout/CheckoutSummary";
 import ChatFAB from "@/components/ui/ChatFAB";
-
-/* ── Sample cart items passed to checkout ──────────────────── */
-const DEFAULT_ITEMS: SummaryItem[] = [
-  {
-    id: "gourmet-mix",
-    name: "Gourmet Micro Mix",
-    quantity: 2,
-    price: 999,
-    image:
-      "https://lh3.googleusercontent.com/aida/AP1WRLvC22NA1goRvJW71JaUpgVyUvo97noiLIad3EK7P47w15iVEtt84GNtBLOpk8374hbWM9iZJWInC3lMSF6cAp9xPf2wbbjRACBuyLaK4wkk9O22BBWBksMZO1fm9Y7P3byezBRVF0l0eZ-QhCI5Qvlvb-YPl1HxlhizPW7vX1tC9q3Qew-INB8Z7WZeaItNQ4tUNZHNQIhEuhIZwovytSVBqFnERyCaJhbYLbZoeopHhsfEUnsqjqDF9JE",
-  },
-  {
-    id: "wheatgrass-kit",
-    name: "Wheatgrass Vitality Kit",
-    quantity: 1,
-    price: 1539,
-    image:
-      "https://lh3.googleusercontent.com/aida/AP1WRLvxVL-OmSx83t8sF6VUZ-osAboQLjusViw3nYPiAe1dXwwl1TkQREsv3qkmiBf3ZGguunsusgR_9UNqSZ5BxYB6PydLAx7Oc64uZ2J9kHn_yoRF80u8wngdhP9OhCAfu56Kg0elgD6m11ObyEZbPaAAi496xTsjkopppbYmtVQ310Gdp2V5WOPne-haXRmDEKhWQGFJuJ0sTr1wwOhAC1gN7Of5N93N9N2o2FvLSAjf265q95F7z_4Dkpc",
-  },
-];
 
 /* ── Validation helpers ─────────────────────────────────────── */
 function validateShipping(data: ShippingData): ShippingErrors {
@@ -73,14 +54,9 @@ function validateCard(data: CardData): CardErrors {
 export default function CheckoutPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const { items: cartItems, syncing } = useCart();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace("/cart");
-    }
-  }, [isAuthenticated, router]);
-
-  if (!isAuthenticated) return null;
+  /* ── All hooks must come before any early returns ── */
 
   /* ── Shipping state ── */
   const [shipping, setShipping] = useState<ShippingData>({
@@ -107,7 +83,41 @@ export default function CheckoutPage() {
   /* ── Processing state ── */
   const [isProcessing, setIsProcessing] = useState(false);
 
+  /* ── Auth guard (after all hooks) ── */
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace("/cart");
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) return null;
+  if (syncing) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#fafaf4]">
+        <div className="flex flex-col items-center gap-4">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            className="w-10 h-10 rounded-full border-4 border-[#e3e3dd] border-t-[#386b00]"
+          />
+          <p className="text-sm text-[#727973] font-[var(--font-work-sans)]">
+            Preparing your cart…
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const shippingCost = delivery === "express" ? 999 : 0;
+
+  /* ── Map cart items to checkout summary format ── */
+  const summaryItems: SummaryItem[] = cartItems.map((item) => ({
+    id: item.productId,
+    name: item.name,
+    quantity: item.quantity,
+    price: item.price,
+    image: item.image,
+  }));
 
   /* ── Handlers ── */
   const handleShippingChange = (field: keyof ShippingData, value: string) => {
@@ -198,17 +208,18 @@ export default function CheckoutPage() {
               {/* ── Right column: summary ── */}
               <div className="w-full lg:w-[380px] shrink-0">
                 <CheckoutSummary
-                  items={DEFAULT_ITEMS}
+                  items={summaryItems}
                   shippingCost={shippingCost}
                   onPlaceOrder={handlePlaceOrder}
                   isProcessing={isProcessing}
                 />
-              </div>
+                        </div>
             </div>
           </div>
         </main>
       </PageTransition>
       <Footer />
+      <ChatFAB />
     </>
   );
 }

@@ -177,6 +177,21 @@ export const apiClient = {
     );
   },
 
+  put<T>(
+    path: string,
+    payload?: unknown,
+    config?: RequestConfig
+  ): Promise<ApiResponse<T>> {
+    return request<T>(
+      path,
+      {
+        method: "PUT",
+        body: payload === undefined ? undefined : JSON.stringify(payload),
+      },
+      config
+    );
+  },
+
   delete<T>(path: string, config?: RequestConfig): Promise<ApiResponse<T>> {
     return request<T>(path, { method: "DELETE" }, config);
   },

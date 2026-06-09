@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/store/authStore";
+import { useCart } from "@/store/cartStore";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -16,9 +17,9 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartCount] = useState(0);
   const pathname = usePathname();
   const { isAuthenticated, openLoginModal } = useAuth();
+  const { count: cartCount } = useCart();
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";

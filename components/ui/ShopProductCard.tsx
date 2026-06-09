@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useCart } from "@/store/cartStore";
 
 interface ShopProductCardProps {
   name: string;
@@ -13,6 +14,10 @@ interface ShopProductCardProps {
   badgeVariant?: "popular" | "sale" | "new";
   image: string;
   index?: number;
+  /** Backend product _id — required to wire up real Add to Cart */
+  productId?: string;
+  /** Numeric unit price in INR — required to wire up real Add to Cart */
+  numericPrice?: number;
 }
 
 const badgeStyles: Record<string, string> = {
@@ -31,10 +36,16 @@ export default function ShopProductCard({
   badgeVariant = "popular",
   image,
   index = 0,
+  productId,
+  numericPrice,
 }: ShopProductCardProps) {
   const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    if (productId && numericPrice !== undefined) {
+      await addItem({ productId, name, price: numericPrice, image });
+    }
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };
