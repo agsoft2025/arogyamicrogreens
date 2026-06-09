@@ -17,7 +17,7 @@
 
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import {
   uploadSingleImage,
   buildServerUrl,
@@ -213,11 +213,18 @@ export function useImageUpload(): UseImageUploadReturn {
     setFeaturedUrlState("");
   }, []);
 
-  const uploadedUrls = items
-    .filter((i) => i.status === "success" && i.serverUrl)
-    .map((i) => i.serverUrl as string);
+  const uploadedUrls = useMemo(
+    () =>
+      items
+        .filter((i) => i.status === "success" && i.serverUrl)
+        .map((i) => i.serverUrl as string),
+    [items]
+  );
 
-  const isUploading = items.some((i) => i.status === "uploading");
+  const isUploading = useMemo(
+    () => items.some((i) => i.status === "uploading"),
+    [items]
+  );
 
   return {
     items,
