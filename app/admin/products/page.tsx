@@ -1,6 +1,7 @@
 "use client";
 
 import { formatCurrency } from "@/lib/currency";
+import { getProductThumbnailUrl } from "@/lib/imageUtils";
 import { useState, useEffect, useCallback, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -24,14 +25,6 @@ function stockLabel(stock: number): { text: string; dot: string } {
   if (stock === 0) return { text: "Out of Stock", dot: "bg-[#ba1a1a]" };
   if (stock <= 10) return { text: `Low (${stock})`,  dot: "bg-amber-400" };
   return { text: `${stock} in stock`, dot: "bg-[#386b00]" };
-}
-
-function getImageUrl(product: Product): string {
-  const src = product.featuredImage ?? product.images?.[0];
-  if (!src) return "";
-  if (src.startsWith("http")) return src;
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
-  return `${base.replace("/api/v1", "")}/uploads/${src}`;
 }
 
 /* ── Page ────────────────────────────────────────────────────── */
@@ -334,7 +327,7 @@ export default function AdminProductsPage() {
                     const isFeatured = featuredOverrides[product._id] ?? product.isFeatured;
                     const stockInfo  = stockLabel(product.stock);
                     const statusCfg  = STATUS_STYLES[product.status] ?? STATUS_STYLES.draft;
-                    const imageUrl   = getImageUrl(product);
+                    const imageUrl   = getProductThumbnailUrl(product, "");
 
                     return (
                       <motion.tr

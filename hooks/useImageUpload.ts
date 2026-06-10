@@ -10,7 +10,7 @@
  *   upload.removeItem(id);           // remove any item (cancels if uploading)
  *   upload.retryItem(id);            // retry a failed item
  *   upload.setFeaturedUrl(url);      // mark a server URL as featured
- *   upload.uploadedUrls              // all successfully uploaded absolute URLs
+ *   upload.uploadedUrls              // all successfully uploaded relative paths ("/uploads/images/...")
  *   upload.featuredUrl               // current featured URL
  *   upload.isUploading               // true if any upload is active
  */
@@ -20,7 +20,6 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import {
   uploadSingleImage,
-  buildServerUrl,
   validateImageFiles,
 } from "@/api/upload.api";
 import type { UploadItem } from "@/types/upload.types";
@@ -34,7 +33,7 @@ export interface UseImageUploadReturn {
   retryItem: (id: string) => void;
   featuredUrl: string;
   setFeaturedUrl: (url: string) => void;
-  /** All successfully uploaded absolute URLs in insertion order */
+  /** All successfully uploaded relative paths ("/uploads/images/...") in insertion order */
   uploadedUrls: string[];
   /** True when at least one item is uploading */
   isUploading: boolean;
@@ -92,16 +91,18 @@ export function useImageUpload(): UseImageUploadReturn {
           signal: controller.signal,
         });
 
-        const fullUrl = buildServerUrl(uploaded.url);
+        // Store the relative path as-is — the backend expects "/uploads/images/..."
+        // and already knows its own domain. buildServerUrl() is only for display.
+        const relativeUrl = uploaded.url;
 
         updateItem(id, {
           status: "success",
           progress: 100,
-          serverUrl: fullUrl,
+          serverUrl: relativeUrl,
         });
 
         // Auto-set first successfully uploaded image as featured
-        setFeaturedUrlState((prev) => (prev === "" ? fullUrl : prev));
+        setFeaturedUrlState((prev) => (prev === "" ? relativeUrl : prev));
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Upload failed. Please retry.";

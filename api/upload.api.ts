@@ -21,26 +21,21 @@
  */
 
 import type { UploadedFile, UploadResponse } from "@/types/upload.types";
+import { getProductImageUrl } from "@/lib/imageUtils";
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
 
-/** Strip /api/v1 suffix to get the server root (for static assets) */
-export function getServerRoot(): string {
-  return API_BASE.replace(/\/api\/v1\/?$/, "");
-}
-
 /**
- * Convert a relative upload path to a full absolute URL.
- * e.g. "/uploads/images/abc.jpg" → "http://localhost:3000/uploads/images/abc.jpg"
+ * Convert a relative upload path to a full absolute URL for display.
+ * e.g. "/uploads/images/abc.jpg" → "http://localhost:5000/uploads/images/abc.jpg"
+ *
+ * Delegates to the centralized getProductImageUrl helper in lib/imageUtils.ts.
  */
 export function buildServerUrl(relativePath: string): string {
-  if (relativePath.startsWith("http")) return relativePath;
-  const root = getServerRoot();
-  const path = relativePath.startsWith("/") ? relativePath : `/${relativePath}`;
-  return `${root}${path}`;
+  return getProductImageUrl(relativePath);
 }
 
 function getStoredToken(): string | null {

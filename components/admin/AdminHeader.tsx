@@ -69,6 +69,22 @@ export default function AdminHeader() {
           transition={{ duration: 0.4, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
           className="flex items-center gap-3"
         >
+          {/* ── User Site switcher ─────────────────────────────
+               Lime-green pill — visually distinct from admin chrome.
+               Always visible in the admin header; one click returns
+               the admin to the customer-facing storefront.
+          ─────────────────────────────────────────────────────── */}
+          <motion.button
+            onClick={() => router.push("/")}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            aria-label="Return to customer site"
+            className="flex items-center gap-2 bg-[#a5f95b] text-[#032616] px-4 py-2 rounded-full text-[11px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] hover:bg-[#8fe040] transition-colors shadow-sm"
+          >
+            <UserSiteIcon />
+            <span className="hidden sm:inline">User Site</span>
+          </motion.button>
+
           {/* Date range pill */}
           <button className="flex items-center gap-2 bg-[#f4f4ee] border border-[#c1c8c1] rounded-full px-4 py-2 text-sm text-[#424843] font-[var(--font-work-sans)] hover:bg-[#e8e8e3] transition-colors">
             <CalendarIcon />
@@ -180,6 +196,14 @@ export default function AdminHeader() {
 
 /* ── Icons ─────────────────────────────────────────────────────── */
 
+function UserSiteIcon() {
+  return (
+    <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+}
 function CalendarIcon() {
   return (
     <svg className="w-3.5 h-3.5 text-[#424843] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

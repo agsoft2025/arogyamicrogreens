@@ -39,16 +39,21 @@ export default function ShopProductCard({
   productId,
   numericPrice,
 }: ShopProductCardProps) {
-  const [added, setAdded] = useState(false);
-  const { addItem, clearError } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+  const { items, addItem, clearError } = useCart();
+
+  // Persistent active state: product is already in the cart
+  const isInCart = !!productId && items.some((i) => i.productId === productId);
+  // Button shows active when in cart OR immediately after clicking (brief feedback)
+  const showActive = isInCart || justAdded;
 
   const handleAddToCart = async () => {
     if (productId && numericPrice !== undefined) {
       clearError();
       await addItem({ productId, name, price: numericPrice, image });
     }
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
   };
 
   return (
@@ -126,12 +131,12 @@ export default function ShopProductCard({
             onClick={handleAddToCart}
             aria-label={`Add ${name} to cart`}
             className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-              added
+              showActive
                 ? "bg-[#a5f95b] text-[#3b7100]"
                 : "bg-[#386b00] text-white hover:bg-[#a5f95b] hover:text-[#3b7100]"
             }`}
           >
-            {added ? (
+            {showActive ? (
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path d="m5 13 4 4L19 7" />
               </svg>
