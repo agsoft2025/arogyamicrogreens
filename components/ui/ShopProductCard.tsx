@@ -40,10 +40,11 @@ export default function ShopProductCard({
   numericPrice,
 }: ShopProductCardProps) {
   const [added, setAdded] = useState(false);
-  const { addItem } = useCart();
+  const { addItem, clearError } = useCart();
 
   const handleAddToCart = async () => {
     if (productId && numericPrice !== undefined) {
+      clearError();
       await addItem({ productId, name, price: numericPrice, image });
     }
     setAdded(true);

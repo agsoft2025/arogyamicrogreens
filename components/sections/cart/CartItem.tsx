@@ -43,12 +43,18 @@ export default function CartItem({
   };
 
   const decrement = () => {
-    if (item.quantity > 1) onQuantityChange(item.productId, item.quantity - 1);
+    const qty = Number(item.quantity);
+    if (qty > 1) {
+      onQuantityChange(item.productId, qty - 1);
+    }
   };
 
-  const increment = () => onQuantityChange(item.productId, item.quantity + 1);
+  const increment = () => {
+    const qty = Number(item.quantity);
+    onQuantityChange(item.productId, qty + 1);
+  };
 
-  const lineTotal = item.price * item.quantity;
+  const lineTotal = item.price * Number(item.quantity);
   const variant = item.badgeVariant ?? "organic";
 
   return (
@@ -124,7 +130,7 @@ export default function CartItem({
             <motion.button
               whileTap={{ scale: 0.85 }}
               onClick={decrement}
-              disabled={item.quantity <= 1}
+              disabled={Number(item.quantity) <= 1}
               aria-label="Decrease quantity"
               className="px-3 py-2 hover:bg-[#e8e8e3] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
@@ -132,7 +138,7 @@ export default function CartItem({
             </motion.button>
 
             <span className="w-10 text-center font-bold text-[15px] font-[var(--font-work-sans)] text-[#1a1c19] select-none">
-              {item.quantity}
+              {Number(item.quantity)}
             </span>
 
             <motion.button

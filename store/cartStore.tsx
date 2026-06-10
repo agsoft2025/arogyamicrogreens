@@ -124,7 +124,7 @@ function normalizeApiItems(apiItems: ApiCartItem[]): CartItem[] {
           productId: p._id,
           name: p.name,
           price: effectivePrice,
-          quantity: item.quantity,
+          quantity: Number(item.quantity),
           image: resolveProductImage(p),
           slug: p.slug,
         };
@@ -142,6 +142,8 @@ interface CartState {
   syncing: boolean;
   /** non-null when sync failed — guest items are preserved */
   syncError: string | null;
+  /** non-null when a cart operation failed */
+  error: string | null;
 }
 
 type CartAction =
@@ -149,20 +151,23 @@ type CartAction =
   | { type: "SET_LOADING"; loading: boolean }
   | { type: "SET_SYNCING"; syncing: boolean }
   | { type: "SET_SYNC_ERROR"; error: string | null }
+  | { type: "SET_ERROR"; error: string | null }
   | { type: "RESET" };
 
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "SET_ITEMS":
-      return { ...state, items: mergeCartItems(action.items), loading: false };
+      return { ...state, items: mergeCartItems(action.items), loading: false, error: null };
     case "SET_LOADING":
       return { ...state, loading: action.loading };
     case "SET_SYNCING":
       return { ...state, syncing: action.syncing };
     case "SET_SYNC_ERROR":
       return { ...state, syncError: action.error };
+    case "SET_ERROR":
+      return { ...state, error: action.error };
     case "RESET":
-      return { items: [], loading: false, syncing: false, syncError: null };
+      return { items: [], loading: false, syncing: false, syncError: null, error: null };
     default:
       return state;
   }
@@ -173,6 +178,7 @@ const initialCartState: CartState = {
   loading: false,
   syncing: false,
   syncError: null,
+  error: null,
 };
 
 /* ── Context shape ───────────────────────────────────────────── */
@@ -196,6 +202,8 @@ export interface CartContextValue extends CartState {
   clearCart: () => Promise<void>;
   /** Force refresh (API fetch or localStorage reload) */
   refetch: () => Promise<void>;
+  /** Clear any error state */
+  clearError: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -305,6 +313,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = useCallback(
     async (params: AddItemParams, quantity = 1) => {
+      dispatch({ type: "SET_ERROR", error: null });
+
       if (!isAuthenticated) {
         // Guest: merge into localStorage
         const current = readGuestCart();
@@ -326,9 +336,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               type: "SET_ITEMS",
               items: normalizeApiItems(res.data.items),
             });
+          } else {
+            dispatch({
+              type: "SET_ERROR",
+              error: res.message || "Failed to add item to cart",
+            });
           }
-        } catch {
-          /* no-op — add failed silently */
+        } catch (err: any) {
+          dispatch({
+            type: "SET_ERROR",
+            error: err?.message || "Failed to add item to cart. Please try again.",
+          });
         }
       }
     },
@@ -339,6 +357,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     async (productId: string, quantity: number) => {
       if (quantity <= 0) return;
 
+      dispatch({ type: "SET_ERROR", error: null });
+
       if (!isAuthenticated) {
         const updated = state.items.map((i) =>
           i.productId === productId ? { ...i, quantity } : i
@@ -346,6 +366,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         writeGuestCart(updated);
         dispatch({ type: "SET_ITEMS", items: updated });
       } else {
+        // Optimistic update for better UX
+        const optimistic = state.items.map((i) =>
+          i.productId === productId ? { ...i, quantity } : i
+        );
+        dispatch({ type: "SET_ITEMS", items: optimistic });
+
         try {
           const res = await updateCartItem(productId, quantity);
           if (res.success && res.data?.items) {
@@ -353,9 +379,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               type: "SET_ITEMS",
               items: normalizeApiItems(res.data.items),
             });
+          } else {
+            // Revert optimistic update on failure
+            dispatch({ type: "SET_ITEMS", items: state.items });
+            dispatch({
+              type: "SET_ERROR",
+              error: res.message || "Failed to update quantity",
+            });
           }
-        } catch {
-          /* no-op */
+        } catch (err: any) {
+          // Revert optimistic update on error
+          dispatch({ type: "SET_ITEMS", items: state.items });
+          dispatch({
+            type: "SET_ERROR",
+            error: err?.message || "Failed to update quantity. Please try again.",
+          });
         }
       }
     },
@@ -364,6 +402,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const removeItem = useCallback(
     async (productId: string) => {
+      dispatch({ type: "SET_ERROR", error: null });
+
       if (!isAuthenticated) {
         const updated = state.items.filter((i) => i.productId !== productId);
         writeGuestCart(updated);
@@ -381,9 +421,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               type: "SET_ITEMS",
               items: normalizeApiItems(res.data.items),
             });
+          } else {
+            // Revert optimistic update on failure
+            dispatch({ type: "SET_ITEMS", items: state.items });
+            dispatch({
+              type: "SET_ERROR",
+              error: res.message || "Failed to remove item from cart",
+            });
           }
-        } catch {
-          /* keep optimistic state */
+        } catch (err: any) {
+          // Revert optimistic update on error
+          dispatch({ type: "SET_ITEMS", items: state.items });
+          dispatch({
+            type: "SET_ERROR",
+            error: err?.message || "Failed to remove item from cart. Please try again.",
+          });
         }
       }
     },
@@ -391,16 +443,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 
   const clearCart = useCallback(async () => {
+    dispatch({ type: "SET_ERROR", error: null });
+
     if (!isAuthenticated) {
       deleteGuestCart();
       dispatch({ type: "SET_ITEMS", items: [] });
     } else {
       try {
         await clearApiCart();
-      } catch {
-        /* no-op */
+        dispatch({ type: "SET_ITEMS", items: [] });
+      } catch (err: any) {
+        dispatch({
+          type: "SET_ERROR",
+          error: err?.message || "Failed to clear cart. Please try again.",
+        });
       }
-      dispatch({ type: "SET_ITEMS", items: [] });
     }
   }, [isAuthenticated]);
 
@@ -411,6 +468,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       dispatch({ type: "SET_ITEMS", items: readGuestCart() });
     }
   }, [isAuthenticated, fetchApiCart]);
+
+  const clearError = useCallback(() => {
+    dispatch({ type: "SET_ERROR", error: null });
+  }, []);
 
   /* ── Derived values ──────────────────────────────────────────── */
   const count = state.items.reduce((sum, i) => sum + i.quantity, 0);
@@ -428,6 +489,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     removeItem,
     clearCart,
     refetch,
+    clearError,
   };
 
   return (

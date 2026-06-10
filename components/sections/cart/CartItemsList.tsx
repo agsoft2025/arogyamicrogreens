@@ -7,7 +7,7 @@ import OrderSummary from "./OrderSummary";
 import { useCart } from "@/store/cartStore";
 
 export default function CartItemsList() {
-  const { items, loading, syncing, syncError, removeItem, updateQty } =
+  const { items, loading, syncing, syncError, error, removeItem, updateQty, clearError } =
     useCart();
 
   const isEmpty = items.length === 0;
@@ -17,6 +17,7 @@ export default function CartItemsList() {
   };
 
   const handleQtyChange = async (productId: string, qty: number) => {
+    clearError();
     await updateQty(productId, qty);
   };
 
@@ -60,6 +61,30 @@ export default function CartItemsList() {
                 <path d="M12 8v4M12 16h.01" />
               </svg>
               {syncError}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Cart operation error banner */}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="flex items-center gap-3 bg-[#ffdad6] text-[#ba1a1a] text-sm font-[var(--font-work-sans)] rounded-lg px-4 py-3"
+            >
+              <svg
+                className="w-4 h-4 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4M12 16h.01" />
+              </svg>
+              {error}
             </motion.div>
           )}
         </AnimatePresence>
