@@ -3,6 +3,12 @@
  *
  * HTTP calls for Admin Order Management endpoints.
  * All methods delegate to the shared apiClient (axios.ts).
+ *
+ * Endpoints (admin routes are nested inside the /orders router):
+ *   GET  /orders/admin/orders
+ *   GET  /orders/admin/orders/:id
+ *   PUT  /orders/admin/orders/status/:id
+ *   POST /orders/admin/orders/refund/:id
  */
 
 import apiClient from "./axios";

@@ -3,8 +3,9 @@
 /**
  * components/admin/orders/UpdateStatusDialog.tsx
  *
- * Modal for updating an order's status.
- * Enforces valid status transitions and requires a remark.
+ * Modal for updating an order's status via a dropdown.
+ * All non-pending statuses are selectable; current status
+ * is pre-selected. Remarks are optional.
  */
 
 import { useState } from "react";
@@ -14,10 +15,16 @@ import type {
   AdminOrderStatus,
   UpdateOrderStatusPayload,
 } from "@/types/admin.order.types";
-import {
-  ORDER_STATUS_TRANSITIONS,
-  ORDER_STATUS_CFG,
-} from "@/types/admin.order.types";
+import { ORDER_STATUS_CFG } from "@/types/admin.order.types";
+
+/* All statuses the admin can set from the dropdown */
+const SELECTABLE_STATUSES: AdminOrderStatus[] = [
+  "CONFIRMED",
+  "PROCESSING",
+  "SHIPPED",
+  "DELIVERED",
+  "CANCELLED",
+];
 
 interface UpdateStatusDialogProps {
   open: boolean;
@@ -36,38 +43,33 @@ export default function UpdateStatusDialog({
   onClose,
   onSuccess,
 }: UpdateStatusDialogProps) {
-  const allowedNext = ORDER_STATUS_TRANSITIONS[currentStatus] ?? [];
-
-  const [selectedStatus, setSelectedStatus] = useState<AdminOrderStatus | "">(
-    allowedNext[0] ?? ""
+  const [selectedStatus, setSelectedStatus] = useState<AdminOrderStatus>(
+    currentStatus
   );
   const [remarks, setRemarks] = useState("");
-  const [errors, setErrors] = useState<{ status?: string; remarks?: string }>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  function validate(): boolean {
-    const e: { status?: string; remarks?: string } = {};
-    if (!selectedStatus) e.status = "Please select a status.";
-    if (!remarks.trim()) e.remarks = "Remarks are required.";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  }
+  const isDirty = selectedStatus !== currentStatus;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitError("");
-    if (!validate()) return;
+
+    if (!isDirty) {
+      setSubmitError("Please select a different status.");
+      return;
+    }
 
     setSubmitting(true);
     try {
       const payload: UpdateOrderStatusPayload = {
-        status: selectedStatus as AdminOrderStatus,
+        status: selectedStatus,
         remarks: remarks.trim(),
       };
       const res = await updateOrderStatus(orderId, payload);
       if (res.success) {
-        onSuccess(res.message || `Order updated to ${selectedStatus}`);
+        onSuccess(res.message || `Order updated to ${ORDER_STATUS_CFG[selectedStatus].label}`);
         handleClose();
       } else {
         setSubmitError(res.message || "Failed to update order status.");
@@ -81,12 +83,14 @@ export default function UpdateStatusDialog({
 
   function handleClose() {
     if (submitting) return;
-    setSelectedStatus(allowedNext[0] ?? "");
+    setSelectedStatus(currentStatus);
     setRemarks("");
-    setErrors({});
     setSubmitError("");
     onClose();
   }
+
+  const selectedCfg = ORDER_STATUS_CFG[selectedStatus];
+  const currentCfg  = ORDER_STATUS_CFG[currentStatus];
 
   return (
     <AnimatePresence>
@@ -142,100 +146,109 @@ export default function UpdateStatusDialog({
 
             {/* Body */}
             <form onSubmit={handleSubmit} className="px-6 py-5 space-y-5">
-              {/* Current status */}
-              <div className="flex items-center gap-2 text-sm text-[#424843] font-[var(--font-work-sans)]">
-                <span className="text-[11px] font-bold tracking-widest uppercase text-[#9ca8a3]">
-                  Current:
-                </span>
-                <span
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${ORDER_STATUS_CFG[currentStatus].bg} ${ORDER_STATUS_CFG[currentStatus].text}`}
+
+              {/* Status dropdown */}
+              <div>
+                <label
+                  htmlFor="order-status-select"
+                  className="block text-[11px] font-bold tracking-widest uppercase text-[#424843] mb-2 font-[var(--font-work-sans)]"
                 >
-                  <span className={`w-1.5 h-1.5 rounded-full ${ORDER_STATUS_CFG[currentStatus].dot}`} />
-                  {ORDER_STATUS_CFG[currentStatus].label}
-                </span>
+                  Order Status <span className="text-[#ba1a1a]">*</span>
+                </label>
+
+                {/* Custom styled select wrapper */}
+                <div className="relative">
+                  {/* Colour dot reflecting selected status */}
+                  <span
+                    className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full pointer-events-none ${selectedCfg.dot}`}
+                  />
+                  <select
+                    id="order-status-select"
+                    value={selectedStatus}
+                    disabled={submitting}
+                    onChange={(e) => {
+                      setSelectedStatus(e.target.value as AdminOrderStatus);
+                      setSubmitError("");
+                    }}
+                    className="w-full appearance-none pl-8 pr-10 py-2.5 bg-white border border-[#e3e3dd] rounded-lg text-sm font-bold font-[var(--font-work-sans)] text-[#1a1c19] focus:outline-none focus:ring-2 focus:ring-[#386b00]/30 focus:border-[#386b00] transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    {SELECTABLE_STATUSES.map((s) => (
+                      <option key={s} value={s}>
+                        {ORDER_STATUS_CFG[s].label}
+                        {s === currentStatus ? "  (current)" : ""}
+                      </option>
+                    ))}
+                  </select>
+                  {/* Chevron */}
+                  <svg
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca8a3] pointer-events-none"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </div>
+
+                {/* Current → New arrow */}
+                {isDirty && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 mt-2.5 text-[11px] font-[var(--font-work-sans)]"
+                  >
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold ${currentCfg.bg} ${currentCfg.text}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${currentCfg.dot}`} />
+                      {currentCfg.label}
+                    </span>
+                    <svg className="w-3.5 h-3.5 text-[#9ca8a3] shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path d="m9 18 6-6-6-6" />
+                    </svg>
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold ${selectedCfg.bg} ${selectedCfg.text}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${selectedCfg.dot}`} />
+                      {selectedCfg.label}
+                    </span>
+                  </motion.div>
+                )}
               </div>
 
-              {allowedNext.length === 0 ? (
-                <div className="bg-[#f4f4ee] rounded-xl px-4 py-4 text-sm text-[#727973] font-[var(--font-work-sans)] text-center">
-                  This order is in a terminal state and cannot be updated further.
-                </div>
-              ) : (
-                <>
-                  {/* New status selector */}
-                  <div>
-                    <label className="block text-[11px] font-bold tracking-widest uppercase text-[#424843] mb-2 font-[var(--font-work-sans)]">
-                      New Status <span className="text-[#ba1a1a]">*</span>
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {allowedNext.map((s) => (
-                        <button
-                          key={s}
-                          type="button"
-                          onClick={() => {
-                            setSelectedStatus(s);
-                            if (errors.status) setErrors((p) => ({ ...p, status: undefined }));
-                          }}
-                          className={`px-3 py-1.5 rounded-lg text-[12px] font-bold font-[var(--font-work-sans)] border-2 transition-colors ${
-                            selectedStatus === s
-                              ? `${ORDER_STATUS_CFG[s].bg} ${ORDER_STATUS_CFG[s].text} border-current`
-                              : "bg-white text-[#424843] border-[#e3e3dd] hover:border-[#9ca8a3]"
-                          }`}
-                        >
-                          {ORDER_STATUS_CFG[s].label}
-                        </button>
-                      ))}
-                    </div>
-                    {errors.status && (
-                      <p className="mt-1 text-[11px] text-[#ba1a1a] font-[var(--font-work-sans)]">
-                        {errors.status}
-                      </p>
-                    )}
-                  </div>
+              {/* Remarks (optional) */}
+              <div>
+                <label
+                  htmlFor="order-remarks"
+                  className="block text-[11px] font-bold tracking-widest uppercase text-[#424843] mb-1.5 font-[var(--font-work-sans)]"
+                >
+                  Remarks
+                  <span className="ml-1 text-[#9ca8a3] normal-case tracking-normal font-normal">(optional)</span>
+                </label>
+                <textarea
+                  id="order-remarks"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                  disabled={submitting}
+                  rows={3}
+                  placeholder="e.g. Order shipped via Delhivery — tracking #DL123456"
+                  className="w-full border border-[#e3e3dd] rounded-lg px-3 py-2.5 text-sm text-[#1a1c19] font-[var(--font-work-sans)] bg-white placeholder:text-[#b0b8b0] outline-none focus:border-[#386b00] focus:ring-1 focus:ring-[#386b00]/30 transition-colors resize-none disabled:opacity-60 disabled:cursor-not-allowed"
+                />
+              </div>
 
-                  {/* Remarks */}
-                  <div>
-                    <label className="block text-[11px] font-bold tracking-widest uppercase text-[#424843] mb-1.5 font-[var(--font-work-sans)]">
-                      Remarks <span className="text-[#ba1a1a]">*</span>
-                    </label>
-                    <textarea
-                      value={remarks}
-                      onChange={(e) => {
-                        setRemarks(e.target.value);
-                        if (errors.remarks) setErrors((p) => ({ ...p, remarks: undefined }));
-                      }}
-                      rows={3}
-                      placeholder="e.g. Order verified and confirmed"
-                      className={`w-full border rounded-lg px-3 py-2.5 text-sm text-[#1a1c19] font-[var(--font-work-sans)] bg-white placeholder:text-[#b0b8b0] outline-none transition-colors resize-none ${
-                        errors.remarks
-                          ? "border-[#ba1a1a] ring-1 ring-[#ba1a1a]/30"
-                          : "border-[#e3e3dd] focus:border-[#386b00] focus:ring-1 focus:ring-[#386b00]/30"
-                      }`}
-                    />
-                    {errors.remarks && (
-                      <p className="mt-1 text-[11px] text-[#ba1a1a] font-[var(--font-work-sans)]">
-                        {errors.remarks}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Submit error */}
-                  <AnimatePresence>
-                    {submitError && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        className="flex items-center gap-2 bg-[#ffdad6] text-[#ba1a1a] text-sm font-[var(--font-work-sans)] rounded-lg px-4 py-3"
-                      >
-                        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" />
-                        </svg>
-                        {submitError}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </>
-              )}
+              {/* Submit error */}
+              <AnimatePresence>
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 bg-[#ffdad6] text-[#ba1a1a] text-sm font-[var(--font-work-sans)] rounded-lg px-4 py-3"
+                  >
+                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" />
+                    </svg>
+                    {submitError}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </form>
 
             {/* Footer */}
@@ -250,38 +263,36 @@ export default function UpdateStatusDialog({
                 Cancel
               </motion.button>
 
-              {allowedNext.length > 0 && (
-                <motion.button
-                  type="submit"
-                  form=""
-                  whileHover={!submitting ? { scale: 1.02 } : {}}
-                  whileTap={!submitting ? { scale: 0.97 } : {}}
-                  disabled={submitting}
-                  onClick={handleSubmit}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-[#386b00] text-white font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] rounded-lg hover:bg-[#4a8a00] transition-colors disabled:opacity-70"
-                >
-                  {submitting ? (
-                    <>
-                      <motion.svg
-                        className="w-4 h-4"
-                        animate={{ rotate: 360 }}
-                        transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
-                        fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
-                      >
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                      </motion.svg>
-                      Updating…
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                        <path d="M5 13l4 4L19 7" />
-                      </svg>
-                      Update Status
-                    </>
-                  )}
-                </motion.button>
-              )}
+              <motion.button
+                type="submit"
+                form=""
+                whileHover={!submitting ? { scale: 1.02 } : {}}
+                whileTap={!submitting ? { scale: 0.97 } : {}}
+                disabled={submitting || !isDirty}
+                onClick={handleSubmit}
+                className="flex items-center gap-2 px-6 py-2.5 bg-[#386b00] text-white font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] rounded-lg hover:bg-[#4a8a00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {submitting ? (
+                  <>
+                    <motion.svg
+                      className="w-4 h-4"
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+                      fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
+                    >
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                    </motion.svg>
+                    Updating…
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                    Update Status
+                  </>
+                )}
+              </motion.button>
             </div>
           </motion.div>
         </>

@@ -12,10 +12,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useAdminOrders } from "@/hooks/useAdminOrders";
 import UpdateStatusDialog from "@/components/admin/orders/UpdateStatusDialog";
+import RefundDialog from "@/components/admin/orders/RefundDialog";
 import { formatCurrency } from "@/lib/currency";
 import {
   ORDER_STATUS_CFG,
   TERMINAL_STATUSES,
+  isRefundEligible,
   getCustomerName,
   getCustomerEmail,
   type AdminOrder,
@@ -77,6 +79,7 @@ export default function AdminOrdersPage() {
 
   /* Dialog state */
   const [updateTarget, setUpdateTarget] = useState<AdminOrder | null>(null);
+  const [refundTarget, setRefundTarget] = useState<AdminOrder | null>(null);
 
   /* Portal action-menu */
   const [menuState, setMenuState] = useState<{
@@ -491,6 +494,18 @@ export default function AdminOrdersPage() {
                         Update Status
                       </button>
                     )}
+                    {isRefundEligible(order.orderStatus) && (
+                      <button
+                        onClick={() => {
+                          setRefundTarget(order);
+                          setMenuState(null);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-[12px] text-[#ba1a1a] font-[var(--font-work-sans)] hover:bg-[#ffdad6]/40 transition-colors text-left border-t border-[#f4f4ee]"
+                      >
+                        <RefundMenuIcon />
+                        Refund
+                      </button>
+                    )}
                   </>
                 );
               })()}
@@ -510,6 +525,22 @@ export default function AdminOrdersPage() {
           onSuccess={(msg) => {
             showSuccess(msg);
             setUpdateTarget(null);
+            refetch();
+          }}
+        />
+      )}
+
+      {/* ── RefundDialog ─────────────────────────────── */}
+      {refundTarget && (
+        <RefundDialog
+          open={!!refundTarget}
+          orderId={refundTarget._id}
+          orderNumber={refundTarget.orderNumber}
+          totalAmount={refundTarget.totalAmount}
+          onClose={() => setRefundTarget(null)}
+          onSuccess={(msg) => {
+            showSuccess(msg);
+            setRefundTarget(null);
             refetch();
           }}
         />
@@ -692,6 +723,19 @@ function RefreshIcon() {
     >
       <polyline points="1 4 1 10 7 10" />
       <path d="M3.51 15a9 9 0 1 0 .49-4" />
+    </svg>
+  );
+}
+function RefundMenuIcon() {
+  return (
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path d="M3 10h10a8 8 0 0 1 8 8v2M3 10l6 6m-6-6 6-6" />
     </svg>
   );
 }

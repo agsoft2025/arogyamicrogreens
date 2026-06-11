@@ -104,7 +104,7 @@ export default function ContactGrid() {
     <section className="max-w-[1280px] mx-auto px-5 md:px-16 py-20">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        {/* ── Contact Form (7 cols) ── */}
+        {/* Contact Form (7 cols) */}
         <FadeIn direction="left" className="lg:col-span-7">
           <div
             className="bg-white p-8 md:p-10 rounded-xl border border-[#e3e3dd]"
@@ -240,7 +240,7 @@ export default function ContactGrid() {
           </div>
         </FadeIn>
 
-        {/* ── Right Sidebar (5 cols) ── */}
+        {/* Right Sidebar (5 cols) */}
         <div className="lg:col-span-5 flex flex-col gap-6">
 
           {/* Support Hub */}
@@ -262,15 +262,15 @@ export default function ContactGrid() {
                       Email Us
                     </p>
                     <a
-                      href="mailto:hello@agrinest.com"
+                      href="mailto:agrinestmicrogreens@gmail.com"
                       className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors"
                     >
-                      hello@agrinest.com
+                      agrinestmicrogreens@gmail.com
                     </a>
                   </div>
                 </motion.div>
 
-                {/* Phone 1 */}
+                {/* Phone */}
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }} className="flex items-start gap-4">
                   <div className="bg-[#386b00] p-3 rounded-lg shrink-0" aria-hidden="true">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -312,7 +312,7 @@ export default function ContactGrid() {
                     <address className="font-[var(--font-work-sans)] text-sm not-italic leading-relaxed opacity-90">
                       Plot No 359, Gokul Plots,<br />
                       KPHB 9th Phase,<br />
-                      Hyderabad, Telangana – 500085,<br />
+                      Hyderabad, Telangana \u2013 500085,<br />
                       India
                     </address>
                   </div>
@@ -366,7 +366,7 @@ export default function ContactGrid() {
                 <address className="text-[#424843] font-[var(--font-work-sans)] mb-5 leading-relaxed not-italic">
                   Plot No 359, Gokul Plots,<br />
                   KPHB 9th Phase,<br />
-                  Hyderabad, Telangana – 500085,<br />
+                  Hyderabad, Telangana \u2013 500085,<br />
                   India
                 </address>
                 <div className="flex items-start gap-3 mb-4">
@@ -374,7 +374,7 @@ export default function ContactGrid() {
                     <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
                   </svg>
                   <div className="text-sm text-[#424843] font-[var(--font-work-sans)] leading-relaxed">
-                    Mon–Sat: 9am – 6pm
+                    Mon\u2013Sat: 9am \u2013 6pm
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">

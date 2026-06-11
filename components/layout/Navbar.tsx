@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/store/authStore";
 import { useCart } from "@/store/cartStore";
+import { useWishlist } from "@/store/wishlistStore";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -21,6 +22,7 @@ export default function Navbar() {
   const router = useRouter();
   const { isAuthenticated, user, openLoginModal } = useAuth();
   const { count: cartCount } = useCart();
+  const { count: wishlistCount } = useWishlist();
 
   // Show admin controls only for admin role
   const isAdmin = isAuthenticated && user?.role === "admin";
@@ -97,7 +99,7 @@ export default function Navbar() {
             <Link
               href="/wishlist"
               aria-label="Wishlist"
-              className="hover:opacity-70 transition-opacity"
+              className="hover:opacity-70 transition-opacity relative"
             >
               <svg
                 className="w-5 h-5"
@@ -108,6 +110,11 @@ export default function Navbar() {
               >
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#386b00] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-bold">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
             <Link
               href="/cart"

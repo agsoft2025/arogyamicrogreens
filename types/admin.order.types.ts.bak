@@ -2,11 +2,11 @@
  * types/admin.order.types.ts
  *
  * TypeScript types for the Admin Order Management module.
- * Covers the admin endpoints:
- *   GET  /admin/orders
- *   GET  /admin/orders/:id
- *   PUT  /admin/orders/status/:id
- *   POST /admin/orders/refund/:id
+ * Covers the three admin endpoints:
+ *   GET  /orders/admin/orders
+ *   GET  /orders/admin/orders/:id
+ *   PUT  /orders/admin/orders/status/:id
+ *   POST /orders/admin/orders/refund/:id
  */
 
 /* ── Status enum ─────────────────────────────────────────────── */
@@ -55,7 +55,7 @@ export const TERMINAL_STATUSES: AdminOrderStatus[] = [
   "DELIVERED", "CANCELLED", "REFUNDED",
 ];
 
-/** Refund is allowed when order is DELIVERED */
+/** Refund is allowed when order is DELIVERED or already REFUNDED-eligible */
 export function isRefundEligible(status: AdminOrderStatus): boolean {
   return status === "DELIVERED";
 }
@@ -247,19 +247,4 @@ export interface UseAdminOrderState {
 
 /** Extract the user object from userId (populated or string) */
 export function resolveOrderUser(order: AdminOrder): AdminOrderUser | null {
-  if (!order.userId) return null;
-  if (typeof order.userId === "object") return order.userId;
-  return null;
-}
-
-/** Get customer display name */
-export function getCustomerName(order: AdminOrder): string {
-  const user = resolveOrderUser(order);
-  return user?.name ?? order.shippingAddress?.fullName ?? "Unknown";
-}
-
-/** Get customer email */
-export function getCustomerEmail(order: AdminOrder): string {
-  const user = resolveOrderUser(order);
-  return user?.email ?? "—";
-}
+  if (!order.userId) r

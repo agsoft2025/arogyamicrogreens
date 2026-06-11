@@ -221,6 +221,7 @@ export default function ProductsGrid() {
                 index={i}
                 productId={product._id}
                 numericPrice={effectivePrice}
+                slug={product.slug}
               />
             );
           })}

@@ -130,10 +130,10 @@ export default function Footer() {
                 <polyline points="22,6 12,13 2,6" />
               </svg>
               <a
-                href="mailto:hello@agrinest.com"
+                href="mailto:agrinestmicrogreens@gmail.com"
                 className="text-sm text-[#c4c8be] hover:text-white transition-colors font-[var(--font-work-sans)]"
               >
-                hello@agrinest.com
+                agrinestmicrogreens@gmail.com
               </a>
             </div>
 
@@ -144,7 +144,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="max-w-[1280px] mx-auto px-5 md:px-16 py-6 border-t border-[#333730] flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-sm opacity-60 font-[var(--font-work-sans)]">
-          © {new Date().getFullYear()} AgriNest Microgreens. All rights reserved.
+          &copy; {new Date().getFullYear()} AgriNest Microgreens. All rights reserved.
         </p>
         <div className="flex gap-4 items-center opacity-50">
           <span className="text-xs font-bold tracking-wider font-[var(--font-work-sans)]">VISA</span>

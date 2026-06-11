@@ -4,62 +4,38 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import FadeIn from "@/components/animations/FadeIn";
-import WishlistCard, { WishlistItem } from "./WishlistCard";
+import WishlistCard from "./WishlistCard";
+import { useWishlist } from "@/store/wishlistStore";
+import { useCart } from "@/store/cartStore";
 
 const CATEGORIES = [
-  { label: "All Items", count: 12 },
-  { label: "Microgreens", count: null },
-  { label: "Growing Kits", count: null },
-  { label: "Subscriptions", count: null },
-];
-
-const INITIAL_ITEMS: WishlistItem[] = [
-  {
-    id: "radish",
-    name: "Radish Microgreens",
-    description: "Spicy and crisp, perfect for salads.",
-    price: "₹1,049",
-    originalPrice: "₹1,249",
-    badge: "Organic",
-    badgeVariant: "organic",
-    image:
-      "https://lh3.googleusercontent.com/aida/AP1WRLuiOs3N_qHiN1epBe46evph4dpwM8tP4bgvdtD6CxEseH-zHD9gVPyKZn0o5-ZSDAxZcUOPGT3E0Kpd_VLrjSu7AGvaIOmvcaBif7KyACKmrITCh4sgxoJzwt2dydnQDNKc1ZvVWHCywhx8DvgzTTQCA4IKv2xBp71YdYmXOilFv-hO26EPtuYgzuLlJgQtSOxsU8zjHMpSpsGXVA_oy0OqA-2j5REuRyz7rYwwsBQXPXuE6f5WnJP5pH4",
-  },
-  {
-    id: "broccoli",
-    name: "Broccoli Shoots",
-    description: "Rich in antioxidants and nutrients.",
-    price: "₹849",
-    badge: "Popular",
-    badgeVariant: "popular",
-    image:
-      "https://lh3.googleusercontent.com/aida/AP1WRLvc8MOZ9A1s2af1JyJg6R0zWoaNkG1ggxetFU8iQ39xC9oAcIof81eI7Cpk8J9PhRpgJ1pl8B-0BBdfYO3rCLtypi_4_Z0kUmraZwqr9n3mAczlxMl6xqr3dsXCTf8xR4uXvjVb9dI5Ysu5SZiRKd3YBrLIHxaooHU4nANHtyFloJ5KVeKRQNwsCpysBMVmuKsuMxNAHqA9SaoTZ3PNbixZvUGxtr2yrMFX1W-3ISpAQiYJ1Ebl8hiyTQ",
-  },
-  {
-    id: "diy-kit",
-    name: "DIY Starter Kit",
-    description: "Everything you need to grow at home.",
-    price: "₹3,749",
-    badge: "Kit",
-    badgeVariant: "kit",
-    image:
-      "https://lh3.googleusercontent.com/aida/AP1WRLsA4EsrMT11t7BVOpfJprh9s4ALvhszzzWwhqD1JZ6ouaHYh6sdblPOzeeQQenSrxFk-iaT679kzsP1sl4nxwijPaYjLHbXu-ZDI4I2tZba15lP6KiAbNOE9i3SiLVMHhOcu3RhhIIq-HOZD3yx6UMdLfXqvQiGZYlt_z45j8HkLCcrsH32Nr3i3fsPHUvi1VMshey1cO4muwAzMk6K3MzzKAw34HecBTDntft9iLeG2IgLtGY34uMkOg",
-  },
+  { label: "All Items" },
+  { label: "Microgreens" },
+  { label: "Growing Kits" },
+  { label: "Subscriptions" },
 ];
 
 export default function WishlistGrid() {
-  const [items, setItems] = useState<WishlistItem[]>(INITIAL_ITEMS);
   const [activeCategory, setActiveCategory] = useState(0);
+  const { items, removeItem, loading, error } = useWishlist();
+  const { addItem: addToCart } = useCart();
 
-  const handleRemove = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+  const handleRemove = (productId: string) => {
+    removeItem(productId);
   };
 
-  const handleMoveToCart = (_id: string) => {
-    // Cart logic would be wired to global state / context in a full implementation
+  const handleMoveToCart = (productId: string) => {
+    const item = items.find((i) => i.productId === productId);
+    if (!item) return;
+    addToCart({
+      productId: item.productId,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+    });
   };
 
-  const isEmpty = items.length === 0;
+  const isEmpty = items.length === 0 && !loading;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
@@ -83,10 +59,8 @@ export default function WishlistGrid() {
                     />
                     <span className="font-[var(--font-work-sans)] text-sm text-[#1a1c19] group-hover:text-[#386b00] transition-colors">
                       {cat.label}
-                      {cat.count !== null && (
-                        <span className="text-[#727973] ml-1">
-                          ({cat.count})
-                        </span>
+                      {i === 0 && items.length > 0 && (
+                        <span className="text-[#727973] ml-1">({items.length})</span>
                       )}
                     </span>
                   </label>
@@ -127,8 +101,36 @@ export default function WishlistGrid() {
 
       {/* Product Cards Grid */}
       <div className="col-span-1 md:col-span-9">
+        {/* Error banner */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 px-4 py-3 rounded-lg bg-[#ffdad6] text-[#ba1a1a] text-sm font-[var(--font-work-sans)] font-bold"
+          >
+            {error}
+          </motion.div>
+        )}
+
+        {/* Loading skeleton */}
+        {loading && items.length === 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="bg-white rounded-xl overflow-hidden animate-pulse">
+                <div className="h-64 bg-[#eeeee9]" />
+                <div className="p-6 space-y-3">
+                  <div className="h-6 bg-[#eeeee9] rounded w-3/4" />
+                  <div className="h-4 bg-[#eeeee9] rounded w-full" />
+                  <div className="h-4 bg-[#eeeee9] rounded w-2/3" />
+                  <div className="h-10 bg-[#eeeee9] rounded mt-4" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         <AnimatePresence mode="popLayout">
-          {isEmpty ? (
+          {!loading && isEmpty ? (
             <motion.div
               key="empty"
               initial={{ opacity: 0, y: 20 }}
@@ -166,23 +168,25 @@ export default function WishlistGrid() {
               </Link>
             </motion.div>
           ) : (
-            <motion.div
-              key="grid"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-              layout
-            >
-              <AnimatePresence mode="popLayout">
-                {items.map((item, i) => (
-                  <WishlistCard
-                    key={item.id}
-                    item={item}
-                    index={i}
-                    onRemove={handleRemove}
-                    onMoveToCart={handleMoveToCart}
-                  />
-                ))}
-              </AnimatePresence>
-            </motion.div>
+            !loading && (
+              <motion.div
+                key="grid"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                layout
+              >
+                <AnimatePresence mode="popLayout">
+                  {items.map((item, i) => (
+                    <WishlistCard
+                      key={item.productId}
+                      item={item}
+                      index={i}
+                      onRemove={handleRemove}
+                      onMoveToCart={handleMoveToCart}
+                    />
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            )
           )}
         </AnimatePresence>
       </div>

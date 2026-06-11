@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useCart } from "@/store/cartStore";
+import { useWishlist } from "@/store/wishlistStore";
 
 interface ShopProductCardProps {
   name: string;
@@ -14,10 +16,12 @@ interface ShopProductCardProps {
   badgeVariant?: "popular" | "sale" | "new";
   image: string;
   index?: number;
-  /** Backend product _id — required to wire up real Add to Cart */
+  /** Backend product _id — required to wire up real Add to Cart / Wishlist */
   productId?: string;
   /** Numeric unit price in INR — required to wire up real Add to Cart */
   numericPrice?: number;
+  /** Product slug — passed through to wishlist for deep-link */
+  slug?: string;
 }
 
 const badgeStyles: Record<string, string> = {
@@ -38,14 +42,24 @@ export default function ShopProductCard({
   index = 0,
   productId,
   numericPrice,
+  slug,
 }: ShopProductCardProps) {
   const [justAdded, setJustAdded] = useState(false);
   const { items, addItem, clearError } = useCart();
+  const { isInWishlist, toggleItem } = useWishlist();
+  const inWishlist = !!productId && isInWishlist(productId);
 
   // Persistent active state: product is already in the cart
   const isInCart = !!productId && items.some((i) => i.productId === productId);
   // Button shows active when in cart OR immediately after clicking (brief feedback)
   const showActive = isInCart || justAdded;
+
+  const handleToggleWishlist = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!productId || numericPrice === undefined) return;
+    await toggleItem({ productId, name, price: numericPrice, image, slug, description });
+  };
 
   const handleAddToCart = async () => {
     if (productId && numericPrice !== undefined) {
@@ -63,7 +77,7 @@ export default function ShopProductCard({
       viewport={{ once: true }}
       transition={{ delay: index * 0.08, duration: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
       whileHover={{ y: -4 }}
-      className="bg-white rounded-lg overflow-hidden flex flex-col group cursor-pointer"
+      className="relative bg-white rounded-lg overflow-hidden flex flex-col group cursor-pointer"
       style={{ boxShadow: "0 4px 12px rgba(27,60,42,0.10)", transition: "box-shadow 0.3s ease" }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 24px rgba(27,60,42,0.18)";
@@ -72,8 +86,17 @@ export default function ShopProductCard({
         (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 12px rgba(27,60,42,0.10)";
       }}
     >
+      {/* Stretched link — covers entire card for keyboard/mouse navigation */}
+      {slug && (
+        <Link
+          href={`/products/${slug}`}
+          className="absolute inset-0 z-[1] rounded-lg"
+          aria-label={`View ${name} details`}
+        />
+      )}
+
       {/* Image */}
-      <div className="relative aspect-square bg-[#eeeee9] overflow-hidden">
+      <div className="relative aspect-square bg-[#eeeee9] overflow-hidden z-[2]">
         <motion.img
           whileHover={{ scale: 1.06 }}
           transition={{ duration: 0.5 }}
@@ -83,15 +106,34 @@ export default function ShopProductCard({
         />
         {badge && (
           <span
-            className={`absolute top-3 ${badgeVariant === "sale" ? "right-3" : "left-3"} px-2 py-1 rounded font-bold text-[10px] uppercase tracking-wider font-[var(--font-work-sans)] ${badgeStyles[badgeVariant]}`}
+            className={`absolute top-3 left-3 px-2 py-1 rounded font-bold text-[10px] uppercase tracking-wider font-[var(--font-work-sans)] ${badgeStyles[badgeVariant]}`}
           >
             {badge}
           </span>
         )}
+        {productId && (
+          <motion.button
+            onClick={handleToggleWishlist}
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.9 }}
+            aria-label={inWishlist ? `Remove ${name} from wishlist` : `Add ${name} to wishlist`}
+            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/85 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+          >
+            <svg
+              className={`w-4 h-4 transition-colors ${inWishlist ? "text-[#ba1a1a]" : "text-[#424843]"}`}
+              fill={inWishlist ? "currentColor" : "none"}
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </motion.button>
+        )}
       </div>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="relative z-[2] p-5 flex flex-col flex-grow">
         {/* Name + Rating */}
         <div className="flex justify-between items-start mb-2">
           <h4 className="font-[var(--font-libre-caslon)] text-xl font-bold text-[#032616] leading-tight pr-2">

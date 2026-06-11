@@ -520,12 +520,65 @@ export default function AdminOrderDetailPage() {
               </div>
             </motion.section>
 
+            {/* Refund Information */}
+            {order.refundInfo && (
+              <motion.section
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.18 }}
+                className="bg-[#ede9fe] rounded-xl border border-[#c4b5fd] px-5 py-5"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <svg className="w-4 h-4 text-[#6d28d9]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M3 10h10a8 8 0 0 1 8 8v2M3 10l6 6m-6-6 6-6" />
+                  </svg>
+                  <h2 className="text-[11px] font-bold tracking-widest uppercase text-[#6d28d9] font-[var(--font-work-sans)]">
+                    Refund Information
+                  </h2>
+                </div>
+                <div className="space-y-2">
+                  {order.refundInfo.refundId && (
+                    <div className="flex justify-between text-[12px] font-[var(--font-work-sans)]">
+                      <span className="text-[#6d28d9]/70">Refund ID</span>
+                      <span className="font-bold text-[#4c1d95] font-mono text-[10px] break-all text-right max-w-[140px]">
+                        {order.refundInfo.refundId}
+                      </span>
+                    </div>
+                  )}
+                  {order.refundInfo.refundedAmount !== undefined && (
+                    <div className="flex justify-between text-[12px] font-[var(--font-work-sans)]">
+                      <span className="text-[#6d28d9]/70">Refunded Amount</span>
+                      <span className="font-bold text-[#4c1d95]">
+                        {formatCurrency(order.refundInfo.refundedAmount)}
+                      </span>
+                    </div>
+                  )}
+                  {order.refundInfo.refundStatus && (
+                    <div className="flex justify-between text-[12px] font-[var(--font-work-sans)]">
+                      <span className="text-[#6d28d9]/70">Status</span>
+                      <span className="font-bold text-[#4c1d95]">
+                        {order.refundInfo.refundStatus}
+                      </span>
+                    </div>
+                  )}
+                  {order.refundInfo.refundedAt && (
+                    <div className="flex justify-between text-[12px] font-[var(--font-work-sans)]">
+                      <span className="text-[#6d28d9]/70">Refunded On</span>
+                      <span className="font-bold text-[#4c1d95]">
+                        {formatDateShort(order.refundInfo.refundedAt)}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </motion.section>
+            )}
+
             {/* Notes */}
             {order.notes && (
               <motion.section
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.18 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
                 className="bg-[#fffbe6] rounded-xl border border-[#f0e0a0] px-5 py-4"
               >
                 <h2 className="text-[11px] font-bold tracking-widest uppercase text-[#9a7b00] font-[var(--font-work-sans)] mb-1.5">
