@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProduct, getEffectivePrice } from "@/hooks/useProducts";
@@ -8,27 +8,44 @@ import { useCart } from "@/store/cartStore";
 import { useWishlist } from "@/store/wishlistStore";
 import { formatCurrencyInt } from "@/lib/currency";
 import { getProductImageUrl } from "@/lib/imageUtils";
+import AnnouncementBar from "@/components/layout/AnnouncementBar";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import ChatFAB from "@/components/ui/ChatFAB";
+import PageTransition from "@/components/animations/PageTransition";
+import type { Product } from "@/types/product.types";
 
 /* ── Page ────────────────────────────────────────────────────── */
 
 export default function ProductDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { product, loading, error, refetch } = useProduct({
-    slug: params.slug,
-  });
+  // Next.js 15+ passes params as a Promise — unwrap with React.use()
+  const { slug } = use(params);
+  const { product, loading, error, refetch } = useProduct({ slug });
 
-  if (loading) return <ProductDetailSkeleton />;
-  if (error || !product) return <ProductDetailError error={error} onRetry={refetch} />;
-
-  return <ProductDetail product={product} />;
+  return (
+    <>
+      <AnnouncementBar />
+      <Navbar />
+      <PageTransition>
+        {loading ? (
+          <ProductDetailSkeleton />
+        ) : error || !product ? (
+          <ProductDetailError error={error} onRetry={refetch} />
+        ) : (
+          <ProductDetail product={product} />
+        )}
+      </PageTransition>
+      <Footer />
+      <ChatFAB />
+    </>
+  );
 }
 
 /* ── Detail view ─────────────────────────────────────────────── */
-
-import type { Product } from "@/types/product.types";
 
 function ProductDetail({ product }: { product: Product }) {
   const effectivePrice = getEffectivePrice(product);
@@ -105,7 +122,7 @@ function ProductDetail({ product }: { product: Product }) {
               <AnimatePresence mode="wait">
                 <motion.img
                   key={activeImg}
-                  src={getProductImageUrl(images[activeImg])}
+                  src={images.length > 0 ? getProductImageUrl(images[activeImg]) : "/images/placeholder-product.jpg"}
                   alt={product.name}
                   className="w-full h-full object-cover"
                   initial={{ opacity: 0, scale: 1.04 }}
@@ -115,16 +132,12 @@ function ProductDetail({ product }: { product: Product }) {
                 />
               </AnimatePresence>
 
-              {/* Wishlist pill on main image */}
+              {/* Wishlist button */}
               <motion.button
                 onClick={handleToggleWishlist}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                aria-label={
-                  inWishlist
-                    ? "Remove from wishlist"
-                    : "Add to wishlist"
-                }
+                aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
                 className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md hover:bg-white transition-colors"
               >
                 <svg
@@ -146,11 +159,18 @@ function ProductDetail({ product }: { product: Product }) {
                   Sale
                 </span>
               )}
+
+              {/* Featured badge */}
+              {product.isFeatured && !hasDiscount && (
+                <span className="absolute top-4 left-4 bg-[#a5f95b] text-[#3b7100] text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] px-3 py-1.5 rounded-full">
+                  Featured
+                </span>
+              )}
             </div>
 
             {/* Thumbnail strip */}
             {images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide">
+              <div className="flex gap-3 overflow-x-auto pb-1">
                 {images.map((img, i) => (
                   <motion.button
                     key={i}
@@ -166,7 +186,7 @@ function ProductDetail({ product }: { product: Product }) {
                   >
                     <img
                       src={getProductImageUrl(img)}
-                      alt={`${product.name} thumbnail ${i + 1}`}
+                      alt={`${product.name} ${i + 1}`}
                       className="w-full h-full object-cover"
                     />
                   </motion.button>
@@ -182,27 +202,29 @@ function ProductDetail({ product }: { product: Product }) {
             transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
             className="flex flex-col"
           >
-            {/* Status chips */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {product.isFeatured && (
-                <span className="bg-[#a5f95b] text-[#3b7100] text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] px-3 py-1 rounded-full">
-                  Featured
-                </span>
-              )}
-              {product.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-[#f4f4ee] text-[#424843] text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] px-3 py-1 rounded-full border border-[#e3e3dd]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {/* Tags */}
+            {product.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {product.tags.slice(0, 4).map((tag) => (
+                  <span
+                    key={tag}
+                    className="bg-[#f4f4ee] text-[#424843] text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] px-3 py-1 rounded-full border border-[#e3e3dd]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* Name */}
             <h1 className="font-[var(--font-libre-caslon)] text-3xl md:text-4xl font-bold text-[#032616] leading-tight mb-4">
               {product.name}
             </h1>
+
+            {/* SKU */}
+            <p className="text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] text-[#9ca8a3] mb-4">
+              SKU: {product.sku}
+            </p>
 
             {/* Price block */}
             <div className="flex items-baseline gap-3 mb-6">
@@ -210,18 +232,17 @@ function ProductDetail({ product }: { product: Product }) {
                 {formatCurrencyInt(effectivePrice)}
               </span>
               {hasDiscount && (
-                <span className="font-[var(--font-work-sans)] text-lg text-[#727973] line-through">
-                  {formatCurrencyInt(product.price)}
-                </span>
-              )}
-              {hasDiscount && (
-                <span className="bg-[#ffdad6] text-[#ba1a1a] text-[11px] font-bold tracking-wider uppercase font-[var(--font-work-sans)] px-2 py-0.5 rounded">
-                  {Math.round((1 - effectivePrice / product.price) * 100)}% off
-                </span>
+                <>
+                  <span className="font-[var(--font-work-sans)] text-lg text-[#727973] line-through">
+                    {formatCurrencyInt(product.price)}
+                  </span>
+                  <span className="bg-[#ffdad6] text-[#ba1a1a] text-[11px] font-bold tracking-wider uppercase font-[var(--font-work-sans)] px-2 py-0.5 rounded">
+                    {Math.round((1 - effectivePrice / product.price) * 100)}% off
+                  </span>
+                </>
               )}
             </div>
 
-            {/* Divider */}
             <div className="h-px bg-[#e3e3dd] mb-6" />
 
             {/* Short description */}
@@ -258,6 +279,13 @@ function ProductDetail({ product }: { product: Product }) {
               </div>
             )}
 
+            {/* Weight */}
+            {product.weight && (
+              <p className="text-sm font-[var(--font-work-sans)] text-[#424843] mb-6">
+                <span className="font-bold">Weight:</span> {product.weight}{product.weightUnit ?? "g"}
+              </p>
+            )}
+
             {/* Stock indicator */}
             <div className="flex items-center gap-2 mb-8">
               {product.stock > 10 ? (
@@ -286,7 +314,6 @@ function ProductDetail({ product }: { product: Product }) {
 
             {/* Action buttons */}
             <div className="flex gap-3">
-              {/* Add to Cart — primary */}
               <motion.button
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
@@ -333,14 +360,11 @@ function ProductDetail({ product }: { product: Product }) {
                 </AnimatePresence>
               </motion.button>
 
-              {/* Wishlist toggle — secondary */}
               <motion.button
                 onClick={handleToggleWishlist}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                aria-label={
-                  inWishlist ? "Remove from wishlist" : "Add to wishlist"
-                }
+                aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
                 className={`w-14 h-14 rounded-xl flex items-center justify-center border-2 transition-all ${
                   inWishlist
                     ? "border-[#ba1a1a] bg-[#ffdad6] text-[#ba1a1a]"
@@ -359,7 +383,7 @@ function ProductDetail({ product }: { product: Product }) {
               </motion.button>
             </div>
 
-            {/* Wishlist status label */}
+            {/* Wishlist label */}
             <AnimatePresence>
               {inWishlist && (
                 <motion.p
@@ -384,22 +408,6 @@ function ProductDetail({ product }: { product: Product }) {
                 </p>
               </div>
             )}
-
-            {/* Weight / SKU meta */}
-            <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
-              {product.weight && (
-                <div>
-                  <span className="text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] text-[#9ca8a3]">Weight</span>
-                  <p className="text-sm font-bold text-[#1a1c19] font-[var(--font-work-sans)]">
-                    {product.weight}{product.weightUnit ?? "g"}
-                  </p>
-                </div>
-              )}
-              <div>
-                <span className="text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] text-[#9ca8a3]">SKU</span>
-                <p className="text-sm font-bold text-[#1a1c19] font-[var(--font-work-sans)]">{product.sku}</p>
-              </div>
-            </div>
           </motion.div>
         </div>
       </div>
@@ -424,11 +432,9 @@ function ProductDetailSkeleton() {
             </div>
           </div>
           <div className="space-y-4 pt-2">
-            <div className="flex gap-2">
-              <div className="w-20 h-6 rounded-full bg-[#e3e3dd] animate-pulse" />
-              <div className="w-16 h-6 rounded-full bg-[#e3e3dd] animate-pulse" />
-            </div>
+            <div className="h-4 w-32 bg-[#e3e3dd] rounded animate-pulse" />
             <div className="h-10 bg-[#e3e3dd] rounded animate-pulse w-4/5" />
+            <div className="h-4 w-24 bg-[#e3e3dd] rounded animate-pulse" />
             <div className="h-8 bg-[#e3e3dd] rounded animate-pulse w-1/3" />
             <div className="h-px bg-[#e3e3dd]" />
             <div className="space-y-2">
@@ -470,7 +476,7 @@ function ProductDetailError({
             Product not found
           </h2>
           <p className="text-[#424843] font-[var(--font-work-sans)] text-sm">
-            {error ?? "This product doesn't exist or has been removed."}
+            {error ?? "This product doesn&apos;t exist or has been removed."}
           </p>
         </div>
         <div className="flex flex-col gap-3">
@@ -497,7 +503,7 @@ function ProductDetailError({
   );
 }
 
-/* ── Micro-icons ─────────────────────────────────────────────── */
+/* ── Icon ────────────────────────────────────────────────────── */
 
 function ChevronRight() {
   return (

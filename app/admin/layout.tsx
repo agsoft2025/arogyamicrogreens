@@ -3,7 +3,7 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 import RoleGuard from "@/components/auth/RoleGuard";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default function AdminLayout({ children }: { children?: ReactNode }) {
   return (
     /*
      * RoleGuard wraps the entire admin shell.

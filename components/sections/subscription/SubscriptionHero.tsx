@@ -1,15 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
+import subscriptionHeroImg from "@/assests/subscriptionhero.jpg";
 
 export default function SubscriptionHero() {
   return (
     <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
       {/* Background image */}
-      <img
-        src="https://lh3.googleusercontent.com/aida/AP1WRLuKxMbzFxLqUtRhMdGAjL3p3ge51Oc8dqIKv2TT7QNQ2aISgt4bRgip1eBSqgttBnslGYIcnZigCAj_b2lRz3rp_n74RrRoAtOCZoseqCPIhU7lCEttDRgxu_0bYdtd9JcCFPJNPMottom2kopWX4cYuMsd5W0EUsPjBqJM7BMxsdte2XJgwd8sF-iRrSaGxwQ1ZHkK83t_ZvfW3C_Pp-yjVgS4Oc6dQUcWSlJLsUEFsNPz-Taqnc8P5DA"
+      <Image
+        src={subscriptionHeroImg}
         alt="Fresh microgreens growing in a tray"
-        className="absolute inset-0 w-full h-full object-cover"
+        fill
+        sizes="100vw"
+        className="object-cover"
+        priority
       />
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-[#032616]/50" />
