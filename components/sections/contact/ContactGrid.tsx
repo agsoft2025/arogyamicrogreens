@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
 import { AgriNestSocialRow } from "@/components/ui/SocialIcons";
+import { contactApi } from "@/api/contact.api";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -93,11 +94,14 @@ export default function ContactGrid() {
     setErrors({});
     setFormState("loading");
 
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1500));
-    setFormState("success");
-    setName(""); setEmail(""); setSubject("General Inquiry"); setMessage("");
-    setTimeout(() => setFormState("idle"), 4000);
+    try {
+      await contactApi.send({ name, email, subject, message });
+      setFormState("success");
+      setName(""); setEmail(""); setSubject("General Inquiry"); setMessage("");
+      setTimeout(() => setFormState("idle"), 4000);
+    } catch {
+      setFormState("error");
+    }
   };
 
   return (
@@ -201,8 +205,8 @@ export default function ContactGrid() {
               {/* Submit button */}
               <motion.button
                 type="submit"
-                whileHover={formState === "idle" ? { scale: 1.01 } : {}}
-                whileTap={formState === "idle" ? { scale: 0.98 } : {}}
+                whileHover={formState === "idle" || formState === "error" ? { scale: 1.01 } : {}}
+                whileTap={formState === "idle" || formState === "error" ? { scale: 0.98 } : {}}
                 disabled={formState === "loading" || formState === "success"}
                 className={`w-full py-4 rounded-lg font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] flex items-center justify-center gap-2 transition-colors ${
                   formState === "success"
@@ -236,6 +240,20 @@ export default function ContactGrid() {
                     </>
                   )}
               </motion.button>
+
+              {/* Error banner */}
+              <AnimatePresence>
+                {formState === "error" && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-sm text-[#ba1a1a] text-center font-[var(--font-work-sans)]"
+                  >
+                    Failed to send your message. Please try again.
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </form>
           </div>
         </FadeIn>
@@ -312,7 +330,7 @@ export default function ContactGrid() {
                     <address className="font-[var(--font-work-sans)] text-sm not-italic leading-relaxed opacity-90">
                       Plot No 359, Gokul Plots,<br />
                       KPHB 9th Phase,<br />
-                      Hyderabad, Telangana \u2013 500085,<br />
+                      Hyderabad, Telangana – 500085,<br />
                       India
                     </address>
                   </div>
@@ -366,7 +384,7 @@ export default function ContactGrid() {
                 <address className="text-[#424843] font-[var(--font-work-sans)] mb-5 leading-relaxed not-italic">
                   Plot No 359, Gokul Plots,<br />
                   KPHB 9th Phase,<br />
-                  Hyderabad, Telangana \u2013 500085,<br />
+                  Hyderabad, Telangana – 500085,<br />
                   India
                 </address>
                 <div className="flex items-start gap-3 mb-4">
@@ -374,7 +392,7 @@ export default function ContactGrid() {
                     <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
                   </svg>
                   <div className="text-sm text-[#424843] font-[var(--font-work-sans)] leading-relaxed">
-                    Mon\u2013Sat: 9am \u2013 6pm
+                    Mon–Sat: 9am – 6pm
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
