@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
 
+const smoothEase = [0.25, 0.4, 0.25, 1] as const;
+
 interface NutrientBarProps {
   level: string;
   percent: number;
@@ -92,7 +94,7 @@ const cardVariants: Variants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.55, ease: [0.25, 0.4, 0.25, 1] },
+    transition: { delay: i * 0.1, duration: 0.55, ease: smoothEase },
   }),
 };
 
