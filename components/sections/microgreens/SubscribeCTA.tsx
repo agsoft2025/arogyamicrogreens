@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
 
@@ -16,20 +17,26 @@ export default function SubscribeCTA() {
             weekly or bi-weekly. Save 15% on every harvest.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="px-8 py-4 bg-[#386b00] text-white rounded-lg font-[var(--font-libre-caslon)] text-xl font-bold hover:bg-[#032616] transition-colors"
-            >
-              Explore Plans
-            </motion.button>
-            <motion.button
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/subscription"
+                className="block px-8 py-4 bg-[#386b00] text-white rounded-lg font-[var(--font-libre-caslon)] text-xl font-bold hover:bg-[#032616] transition-colors"
+              >
+                Explore Plans
+              </Link>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
               whileTap={{ scale: 0.97 }}
-              className="px-8 py-4 bg-transparent border border-white rounded-lg font-[var(--font-libre-caslon)] text-xl font-bold hover:bg-white hover:text-[#032616] transition-colors"
+              className="rounded-lg"
             >
-              How It Works
-            </motion.button>
+              <Link
+                href="/subscription#how-it-works"
+                className="block px-8 py-4 bg-transparent border border-white rounded-lg font-[var(--font-libre-caslon)] text-xl font-bold hover:bg-white hover:text-[#032616] transition-colors"
+              >
+                How It Works
+              </Link>
+            </motion.div>
           </div>
         </FadeIn>
       </div>

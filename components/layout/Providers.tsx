@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { AuthProvider, useAuth } from "@/store/authStore";
 import { CartProvider } from "@/store/cartStore";
+import { WishlistProvider } from "@/store/wishlistStore";
 import { OrderProvider } from "@/store/orderStore";
 import LoginModal from "@/components/auth/LoginModal";
 
@@ -22,11 +23,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <AuthProvider>
       <SessionRestorer />
       <CartProvider>
-        <OrderProvider>
-          {children}
-          <LoginModal />
-        </OrderProvider>
-      </CartProvider>
+          <WishlistProvider>
+            <OrderProvider>
+              {children}
+              <LoginModal />
+            </OrderProvider>
+          </WishlistProvider>
+        </CartProvider>
     </AuthProvider>
   );
 }

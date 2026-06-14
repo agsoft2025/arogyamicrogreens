@@ -2,24 +2,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-
-export interface WishlistItem {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  badge?: string;
-  badgeVariant?: "organic" | "popular" | "kit" | "new" | "sale";
-  image: string;
-}
+import type { WishlistItem } from "@/types/wishlist.types";
 
 interface WishlistCardProps {
   item: WishlistItem;
   index: number;
-  onRemove: (id: string) => void;
-  onMoveToCart: (id: string) => void;
+  onRemove: (productId: string) => void;
+  onMoveToCart: (productId: string) => void;
 }
 
 const badgeStyles: Record<string, string> = {
@@ -43,7 +32,7 @@ export default function WishlistCard({
   const handleMoveToCart = () => {
     if (cartState !== "idle") return;
     setCartState("loading");
-    onMoveToCart(item.id);
+    onMoveToCart(item.productId);
     setTimeout(() => {
       setCartState("added");
       setTimeout(() => setCartState("idle"), 2000);
@@ -51,10 +40,13 @@ export default function WishlistCard({
   };
 
   const handleRemove = () => {
-    onRemove(item.id);
+    onRemove(item.productId);
   };
 
   const variant = item.badgeVariant ?? "organic";
+
+  // Format numeric INR price → ₹1,049
+  const priceDisplay = `₹${item.price.toLocaleString("en-IN")}`;
 
   return (
     <motion.article
@@ -105,21 +97,18 @@ export default function WishlistCard({
           <h3 className="font-[var(--font-libre-caslon)] text-[22px] font-bold text-[#032616] leading-tight mb-1">
             {item.name}
           </h3>
-          <p className="text-sm text-[#424843] font-[var(--font-work-sans)] leading-relaxed">
-            {item.description}
-          </p>
+          {item.description && (
+            <p className="text-sm text-[#424843] font-[var(--font-work-sans)] leading-relaxed">
+              {item.description}
+            </p>
+          )}
         </div>
 
         {/* Price */}
         <div className="mt-auto mb-4">
           <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]">
-            {item.price}
+            {priceDisplay}
           </span>
-          {item.originalPrice && (
-            <span className="text-sm text-[#727973] line-through ml-2 font-[var(--font-work-sans)]">
-              {item.originalPrice}
-            </span>
-          )}
         </div>
 
         {/* Actions */}

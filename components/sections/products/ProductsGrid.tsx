@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import ShopProductCard from "@/components/ui/ShopProductCard";
 import { useProducts } from "@/hooks/useProducts";
 import { formatCurrency } from "@/lib/currency";
+import { getProductThumbnailUrl } from "@/lib/imageUtils";
 import type { Product, ProductListParams } from "@/types/product.types";
 
 /* ── Helpers — map backend Product to ShopProductCard props ──── */
@@ -26,17 +27,6 @@ function resolveBadge(
     if (ageDays < 30) return { badge: "New", badgeVariant: "new" };
   }
   return {};
-}
-
-function getImageUrl(product: Product): string {
-  // Use featuredImage if available, else first image, else placeholder
-  const src = product.featuredImage ?? product.images?.[0];
-  if (!src) return "/images/placeholder-product.jpg";
-  // If it's already a full URL, return as-is; otherwise prepend uploads URL
-  if (src.startsWith("http")) return src;
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
-  const uploadsBase = base.replace("/api/v1", "");
-  return `${uploadsBase}/uploads/${src}`;
 }
 
 const SORT_OPTIONS = [
@@ -227,10 +217,11 @@ export default function ProductsGrid() {
                 rating="4.8"
                 badge={badge}
                 badgeVariant={badgeVariant}
-                image={getImageUrl(product)}
+                image={getProductThumbnailUrl(product)}
                 index={i}
                 productId={product._id}
                 numericPrice={effectivePrice}
+                slug={product.slug}
               />
             );
           })}

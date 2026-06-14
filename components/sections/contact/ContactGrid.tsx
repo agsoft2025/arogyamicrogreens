@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
 import { AgriNestSocialRow } from "@/components/ui/SocialIcons";
+import { contactApi } from "@/api/contact.api";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -93,18 +94,21 @@ export default function ContactGrid() {
     setErrors({});
     setFormState("loading");
 
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1500));
-    setFormState("success");
-    setName(""); setEmail(""); setSubject("General Inquiry"); setMessage("");
-    setTimeout(() => setFormState("idle"), 4000);
+    try {
+      await contactApi.send({ name, email, subject, message });
+      setFormState("success");
+      setName(""); setEmail(""); setSubject("General Inquiry"); setMessage("");
+      setTimeout(() => setFormState("idle"), 4000);
+    } catch {
+      setFormState("error");
+    }
   };
 
   return (
     <section className="max-w-[1280px] mx-auto px-5 md:px-16 py-20">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        {/* ── Contact Form (7 cols) ── */}
+        {/* Contact Form (7 cols) */}
         <FadeIn direction="left" className="lg:col-span-7">
           <div
             className="bg-white p-8 md:p-10 rounded-xl border border-[#e3e3dd]"
@@ -201,8 +205,8 @@ export default function ContactGrid() {
               {/* Submit button */}
               <motion.button
                 type="submit"
-                whileHover={formState === "idle" ? { scale: 1.01 } : {}}
-                whileTap={formState === "idle" ? { scale: 0.98 } : {}}
+                whileHover={formState === "idle" || formState === "error" ? { scale: 1.01 } : {}}
+                whileTap={formState === "idle" || formState === "error" ? { scale: 0.98 } : {}}
                 disabled={formState === "loading" || formState === "success"}
                 className={`w-full py-4 rounded-lg font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] flex items-center justify-center gap-2 transition-colors ${
                   formState === "success"
@@ -236,11 +240,25 @@ export default function ContactGrid() {
                     </>
                   )}
               </motion.button>
+
+              {/* Error banner */}
+              <AnimatePresence>
+                {formState === "error" && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-sm text-[#ba1a1a] text-center font-[var(--font-work-sans)]"
+                  >
+                    Failed to send your message. Please try again.
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </form>
           </div>
         </FadeIn>
 
-        {/* ── Right Sidebar (5 cols) ── */}
+        {/* Right Sidebar (5 cols) */}
         <div className="lg:col-span-5 flex flex-col gap-6">
 
           {/* Support Hub */}
@@ -262,15 +280,15 @@ export default function ContactGrid() {
                       Email Us
                     </p>
                     <a
-                      href="mailto:hello@agrinest.com"
+                      href="mailto:agrinestmicrogreens@gmail.com"
                       className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors"
                     >
-                      hello@agrinest.com
+                      agrinestmicrogreens@gmail.com
                     </a>
                   </div>
                 </motion.div>
 
-                {/* Phone 1 */}
+                {/* Phone */}
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }} className="flex items-start gap-4">
                   <div className="bg-[#386b00] p-3 rounded-lg shrink-0" aria-hidden="true">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

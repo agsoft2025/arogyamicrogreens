@@ -6,17 +6,8 @@ import ProductCard from "@/components/ui/ProductCard";
 import FadeIn from "@/components/animations/FadeIn";
 import { useProducts } from "@/hooks/useProducts";
 import { formatCurrency } from "@/lib/currency";
+import { getProductThumbnailUrl } from "@/lib/imageUtils";
 import type { Product } from "@/types/product.types";
-
-/* ── Helpers ─────────────────────────────────────────────────── */
-
-function getImageUrl(product: Product): string {
-  const src = product.featuredImage ?? product.images?.[0];
-  if (!src) return "/images/placeholder-product.jpg";
-  if (src.startsWith("http")) return src;
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api/v1";
-  return `${base.replace("/api/v1", "")}/uploads/${src}`;
-}
 
 function resolveBadge(product: Product): string | undefined {
   if (product.salePrice && product.salePrice < product.price) {
@@ -140,7 +131,7 @@ export default function FeaturedMicrogreens() {
                       : undefined
                   }
                   badge={resolveBadge(product)}
-                  image={getImageUrl(product)}
+                  image={getProductThumbnailUrl(product)}
                 />
               </motion.div>
             ))}

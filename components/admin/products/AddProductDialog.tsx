@@ -9,6 +9,7 @@ import FeaturedToggle from "@/components/admin/FeaturedToggle";
 import ProductBenefitsInput from "./ProductBenefitsInput";
 import ProductTagsInput from "./ProductTagsInput";
 import ProductImageUploader from "./ProductImageUploader";
+import { buildServerUrl } from "@/api/upload.api";
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 
@@ -231,7 +232,7 @@ function ExistingImagesGrid({
                 <div className="aspect-square bg-[#f4f4ee]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={url}
+                    src={buildServerUrl(url)}
                     alt="Product image"
                     className="w-full h-full object-cover"
                     onError={(e) => {
