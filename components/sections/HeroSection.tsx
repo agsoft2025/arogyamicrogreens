@@ -6,8 +6,8 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="relative px-5 md:px-16 py-16 md:py-24 overflow-hidden bg-[#f4f4ee]">
-      <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <section className="relative px-5 md:px-16 py-16 md:py-10 overflow-hidden bg-[#f4f4ee]">
+      <div className="max-w-[1280px] w-full md:w-[70%] mx-auto grid md:grid-cols-2 gap-10 items-center">
         {/* Left Content */}
         <div className="z-10">
           <motion.h1
@@ -25,8 +25,7 @@ export default function HeroSection() {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.4, 0.25, 1] }}
             className="text-lg text-[#424843] mb-10 max-w-md leading-relaxed font-[var(--font-work-sans)]"
           >
-            Farm-fresh microgreens packed with nutrients, delivered to your doorstep within hours.
-            Experience the power of pure, hydroponic greens.
+            Nutrient-rich microgreens grown with care and delivered fresh to your doorstep. Enjoy clean, hydroponically grown greens that support everyday wellness.
           </motion.p>
 
           <motion.div

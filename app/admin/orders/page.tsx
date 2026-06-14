@@ -27,6 +27,8 @@ import {
 /* ── Filter tabs ──────────────────────────────────────── */
 const FILTER_TABS: { label: string; value: "" | AdminOrderStatus }[] = [
   { label: "All", value: "" },
+  { label: "Awaiting Payment", value: "PAYMENT_PENDING" },
+  { label: "Payment Failed", value: "PAYMENT_FAILED" },
   { label: "Pending", value: "PENDING" },
   { label: "Confirmed", value: "CONFIRMED" },
   { label: "Processing", value: "PROCESSING" },
@@ -70,29 +72,24 @@ export default function AdminOrdersPage() {
   const [statusFilter, setStatusFilter] = useState<"" | AdminOrderStatus>("");
   const [page, setPage] = useState(1);
 
-  /* Success toast */
   const [successMsg, setSuccessMsg] = useState("");
   const showSuccess = useCallback((msg: string) => {
     setSuccessMsg(msg);
     setTimeout(() => setSuccessMsg(""), 4000);
   }, []);
 
-  /* Dialog state */
   const [updateTarget, setUpdateTarget] = useState<AdminOrder | null>(null);
   const [refundTarget, setRefundTarget] = useState<AdminOrder | null>(null);
 
-  /* Portal action-menu */
   const [menuState, setMenuState] = useState<{
     id: string;
     top: number;
     right: number;
   } | null>(null);
 
-  /* API */
   const { orders, pagination, loading, error, refetch, setParams } =
     useAdminOrders({ page: 1, limit: 10 });
 
-  /* Sync status filter → hook params */
   const filterMountRef = useRef(true);
   useEffect(() => {
     if (filterMountRef.current) {
@@ -104,13 +101,11 @@ export default function AdminOrdersPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
-  /* Sync page → hook params */
   useEffect(() => {
     setParams({ page });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
-  /* Close portal menu on scroll / resize / ESC */
   useEffect(() => {
     if (!menuState) return;
     const close = () => setMenuState(null);
@@ -125,7 +120,6 @@ export default function AdminOrdersPage() {
     };
   }, [menuState]);
 
-  /* Action-menu open */
   const openMenu = useCallback((e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -136,7 +130,6 @@ export default function AdminOrdersPage() {
     });
   }, []);
 
-  /* Pagination window */
   const totalPages = pagination?.totalPages ?? 1;
   const pageNums: number[] = [];
   const start = Math.max(1, Math.min(page - 1, totalPages - 2));
@@ -153,7 +146,7 @@ export default function AdminOrdersPage() {
   return (
     <>
       <div className="space-y-5 pb-20 md:pb-6">
-        {/* ── Page Header ─────────────────────────────── */}
+        {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -167,7 +160,7 @@ export default function AdminOrdersPage() {
           </p>
         </motion.div>
 
-        {/* ── Orders Table Card ────────────────────────── */}
+        {/* Orders Table Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -204,15 +197,7 @@ export default function AdminOrdersPage() {
               >
                 <thead className="border-b border-[#f4f4ee] bg-[#fafaf4]/60">
                   <tr>
-                    {[
-                      "Order",
-                      "Customer",
-                      "Date",
-                      "Items",
-                      "Total",
-                      "Status",
-                      "Actions",
-                    ].map((col, i) => (
+                    {["Order", "Customer", "Date", "Items", "Total", "Status", "Actions"].map((col, i) => (
                       <th
                         key={col}
                         className={`px-6 py-4 text-[11px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] text-[#727973] whitespace-nowrap ${
@@ -228,21 +213,12 @@ export default function AdminOrdersPage() {
                   <AnimatePresence mode="wait" initial={false}>
                     {loading ? (
                       Array.from({ length: 6 }).map((_, i) => (
-                        <tr
-                          key={`sk-${i}`}
-                          className="border-b border-[#f4f4ee]"
-                        >
+                        <tr key={`sk-${i}`} className="border-b border-[#f4f4ee]">
                           {Array.from({ length: 7 }).map((__, j) => (
                             <td key={j} className="px-6 py-4">
                               <div
                                 className={`h-3.5 rounded-full bg-[#f4f4ee] animate-pulse ${
-                                  j === 0
-                                    ? "w-20"
-                                    : j === 1
-                                    ? "w-28"
-                                    : j === 5
-                                    ? "w-20 h-6 rounded-full"
-                                    : "w-16"
+                                  j === 0 ? "w-20" : j === 1 ? "w-28" : j === 5 ? "w-20 h-6 rounded-full" : "w-16"
                                 }`}
                               />
                             </td>
@@ -263,10 +239,13 @@ export default function AdminOrdersPage() {
                         const name = getCustomerName(order);
                         const email = getCustomerEmail(order);
                         const pal = avatarColors(name);
-                        const cfg = ORDER_STATUS_CFG[order.orderStatus];
-                        const isTerminal = TERMINAL_STATUSES.includes(
-                          order.orderStatus
-                        );
+                        const cfg = ORDER_STATUS_CFG[order.orderStatus] ?? {
+                          label: order.orderStatus,
+                          bg: "bg-[#e3e3dd]",
+                          text: "text-[#424843]",
+                          dot: "bg-[#9ca8a3]",
+                        };
+                        const isTerminal = TERMINAL_STATUSES.includes(order.orderStatus);
 
                         return (
                           <motion.tr
@@ -274,11 +253,7 @@ export default function AdminOrdersPage() {
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0 }}
-                            transition={{
-                              delay: i * 0.04,
-                              duration: 0.3,
-                              ease: [0.25, 0.4, 0.25, 1],
-                            }}
+                            transition={{ delay: i * 0.04, duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
                             className="border-b border-[#f4f4ee] last:border-0 hover:bg-[#fafaf4] transition-colors"
                           >
                             {/* Order number */}
@@ -296,10 +271,7 @@ export default function AdminOrdersPage() {
                               <div className="flex items-center gap-3">
                                 <div
                                   className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-[11px] font-[var(--font-work-sans)] shrink-0"
-                                  style={{
-                                    background: pal.bg,
-                                    color: pal.text,
-                                  }}
+                                  style={{ background: pal.bg, color: pal.text }}
                                 >
                                   {getInitials(name)}
                                 </div>
@@ -342,9 +314,7 @@ export default function AdminOrdersPage() {
                               <span
                                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase font-[var(--font-work-sans)] ${cfg.bg} ${cfg.text}`}
                               >
-                                <span
-                                  className={`w-1.5 h-1.5 rounded-full shrink-0 ${cfg.dot}`}
-                                />
+                                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${cfg.dot}`} />
                                 {cfg.label}
                               </span>
                             </td>
@@ -383,42 +353,23 @@ export default function AdminOrdersPage() {
             <div className="px-6 py-4 flex items-center justify-between border-t border-[#f4f4ee] bg-[#fafaf4]/60 flex-wrap gap-3">
               <span className="text-[12px] text-[#9ca8a3] font-[var(--font-work-sans)]">
                 Showing{" "}
-                <span className="font-bold text-[#424843]">
-                  {showingFrom}–{showingTo}
-                </span>{" "}
+                <span className="font-bold text-[#424843]">{showingFrom}–{showingTo}</span>{" "}
                 of{" "}
-                <span className="font-bold text-[#424843]">
-                  {pagination.total}
-                </span>{" "}
+                <span className="font-bold text-[#424843]">{pagination.total}</span>{" "}
                 orders
               </span>
-              <div
-                className="flex items-center gap-1.5"
-                role="navigation"
-                aria-label="Pagination"
-              >
+              <div className="flex items-center gap-1.5" role="navigation" aria-label="Pagination">
                 <PageBtn
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
                   aria-label="Previous page"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path d="m15 18-6-6 6-6" />
                   </svg>
                 </PageBtn>
                 {pageNums.map((num) => (
-                  <PageBtn
-                    key={num}
-                    onClick={() => setPage(num)}
-                    active={page === num}
-                    aria-label={`Page ${num}`}
-                  >
+                  <PageBtn key={num} onClick={() => setPage(num)} active={page === num} aria-label={`Page ${num}`}>
                     {num}
                   </PageBtn>
                 ))}
@@ -427,13 +378,7 @@ export default function AdminOrdersPage() {
                   disabled={page === totalPages}
                   aria-label="Next page"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path d="m9 18 6-6-6-6" />
                   </svg>
                 </PageBtn>
@@ -443,35 +388,25 @@ export default function AdminOrdersPage() {
         </motion.div>
       </div>
 
-      {/* ── Portal: row action menu ──────────────────── */}
+      {/* Portal: row action menu */}
       {typeof window !== "undefined" &&
         menuState &&
         createPortal(
           <>
-            <div
-              className="fixed inset-0 z-[200]"
-              onClick={() => setMenuState(null)}
-            />
+            <div className="fixed inset-0 z-[200]" onClick={() => setMenuState(null)} />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 4 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.13 }}
-              style={{
-                position: "fixed",
-                top: menuState.top,
-                right: menuState.right,
-                zIndex: 201,
-              }}
+              style={{ position: "fixed", top: menuState.top, right: menuState.right, zIndex: 201 }}
               className="w-48 bg-white rounded-xl border border-[#e3e3dd] shadow-xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {(() => {
                 const order = orders.find((o) => o._id === menuState.id);
                 if (!order) return null;
-                const isTerminal = TERMINAL_STATUSES.includes(
-                  order.orderStatus
-                );
+                const isTerminal = TERMINAL_STATUSES.includes(order.orderStatus);
                 return (
                   <>
                     <Link
@@ -484,10 +419,7 @@ export default function AdminOrdersPage() {
                     </Link>
                     {!isTerminal && (
                       <button
-                        onClick={() => {
-                          setUpdateTarget(order);
-                          setMenuState(null);
-                        }}
+                        onClick={() => { setUpdateTarget(order); setMenuState(null); }}
                         className="w-full flex items-center gap-3 px-4 py-3 text-[12px] text-[#424843] font-[var(--font-work-sans)] hover:bg-[#fafaf4] transition-colors text-left"
                       >
                         <RefreshIcon />
@@ -496,10 +428,7 @@ export default function AdminOrdersPage() {
                     )}
                     {isRefundEligible(order.orderStatus) && (
                       <button
-                        onClick={() => {
-                          setRefundTarget(order);
-                          setMenuState(null);
-                        }}
+                        onClick={() => { setRefundTarget(order); setMenuState(null); }}
                         className="w-full flex items-center gap-3 px-4 py-3 text-[12px] text-[#ba1a1a] font-[var(--font-work-sans)] hover:bg-[#ffdad6]/40 transition-colors text-left border-t border-[#f4f4ee]"
                       >
                         <RefundMenuIcon />
@@ -514,7 +443,7 @@ export default function AdminOrdersPage() {
           document.body
         )}
 
-      {/* ── UpdateStatusDialog ───────────────────────── */}
+      {/* UpdateStatusDialog */}
       {updateTarget && (
         <UpdateStatusDialog
           open={!!updateTarget}
@@ -522,15 +451,11 @@ export default function AdminOrdersPage() {
           orderNumber={updateTarget.orderNumber}
           currentStatus={updateTarget.orderStatus}
           onClose={() => setUpdateTarget(null)}
-          onSuccess={(msg) => {
-            showSuccess(msg);
-            setUpdateTarget(null);
-            refetch();
-          }}
+          onSuccess={(msg) => { showSuccess(msg); setUpdateTarget(null); refetch(); }}
         />
       )}
 
-      {/* ── RefundDialog ─────────────────────────────── */}
+      {/* RefundDialog */}
       {refundTarget && (
         <RefundDialog
           open={!!refundTarget}
@@ -538,15 +463,11 @@ export default function AdminOrdersPage() {
           orderNumber={refundTarget.orderNumber}
           totalAmount={refundTarget.totalAmount}
           onClose={() => setRefundTarget(null)}
-          onSuccess={(msg) => {
-            showSuccess(msg);
-            setRefundTarget(null);
-            refetch();
-          }}
+          onSuccess={(msg) => { showSuccess(msg); setRefundTarget(null); refetch(); }}
         />
       )}
 
-      {/* ── Toast ────────────────────────────────────── */}
+      {/* Toast */}
       <AnimatePresence>
         {successMsg && (
           <motion.div
@@ -556,13 +477,7 @@ export default function AdminOrdersPage() {
             transition={{ duration: 0.25 }}
             className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[400] flex items-center gap-3 bg-[#032616] text-white text-sm font-[var(--font-work-sans)] font-bold px-5 py-3.5 rounded-xl shadow-2xl max-w-sm"
           >
-            <svg
-              className="w-4 h-4 text-[#a5f95b] shrink-0"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-4 h-4 text-[#a5f95b] shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path d="M5 13l4 4L19 7" />
             </svg>
             {successMsg}
@@ -606,23 +521,11 @@ function PageBtn({
   );
 }
 
-function EmptyState({
-  hasFilters,
-  onReset,
-}: {
-  hasFilters: boolean;
-  onReset: () => void;
-}) {
+function EmptyState({ hasFilters, onReset }: { hasFilters: boolean; onReset: () => void }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center px-6">
       <div className="w-14 h-14 rounded-2xl bg-[#f4f4ee] flex items-center justify-center mb-4">
-        <svg
-          className="w-7 h-7 text-[#c1c8c1]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          viewBox="0 0 24 24"
-        >
+        <svg className="w-7 h-7 text-[#c1c8c1]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3" />
           <rect width="13" height="8" x="9" y="11" rx="1" />
           <circle cx="12" cy="19" r="2" />
@@ -650,23 +553,11 @@ function EmptyState({
   );
 }
 
-function ErrorState({
-  message,
-  onRetry,
-}: {
-  message: string;
-  onRetry: () => void;
-}) {
+function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center px-6">
       <div className="w-14 h-14 rounded-2xl bg-[#ffdad6] flex items-center justify-center mb-4">
-        <svg
-          className="w-7 h-7 text-[#ba1a1a]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          viewBox="0 0 24 24"
-        >
+        <svg className="w-7 h-7 text-[#ba1a1a]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10" />
           <path d="M12 8v4M12 16h.01" />
         </svg>
@@ -674,9 +565,7 @@ function ErrorState({
       <h3 className="font-[var(--font-libre-caslon)] text-lg font-bold text-[#1a1c19] mb-2">
         Failed to load orders
       </h3>
-      <p className="text-sm text-[#9ca8a3] font-[var(--font-work-sans)] max-w-xs mb-5">
-        {message}
-      </p>
+      <p className="text-sm text-[#9ca8a3] font-[var(--font-work-sans)] max-w-xs mb-5">{message}</p>
       <motion.button
         onClick={onRetry}
         whileTap={{ scale: 0.97 }}
@@ -700,13 +589,7 @@ function MoreVertIcon() {
 }
 function EyeIcon() {
   return (
-    <svg
-      className="w-3.5 h-3.5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
+    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
       <circle cx="12" cy="12" r="3" />
     </svg>
@@ -714,13 +597,7 @@ function EyeIcon() {
 }
 function RefreshIcon() {
   return (
-    <svg
-      className="w-3.5 h-3.5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
+    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
       <polyline points="1 4 1 10 7 10" />
       <path d="M3.51 15a9 9 0 1 0 .49-4" />
     </svg>
@@ -728,14 +605,11 @@ function RefreshIcon() {
 }
 function RefundMenuIcon() {
   return (
-    <svg
-      className="w-3.5 h-3.5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
-      <path d="M3 10h10a8 8 0 0 1 8 8v2M3 10l6 6m-6-6 6-6" />
+    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <polyline points="1 4 1 10 7 10" />
+      <path d="M3.51 15a9 9 0 1 0 2.13 5.35" />
+      <line x1="12" y1="9" x2="12" y2="13" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
     </svg>
   );
 }

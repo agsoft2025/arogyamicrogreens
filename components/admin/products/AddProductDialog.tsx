@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createProduct, updateProduct } from "@/api/product.api";
-import type { CreateProductPayload, Product, ProductStatus } from "@/types/product.types";
+import type { CreateProductPayload, Product, ProductCategory, ProductStatus } from "@/types/product.types";
 import type { ApiError } from "@/api/axios";
 import FeaturedToggle from "@/components/admin/FeaturedToggle";
 import ProductBenefitsInput from "./ProductBenefitsInput";
@@ -37,7 +37,7 @@ interface FormValues {
   slug: string;
   slugManual: boolean;
   sku: string;
-  categoryId: string;
+  category: ProductCategory | "";
   price: string;
   salePrice: string;
   stock: string;
@@ -51,6 +51,7 @@ interface FormValues {
   weight: string;
   weightUnit: string;
   isFeatured: boolean;
+  isBestSeller: boolean;
   status: ProductStatus;
   tags: string[];
   seoMetaTitle: string;
@@ -61,18 +62,23 @@ interface FormErrors {
   name?: string;
   slug?: string;
   sku?: string;
-  categoryId?: string;
+  category?: string;
   price?: string;
   stock?: string;
   [key: string]: string | undefined;
 }
+
+const CATEGORY_OPTIONS: { value: ProductCategory; label: string }[] = [
+  { value: "product",    label: "Product" },
+  { value: "microgreen", label: "Microgreen" },
+];
 
 const BLANK_FORM: FormValues = {
   name: "",
   slug: "",
   slugManual: false,
   sku: "",
-  categoryId: "",
+  category: "",
   price: "",
   salePrice: "",
   stock: "",
@@ -84,6 +90,7 @@ const BLANK_FORM: FormValues = {
   weight: "",
   weightUnit: "g",
   isFeatured: false,
+  isBestSeller: false,
   status: "draft",
   tags: [],
   seoMetaTitle: "",
@@ -96,7 +103,7 @@ function productToForm(p: Product): FormValues {
     slug: p.slug,
     slugManual: true, // keep existing slug; don't auto-regenerate
     sku: p.sku,
-    categoryId: p.categoryId,
+    category: p.category,
     price: String(p.price),
     salePrice: p.salePrice != null ? String(p.salePrice) : "",
     stock: String(p.stock),
@@ -108,6 +115,7 @@ function productToForm(p: Product): FormValues {
     weight: p.weight != null ? String(p.weight) : "",
     weightUnit: p.weightUnit ?? "g",
     isFeatured: p.isFeatured,
+    isBestSeller: p.isBestSeller,
     status: p.status,
     tags: p.tags ?? [],
     seoMetaTitle: p.seo?.metaTitle ?? "",
@@ -378,7 +386,7 @@ export default function AddProductDialog({
     else if (!/^[a-z0-9-]+$/.test(form.slug))
       e.slug = "Slug can only contain lowercase letters, numbers, and hyphens.";
     if (!form.sku.trim()) e.sku = "SKU is required.";
-    if (!form.categoryId.trim()) e.categoryId = "Category ID is required.";
+    if (!form.category) e.category = "Category is required.";
     if (!form.price) e.price = "Price is required.";
     else if (isNaN(Number(form.price)) || Number(form.price) < 0)
       e.price = "Price must be a valid positive number.";
@@ -413,7 +421,7 @@ export default function AddProductDialog({
       name:             form.name.trim(),
       slug:             form.slug.trim(),
       sku:              form.sku.trim(),
-      categoryId:       form.categoryId.trim(),
+      category:         form.category as ProductCategory,
       price:            Number(form.price),
       salePrice:        form.salePrice ? Number(form.salePrice) : undefined,
       stock:            Number(form.stock),
@@ -425,6 +433,7 @@ export default function AddProductDialog({
       weight:           form.weight ? Number(form.weight) : undefined,
       weightUnit:       form.weight ? form.weightUnit : undefined,
       isFeatured:       form.isFeatured,
+      isBestSeller:     form.isBestSeller,
       status:           form.status,
       tags:             form.tags,
       seo:
@@ -597,16 +606,28 @@ export default function AddProductDialog({
                     </div>
 
                     <div>
-                      <FieldLabel htmlFor="pf-category" required>Category ID</FieldLabel>
-                      <input
-                        id="pf-category"
-                        type="text"
-                        value={form.categoryId}
-                        onChange={(e) => set("categoryId", e.target.value)}
-                        placeholder="MongoDB ObjectId"
-                        className={inputCls(errors.categoryId)}
-                      />
-                      <FieldError message={errors.categoryId} />
+                      <FieldLabel htmlFor="pf-category" required>Category</FieldLabel>
+                      <div className="relative">
+                        <select
+                          id="pf-category"
+                          value={form.category}
+                          onChange={(e) => set("category", e.target.value as ProductCategory | "")}
+                          className={`w-full appearance-none border rounded-lg px-3 py-2.5 pr-8 text-sm font-[var(--font-work-sans)] bg-white outline-none transition-colors ${
+                            errors.category
+                              ? "border-[#ba1a1a] ring-1 ring-[#ba1a1a]/30 text-[#1a1c19]"
+                              : "border-[#e3e3dd] focus:border-[#386b00] focus:ring-1 focus:ring-[#386b00]/30 text-[#1a1c19]"
+                          } ${!form.category ? "text-[#b0b8b0]" : ""}`}
+                        >
+                          <option value="" disabled>Select Category</option>
+                          {CATEGORY_OPTIONS.map((o) => (
+                            <option key={o.value} value={o.value}>{o.label}</option>
+                          ))}
+                        </select>
+                        <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#727973] pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                          <path d="m6 9 6 6 6-6" />
+                        </svg>
+                      </div>
+                      <FieldError message={errors.category} />
                     </div>
                   </div>
                 </section>
@@ -776,6 +797,20 @@ export default function AddProductDialog({
                         />
                         <span className="text-sm text-[#424843] font-[var(--font-work-sans)]">
                           {form.isFeatured ? "Featured on storefront" : "Not featured"}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold tracking-widest uppercase text-[#424843] mb-2 font-[var(--font-work-sans)]">
+                        Best Seller
+                      </p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <FeaturedToggle
+                          enabled={form.isBestSeller}
+                          onToggle={() => set("isBestSeller", !form.isBestSeller)}
+                        />
+                        <span className="text-sm text-[#424843] font-[var(--font-work-sans)]">
+                          {form.isBestSeller ? "Shown in Best Selling section" : "Not a best seller"}
                         </span>
                       </div>
                     </div>

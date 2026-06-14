@@ -46,7 +46,7 @@ const itemVariants: Variants = {
 export default function MicrogreensHero() {
   return (
     <section
-      className="relative px-5 md:px-16 py-20 md:py-28 overflow-hidden"
+      className="relative px-5 md:px-16 py-20 md:py-15 overflow-hidden"
       style={{
         background:
           "radial-gradient(at 0% 0%, rgba(165,249,91,0.15) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(27,60,42,0.05) 0, transparent 50%), #f4f4ee",
@@ -107,7 +107,7 @@ export default function MicrogreensHero() {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
           className="relative"
         >
-          <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-3">
+          <div className="relative aspect-square w-full md:w-[80%] rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-3">
             <Image
               src={peaShootsHero}
               alt="Fresh pea shoots microgreens"

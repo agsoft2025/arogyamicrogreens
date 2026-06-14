@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function ContactHero() {
   return (
-    <section className="relative bg-[#fafaf4] py-24 md:py-32 overflow-hidden">
+    <section className="relative bg-[#fafaf4] py-10 md:py-12 overflow-hidden">
       {/* Dot-grid background */}
       <div
         className="absolute inset-0 pointer-events-none"

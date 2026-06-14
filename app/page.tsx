@@ -6,7 +6,6 @@ import FeaturedMicrogreens from "@/components/sections/FeaturedMicrogreens";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import BestSelling from "@/components/sections/BestSelling";
 import SubscriptionPlans from "@/components/sections/SubscriptionPlans";
-import Testimonials from "@/components/sections/Testimonials";
 import ChatFAB from "@/components/ui/ChatFAB";
 
 export default function Home() {
@@ -20,7 +19,6 @@ export default function Home() {
         <WhyChooseUs />
         <BestSelling />
         <SubscriptionPlans />
-        <Testimonials />
       </main>
       <Footer />
       <ChatFAB />
