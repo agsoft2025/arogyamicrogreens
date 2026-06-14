@@ -45,7 +45,7 @@ export default function SubscriptionPanel() {
             </p>
             <div className="flex justify-between items-center">
               <span className="font-bold text-white font-[var(--font-work-sans)]">
-                $34.00/mo
+                ₹2,829/mo
               </span>
               <motion.button
                 whileHover={{ scale: 1.06 }}

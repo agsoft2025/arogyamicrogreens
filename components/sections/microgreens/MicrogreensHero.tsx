@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, type Variants } from "framer-motion";
+import peaShootsHero from "@/assests/peashootsmicrogreen.png";
 
 const badges = [
   {
@@ -31,12 +33,12 @@ const badges = [
   },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.15 } },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] } },
 };
@@ -105,11 +107,14 @@ export default function MicrogreensHero() {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
           className="relative"
         >
-          <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-3">
-            <img
-              src="https://lh3.googleusercontent.com/aida/AP1WRLvM29DqgAIgfFOLkMSle4WvcN0nXOkBOXbzIQfF8cpXM1_VC-Wqo1g01FhWv5Z7IpA0IfkzqKCw1I1LtMKqTARR_LgfBAYsELdOAyjSGr1AoVnWSs3erhctevwNTS_Su7t4TRru-TGfkgrFWEC-cV2btjYCAjOk1l5jTlVI-_jgrqnvQkf8FQ0Eqjd46n5ei6mjyFCeseGGsBUIiKFlmX7w0Xd_P1vM30ChPZs611XeaSkNu2diLWLr8ZA"
-              alt="Assorted microgreens in a wooden tray"
-              className="w-full h-full object-cover"
+          <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-3">
+            <Image
+              src={peaShootsHero}
+              alt="Fresh pea shoots microgreens"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
             />
           </div>
 

@@ -2,12 +2,18 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageTransition from "@/components/animations/PageTransition";
 
 export default function OrderSuccessPage() {
+  const [orderNumber, setOrderNumber] = useState<string>("");
+
+  useEffect(() => {
+    setOrderNumber(`#AGN-${Math.floor(100000 + Math.random() * 900000)}`);
+  }, []);
   return (
     <>
       <AnnouncementBar />
@@ -72,7 +78,7 @@ export default function OrderSuccessPage() {
                 Order Number
               </p>
               <p className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">
-                #AGN-{Math.floor(100000 + Math.random() * 900000)}
+                {orderNumber}
               </p>
             </motion.div>
 

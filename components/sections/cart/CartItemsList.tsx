@@ -1,57 +1,94 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import CartItem, { CartItemData } from "./CartItem";
+import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
-
-const INITIAL_CART: CartItemData[] = [
-  {
-    id: "sunflower-large",
-    name: "Sunflower Shoots - Large",
-    description: "Freshly harvested, nutty flavor profile",
-    price: 9.0,
-    quantity: 2,
-    badge: "Bestseller",
-    badgeVariant: "bestseller",
-    image:
-      "https://lh3.googleusercontent.com/aida/AP1WRLt3oyHfJg21JkD78uRoIPGiU4tf2pQmbj_uYvn54Pp6ZQBItJteJ3R-Ow8kufCR4MMH5CMWuDFYSz4z_WxX0g4Kk1npkU1gBEhyKcJ0jMPKiy4C69LGSkyxeJCZPKut29DtG95GS9eeCDWqVIfvHro4ftrI8hbtz8QGoEP7sGwOPgMg6VoiOCxBdxA0o3MAqAUP2gA6GnVsuF5R0Qap1Tcjk-YKoDQrAA9EwCSkgdAkS3qvQUaAXafdPRw",
-  },
-  {
-    id: "purple-radish",
-    name: "Purple Radish Zest",
-    description: "Weekly delivery, peppery spice",
-    price: 12.5,
-    quantity: 1,
-    badge: "Subscription Only",
-    badgeVariant: "subscription",
-    image:
-      "https://lh3.googleusercontent.com/aida/AP1WRLs0IOolfe1srTnxiX2guoxJ6BWGJ64JG8ZhGV8-daV979LzVwcqwx5CpBOZQqCKZxmAiFm7Ueib-esNnF6deET9TnnIP6H_Es5M8rEbhjNbRt5Br00CulmXzEdh8fuN53i5stbxfuRfODOAuXwmaBwAkQd8nM2J4ub3s5Ei9RgqkFaNxjn-HKP_yWiRUTt4GGpnMnztB_2WWYOrdv7HGG-Knbv8lb6cW_amt1aw2oazWuwXeC66KOV1InU",
-  },
-];
+import { useCart } from "@/store/cartStore";
 
 export default function CartItemsList() {
-  const [items, setItems] = useState<CartItemData[]>(INITIAL_CART);
+  const { items, loading, syncing, syncError, error, removeItem, updateQty, clearError } =
+    useCart();
 
-  const handleRemove = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const handleQtyChange = (id: string, qty: number) => {
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity: qty } : item))
-    );
-  };
-
-  const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  const tax = parseFloat((subtotal * 0.08).toFixed(2));
   const isEmpty = items.length === 0;
+
+  const handleRemove = async (productId: string) => {
+    await removeItem(productId);
+  };
+
+  const handleQtyChange = async (productId: string, qty: number) => {
+    clearError();
+    await updateQty(productId, qty);
+  };
+
+  /* ── Loading / syncing states ─────────────────────────────── */
+  if (loading || syncing) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 text-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+          className="w-10 h-10 rounded-full border-4 border-[#e3e3dd] border-t-[#386b00] mb-4"
+        />
+        <p className="text-sm text-[#727973] font-[var(--font-work-sans)]">
+          {syncing ? "Syncing your cart…" : "Loading cart…"}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       {/* Cart Items — 8 cols */}
       <div className="lg:col-span-8 space-y-6">
+        {/* Sync error banner */}
+        <AnimatePresence>
+          {syncError && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="flex items-center gap-3 bg-[#ffdad6] text-[#ba1a1a] text-sm font-[var(--font-work-sans)] rounded-lg px-4 py-3"
+            >
+              <svg
+                className="w-4 h-4 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4M12 16h.01" />
+              </svg>
+              {syncError}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Cart operation error banner */}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="flex items-center gap-3 bg-[#ffdad6] text-[#ba1a1a] text-sm font-[var(--font-work-sans)] rounded-lg px-4 py-3"
+            >
+              <svg
+                className="w-4 h-4 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4M12 16h.01" />
+              </svg>
+              {error}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <AnimatePresence mode="popLayout">
           {isEmpty ? (
             <motion.div
@@ -94,8 +131,14 @@ export default function CartItemsList() {
           ) : (
             items.map((item, i) => (
               <CartItem
-                key={item.id}
-                item={item}
+                key={item.productId}
+                item={{
+                  productId: item.productId,
+                  name: item.name,
+                  price: item.price,
+                  quantity: item.quantity,
+                  image: item.image,
+                }}
                 index={i}
                 onRemove={handleRemove}
                 onQuantityChange={handleQtyChange}
@@ -130,7 +173,7 @@ export default function CartItemsList() {
 
       {/* Order Summary — 4 cols, sticky */}
       <div className="lg:col-span-4 lg:sticky lg:top-24">
-        <OrderSummary subtotal={subtotal} tax={tax} />
+        <OrderSummary />
       </div>
     </div>
   );

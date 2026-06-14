@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
+import { AgriNestSocialRow } from "@/components/ui/SocialIcons";
+import { contactApi } from "@/api/contact.api";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -73,6 +75,7 @@ function InputField({
   );
 }
 
+
 export default function ContactGrid() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -91,18 +94,21 @@ export default function ContactGrid() {
     setErrors({});
     setFormState("loading");
 
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1500));
-    setFormState("success");
-    setName(""); setEmail(""); setSubject("General Inquiry"); setMessage("");
-    setTimeout(() => setFormState("idle"), 4000);
+    try {
+      await contactApi.send({ name, email, subject, message });
+      setFormState("success");
+      setName(""); setEmail(""); setSubject("General Inquiry"); setMessage("");
+      setTimeout(() => setFormState("idle"), 4000);
+    } catch {
+      setFormState("error");
+    }
   };
 
   return (
     <section className="max-w-[1280px] mx-auto px-5 md:px-16 py-20">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        {/* ── Contact Form (7 cols) ── */}
+        {/* Contact Form (7 cols) */}
         <FadeIn direction="left" className="lg:col-span-7">
           <div
             className="bg-white p-8 md:p-10 rounded-xl border border-[#e3e3dd]"
@@ -157,6 +163,7 @@ export default function ContactGrid() {
                   <svg
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#424843] pointer-events-none"
                     fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path d="m6 9 6 6 6-6" />
                   </svg>
@@ -198,8 +205,8 @@ export default function ContactGrid() {
               {/* Submit button */}
               <motion.button
                 type="submit"
-                whileHover={formState === "idle" ? { scale: 1.01 } : {}}
-                whileTap={formState === "idle" ? { scale: 0.98 } : {}}
+                whileHover={formState === "idle" || formState === "error" ? { scale: 1.01 } : {}}
+                whileTap={formState === "idle" || formState === "error" ? { scale: 0.98 } : {}}
                 disabled={formState === "loading" || formState === "success"}
                 className={`w-full py-4 rounded-lg font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] flex items-center justify-center gap-2 transition-colors ${
                   formState === "success"
@@ -210,13 +217,13 @@ export default function ContactGrid() {
                 }`}
               >
                 {formState === "loading" && (
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z" />
                   </svg>
                 )}
                 {formState === "success" && (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m5 13 4 4L19 7" />
                   </svg>
                 )}
@@ -227,17 +234,31 @@ export default function ContactGrid() {
                   : (
                     <>
                       Send Message
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="m22 2-7 20-4-9-9-4 20-7z" />
                       </svg>
                     </>
                   )}
               </motion.button>
+
+              {/* Error banner */}
+              <AnimatePresence>
+                {formState === "error" && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-sm text-[#ba1a1a] text-center font-[var(--font-work-sans)]"
+                  >
+                    Failed to send your message. Please try again.
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </form>
           </div>
         </FadeIn>
 
-        {/* ── Right Sidebar (5 cols) ── */}
+        {/* Right Sidebar (5 cols) */}
         <div className="lg:col-span-5 flex flex-col gap-6">
 
           {/* Support Hub */}
@@ -245,42 +266,84 @@ export default function ContactGrid() {
             <div className="bg-[#1b3c2a] text-white p-8 rounded-xl" style={{ boxShadow: "0 4px 16px rgba(27,60,42,0.2)" }}>
               <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold mb-7">Support Hub</h3>
               <div className="space-y-6">
-                {[
-                  {
-                    icon: (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                      </svg>
-                    ),
-                    label: "Email Us",
-                    value: "hello@agrinest.com",
-                  },
-                  {
-                    icon: (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z" />
-                      </svg>
-                    ),
-                    label: "Call Us",
-                    value: "+1 (555) GROW-NOW",
-                  },
-                ].map((item) => (
-                  <motion.div
-                    key={item.label}
-                    whileHover={{ x: 4 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-start gap-4"
-                  >
-                    <div className="bg-[#386b00] p-3 rounded-lg shrink-0">{item.icon}</div>
-                    <div>
-                      <p className="font-bold text-[10px] tracking-widest uppercase opacity-60 font-[var(--font-work-sans)] mb-0.5">
-                        {item.label}
-                      </p>
-                      <p className="font-[var(--font-work-sans)] text-base">{item.value}</p>
-                    </div>
-                  </motion.div>
-                ))}
+
+                {/* Email */}
+                <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }} className="flex items-start gap-4">
+                  <div className="bg-[#386b00] p-3 rounded-lg shrink-0" aria-hidden="true">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                      <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-bold text-[10px] tracking-widest uppercase opacity-60 font-[var(--font-work-sans)] mb-0.5">
+                      Email Us
+                    </p>
+                    <a
+                      href="mailto:agrinestmicrogreens@gmail.com"
+                      className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors"
+                    >
+                      agrinestmicrogreens@gmail.com
+                    </a>
+                  </div>
+                </motion.div>
+
+                {/* Phone */}
+                <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }} className="flex items-start gap-4">
+                  <div className="bg-[#386b00] p-3 rounded-lg shrink-0" aria-hidden="true">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-bold text-[10px] tracking-widest uppercase opacity-60 font-[var(--font-work-sans)] mb-0.5">
+                      Call Us
+                    </p>
+                    <a
+                      href="tel:+918500395821"
+                      className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors block"
+                      aria-label="Call +91 8500395821"
+                    >
+                      +91 8500395821
+                    </a>
+                    <a
+                      href="tel:+918500395831"
+                      className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors block"
+                      aria-label="Call +91 8500395831"
+                    >
+                      +91 8500395831
+                    </a>
+                  </div>
+                </motion.div>
+
+                {/* Address */}
+                <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }} className="flex items-start gap-4">
+                  <div className="bg-[#386b00] p-3 rounded-lg shrink-0" aria-hidden="true">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-bold text-[10px] tracking-widest uppercase opacity-60 font-[var(--font-work-sans)] mb-0.5">
+                      Visit Us
+                    </p>
+                    <address className="font-[var(--font-work-sans)] text-sm not-italic leading-relaxed opacity-90">
+                      Plot No 359, Gokul Plots,<br />
+                      KPHB 9th Phase,<br />
+                      Hyderabad, Telangana – 500085,<br />
+                      India
+                    </address>
+                  </div>
+                </motion.div>
+
+              </div>
+
+              {/* Social Media */}
+              <div className="mt-8 pt-7 border-t border-white/20">
+                <p className="font-bold text-[10px] tracking-widest uppercase opacity-60 font-[var(--font-work-sans)] mb-4">
+                  Follow Us
+                </p>
+                <AgriNestSocialRow variant="dark" iconSize={20} />
               </div>
             </div>
           </FadeIn>
@@ -295,7 +358,7 @@ export default function ContactGrid() {
               <div className="h-48 relative overflow-hidden">
                 <img
                   src="https://lh3.googleusercontent.com/aida/AP1WRLuRo7_vp4g_mLRZ3HDynsF98LSQB7CtbTjW5BtPK6NDMqG9KpiP1FvX61Aw-d4CEOw2KuTufWLyDB2SeCqJ-AGZcUXgc9B8YMSu8yi_SWnPdTrF9QN8lZArQM5UoGhUXU-7uYYVI0--ZOli5eE6AN2_Ehaj8oKeT4N-Ax7AgLD0LKlOUgYJpWyE9bGPBtZGbnuEb0P0duRYUoD-SvAL3g3GIpyiOAWrznBzAw-GFeNYsdZpvPB4jMMGMNE"
-                  alt="Urban farm location map"
+                  alt="AgriNest Microgreens location in Hyderabad"
                   className="w-full h-full object-cover grayscale opacity-60"
                 />
                 {/* Pin */}
@@ -307,7 +370,7 @@ export default function ContactGrid() {
                   className="absolute inset-0 flex items-center justify-center"
                 >
                   <div className="bg-[#386b00] text-white p-3 rounded-full shadow-xl">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                     </svg>
                   </div>
@@ -316,22 +379,43 @@ export default function ContactGrid() {
 
               <div className="p-7">
                 <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616] mb-2">
-                  The Urban Farm
+                  AgriNest Microgreens
                 </h3>
-                <p className="text-[#424843] font-[var(--font-work-sans)] mb-5 leading-relaxed">
-                  422 Greenway Ave, Suite 100
-                  <br />
-                  Eco-District, Portland, OR 97201
-                </p>
-                <div className="flex items-start gap-3">
-                  <svg className="w-4 h-4 text-[#386b00] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <address className="text-[#424843] font-[var(--font-work-sans)] mb-5 leading-relaxed not-italic">
+                  Plot No 359, Gokul Plots,<br />
+                  KPHB 9th Phase,<br />
+                  Hyderabad, Telangana – 500085,<br />
+                  India
+                </address>
+                <div className="flex items-start gap-3 mb-4">
+                  <svg className="w-4 h-4 text-[#386b00] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
                   </svg>
                   <div className="text-sm text-[#424843] font-[var(--font-work-sans)] leading-relaxed">
-                    Mon–Fri: 8am – 6pm
-                    <br />
-                    Sat: 9am – 4pm
+                    Mon–Sat: 9am – 6pm
                   </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <a
+                    href="tel:+918500395821"
+                    className="flex items-center gap-2 text-sm text-[#386b00] font-bold font-[var(--font-work-sans)] hover:text-[#032616] transition-colors"
+                    aria-label="Call +91 8500395821"
+                  >
+                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z" />
+                    </svg>
+                    +91 8500395821
+                  </a>
+                  <a
+                    href="tel:+918500395831"
+                    className="flex items-center gap-2 text-sm text-[#386b00] font-bold font-[var(--font-work-sans)] hover:text-[#032616] transition-colors"
+                    aria-label="Call +91 8500395831"
+                  >
+                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z" />
+                    </svg>
+                    +91 8500395831
+                  </a>
                 </div>
               </div>
             </div>

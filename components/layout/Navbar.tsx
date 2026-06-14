@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/store/authStore";
+import { useCart } from "@/store/cartStore";
+import { useWishlist } from "@/store/wishlistStore";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -15,8 +18,14 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartCount] = useState(0);
   const pathname = usePathname();
+  const router = useRouter();
+  const { isAuthenticated, user, openLoginModal } = useAuth();
+  const { count: cartCount } = useCart();
+  const { count: wishlistCount } = useWishlist();
+
+  // Show admin controls only for admin role
+  const isAdmin = isAuthenticated && user?.role === "admin";
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -90,7 +99,7 @@ export default function Navbar() {
             <Link
               href="/wishlist"
               aria-label="Wishlist"
-              className="hover:opacity-70 transition-opacity"
+              className="hover:opacity-70 transition-opacity relative"
             >
               <svg
                 className="w-5 h-5"
@@ -101,6 +110,11 @@ export default function Navbar() {
               >
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#386b00] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-bold">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
             <Link
               href="/cart"
@@ -122,22 +136,56 @@ export default function Navbar() {
                 {cartCount}
               </span>
             </Link>
-            <Link
-              href="/dashboard"
-              aria-label="My account"
-              className="hover:opacity-70 transition-opacity"
-            >
-              <svg
-                className="w-5 h-5"
-                fill={pathname === "/dashboard" ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
+
+            {/* Admin pill — only for admin role, desktop */}
+            {isAdmin && (
+              <motion.button
+                onClick={() => router.push("/admin/dashboard")}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Go to admin dashboard"
+                className="flex items-center gap-1.5 bg-[#032616] text-[#a5f95b] px-3 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] hover:bg-[#0a3d20] transition-colors shadow-sm"
               >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </Link>
+                <CrownIcon />
+                <span>Admin</span>
+              </motion.button>
+            )}
+
+            {isAuthenticated ? (
+              <Link
+                href="/profile"
+                aria-label="My profile"
+                className="hover:opacity-70 transition-opacity"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill={pathname === "/profile" ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+            ) : (
+              <button
+                onClick={() => openLoginModal("/profile")}
+                aria-label="Sign in"
+                className="hover:opacity-70 transition-opacity text-[#032616]"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </button>
+            )}
           </div>
 
           {/* Hamburger */}
@@ -188,6 +236,24 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
               ))}
+
+              {/* Admin entry — mobile, only for admin role */}
+              {isAdmin && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navLinks.length * 0.05 }}
+                >
+                  <button
+                    onClick={() => { setMenuOpen(false); router.push("/admin/dashboard"); }}
+                    className="w-full flex items-center gap-2 bg-[#032616] text-[#a5f95b] px-4 py-3 rounded-xl font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)]"
+                  >
+                    <CrownIcon />
+                    Admin Dashboard
+                  </button>
+                </motion.div>
+              )}
+
               <div className="flex items-center bg-[#eeeee9] rounded-full px-4 py-2 gap-2 mt-2">
                 <svg className="w-4 h-4 text-[#727973]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
@@ -203,5 +269,17 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </header>
+  );
+}
+
+function CrownIcon() {
+  return (
+    <svg
+      className="w-3 h-3 shrink-0"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M2 19h20v2H2v-2zM2 5l5 7 5-7 5 7 5-7v12H2V5z" />
+    </svg>
   );
 }

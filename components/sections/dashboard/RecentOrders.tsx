@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import FadeIn from "@/components/animations/FadeIn";
+import { useOrder } from "@/store/orderStore";
 
-type OrderStatus = "delivered" | "cancelled" | "processing" | "in_transit";
+type OrderStatus = "delivered" | "cancelled" | "processing" | "in_transit" | "confirmed" | "pending" | "shipped";
 
 interface Order {
   id: string;
@@ -15,17 +16,14 @@ interface Order {
   total: string;
 }
 
-const ORDERS: Order[] = [
-  { id: "#AN-8231", date: "Oct 12, 2024", items: 3, status: "delivered",  total: "$42.50" },
-  { id: "#AN-7944", date: "Sep 28, 2024", items: 1, status: "delivered",  total: "$18.00" },
-  { id: "#AN-7652", date: "Sep 14, 2024", items: 5, status: "cancelled",  total: "$64.20" },
-];
-
 const STATUS_STYLES: Record<OrderStatus, string> = {
   delivered:  "bg-[#386b00]/10 text-[#386b00]",
   cancelled:  "bg-[#ba1a1a]/10 text-[#ba1a1a]",
   processing: "bg-[#f4f4ee] text-[#424843]",
   in_transit: "bg-[#a5f95b]/30 text-[#3b7100]",
+  confirmed: "bg-[#386b00]/10 text-[#386b00]",
+  pending: "bg-[#f4f4ee] text-[#424843]",
+  shipped: "bg-[#a5f95b]/30 text-[#3b7100]",
 };
 
 const STATUS_LABELS: Record<OrderStatus, string> = {
@@ -33,11 +31,42 @@ const STATUS_LABELS: Record<OrderStatus, string> = {
   cancelled:  "Cancelled",
   processing: "Processing",
   in_transit: "In Transit",
+  confirmed: "Confirmed",
+  pending: "Pending",
+  shipped: "Shipped",
 };
 
 export default function RecentOrders() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { orders, loading, getMyOrders } = useOrder();
+
+  useEffect(() => {
+    getMyOrders(1, 5);
+  }, [getMyOrders]);
+
+  const formatOrderData = (order: any): Order => ({
+    id: `#${order.orderNumber}`,
+    date: new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    items: order.items.length,
+    status: mapOrderStatus(order.orderStatus),
+    total: `₹${order.totalAmount.toLocaleString()}`,
+  });
+
+  const mapOrderStatus = (status: string): OrderStatus => {
+    const statusMap: Record<string, OrderStatus> = {
+      'DELIVERED': 'delivered',
+      'CANCELLED': 'cancelled',
+      'PROCESSING': 'processing',
+      'SHIPPED': 'shipped',
+      'OUT_FOR_DELIVERY': 'in_transit',
+      'CONFIRMED': 'confirmed',
+      'PENDING': 'pending',
+    };
+    return statusMap[status] || 'pending';
+  };
+
+  const displayOrders = orders.slice(0, 3).map(formatOrderData);
 
   return (
     <FadeIn direction="up" delay={0.1}>
@@ -79,39 +108,53 @@ export default function RecentOrders() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#e3e3dd]/60">
-              {ORDERS.map((order, i) => (
-                <motion.tr
-                  key={order.id}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{
-                    delay: 0.1 + i * 0.08,
-                    duration: 0.45,
-                    ease: [0.25, 0.4, 0.25, 1],
-                  }}
-                  className="hover:bg-[#f4f4ee] transition-colors group cursor-pointer"
-                >
-                  <td className="py-4 font-bold text-sm font-[var(--font-work-sans)] text-[#032616]">
-                    {order.id}
+              {loading ? (
+                <tr>
+                  <td colSpan={5} className="py-8 text-center text-sm text-[#727973]">
+                    Loading orders...
                   </td>
-                  <td className="py-4 text-sm font-[var(--font-work-sans)] text-[#424843]">
-                    {order.date}
+                </tr>
+              ) : displayOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="py-8 text-center text-sm text-[#727973]">
+                    No orders yet
                   </td>
-                  <td className="py-4 text-sm font-[var(--font-work-sans)] text-[#424843]">
-                    {order.items} {order.items === 1 ? "Item" : "Items"}
-                  </td>
-                  <td className="py-4">
-                    <span
-                      className={`px-2.5 py-1 rounded-full font-bold text-[10px] uppercase tracking-widest font-[var(--font-work-sans)] ${STATUS_STYLES[order.status]}`}
-                    >
-                      {STATUS_LABELS[order.status]}
-                    </span>
-                  </td>
-                  <td className="py-4 text-sm font-[var(--font-work-sans)] text-[#032616] font-bold text-right">
-                    {order.total}
-                  </td>
-                </motion.tr>
-              ))}
+                </tr>
+              ) : (
+                displayOrders.map((order: Order, i: number) => (
+                  <motion.tr
+                    key={order.id}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={inView ? { opacity: 1, x: 0 } : {}}
+                    transition={{
+                      delay: 0.1 + i * 0.08,
+                      duration: 0.45,
+                      ease: [0.25, 0.4, 0.25, 1],
+                    }}
+                    className="hover:bg-[#f4f4ee] transition-colors group cursor-pointer"
+                  >
+                    <td className="py-4 font-bold text-sm font-[var(--font-work-sans)] text-[#032616]">
+                      {order.id}
+                    </td>
+                    <td className="py-4 text-sm font-[var(--font-work-sans)] text-[#424843]">
+                      {order.date}
+                    </td>
+                    <td className="py-4 text-sm font-[var(--font-work-sans)] text-[#424843]">
+                      {order.items} {order.items === 1 ? "Item" : "Items"}
+                    </td>
+                    <td className="py-4">
+                      <span
+                        className={`px-2.5 py-1 rounded-full font-bold text-[10px] uppercase tracking-widest font-[var(--font-work-sans)] ${STATUS_STYLES[order.status]}`}
+                      >
+                        {STATUS_LABELS[order.status]}
+                      </span>
+                    </td>
+                    <td className="py-4 text-sm font-[var(--font-work-sans)] text-[#032616] font-bold text-right">
+                      {order.total}
+                    </td>
+                  </motion.tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

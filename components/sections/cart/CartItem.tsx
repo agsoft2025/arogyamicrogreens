@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatCurrency } from "@/lib/currency";
 
 export interface CartItemData {
-  id: string;
+  productId: string;
   name: string;
-  description: string;
-  price: number;        // unit price in dollars
+  description?: string;
+  price: number;
   quantity: number;
   badge?: string;
   badgeVariant?: "bestseller" | "subscription" | "new" | "organic";
@@ -17,8 +18,8 @@ export interface CartItemData {
 interface CartItemProps {
   item: CartItemData;
   index: number;
-  onRemove: (id: string) => void;
-  onQuantityChange: (id: string, qty: number) => void;
+  onRemove: (productId: string) => void;
+  onQuantityChange: (productId: string, qty: number) => void;
 }
 
 const badgeStyles: Record<string, string> = {
@@ -36,18 +37,72 @@ export default function CartItem({
 }: CartItemProps) {
   const [removing, setRemoving] = useState(false);
 
+  /**
+   * LOCAL QUANTITY STATE — source of truth for the displayed value.
+   * item.quantity only updates after a full render cycle. localQty
+   * updates synchronously on every click so rapid clicks always see
+   * the correct incremented/decremented value.
+   */
+  const [localQty, setLocalQty] = useState<number>(Number(item.quantity));
+
+  /**
+   * DEBOUNCE REF — collapses a burst of rapid clicks into a single
+   * API call. Each click resets the timer; the call fires only after
+   * a 300ms pause.
+   */
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /**
+   * PENDING FLAG — suppresses prop-sync while the user is still clicking.
+   * Without this, a store optimistic-update mid-burst resets localQty.
+   */
+  const isPendingRef = useRef(false);
+
+  /** Sync from prop only when no debounce timer is outstanding. */
+  useEffect(() => {
+    if (!isPendingRef.current) {
+      setLocalQty(Number(item.quantity));
+    }
+  }, [item.quantity]);
+
+  /** Cleanup: cancel outstanding debounce on unmount. */
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
+
+  const scheduleUpdate = (productId: string, qty: number) => {
+    isPendingRef.current = true;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      isPendingRef.current = false;
+      debounceRef.current = null;
+      onQuantityChange(productId, qty);
+    }, 300);
+  };
+
   const handleRemove = () => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    isPendingRef.current = false;
     setRemoving(true);
-    setTimeout(() => onRemove(item.id), 300);
+    setTimeout(() => onRemove(item.productId), 300);
   };
 
   const decrement = () => {
-    if (item.quantity > 1) onQuantityChange(item.id, item.quantity - 1);
+    if (localQty <= 1) return;
+    const next = localQty - 1;
+    setLocalQty(next);
+    scheduleUpdate(item.productId, next);
   };
 
-  const increment = () => onQuantityChange(item.id, item.quantity + 1);
+  const increment = () => {
+    const next = localQty + 1;
+    setLocalQty(next);
+    scheduleUpdate(item.productId, next);
+  };
 
-  const lineTotal = (item.price * item.quantity).toFixed(2);
+  const lineTotal = item.price * localQty;
   const variant = item.badgeVariant ?? "organic";
 
   return (
@@ -123,7 +178,7 @@ export default function CartItem({
             <motion.button
               whileTap={{ scale: 0.85 }}
               onClick={decrement}
-              disabled={item.quantity <= 1}
+              disabled={localQty <= 1}
               aria-label="Decrease quantity"
               className="px-3 py-2 hover:bg-[#e8e8e3] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
@@ -131,7 +186,7 @@ export default function CartItem({
             </motion.button>
 
             <span className="w-10 text-center font-bold text-[15px] font-[var(--font-work-sans)] text-[#1a1c19] select-none">
-              {item.quantity}
+              {localQty}
             </span>
 
             <motion.button
@@ -154,7 +209,7 @@ export default function CartItem({
               transition={{ duration: 0.2 }}
               className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#386b00]"
             >
-              ${lineTotal}
+              {formatCurrency(lineTotal)}
             </motion.span>
           </AnimatePresence>
         </div>

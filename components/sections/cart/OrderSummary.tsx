@@ -2,22 +2,25 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import FadeIn from "@/components/animations/FadeIn";
-
-interface OrderSummaryProps {
-  subtotal: number;
-  tax: number;
-}
+import { formatCurrency } from "@/lib/currency";
+import { useAuth } from "@/store/authStore";
+import { useCart } from "@/store/cartStore";
+import Link from "next/link";
 
 type PromoState = "idle" | "loading" | "applied" | "invalid";
 
-export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
+export default function OrderSummary() {
+  const { subtotal } = useCart();
   const [promoCode, setPromoCode] = useState("");
   const [promoState, setPromoState] = useState<PromoState>("idle");
   const [discount, setDiscount] = useState(0);
   const [paying, setPaying] = useState(false);
+  const { isAuthenticated, openLoginModal } = useAuth();
+  const router = useRouter();
 
+  const tax = parseFloat((subtotal * 0.08).toFixed(2));
   const shipping = 0; // FREE
   const total = subtotal - discount + tax;
 
@@ -36,8 +39,11 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
   };
 
   const handlePay = () => {
-    setPaying(true);
-    setTimeout(() => setPaying(false), 2000);
+    if (!isAuthenticated) {
+      openLoginModal("/checkout");
+      return;
+    }
+    router.push("/checkout");
   };
 
   return (
@@ -53,12 +59,12 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
 
         {/* Line items */}
         <div className="space-y-4 mb-6">
-          <SummaryRow label="Subtotal" value={`$${subtotal.toFixed(2)}`} />
+          <SummaryRow label="Subtotal" value={formatCurrency(subtotal)} />
 
           {discount > 0 && (
             <SummaryRow
               label="Promo (HARVEST15)"
-              value={`-$${discount.toFixed(2)}`}
+              value={"-" + formatCurrency(discount)}
               valueClass="text-[#386b00] font-bold"
             />
           )}
@@ -69,7 +75,7 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
             valueClass="text-[#386b00] font-medium"
           />
 
-          <SummaryRow label="Tax" value={`$${tax.toFixed(2)}`} />
+          <SummaryRow label="Tax" value={formatCurrency(tax)} />
 
           <div className="border-t border-[#c1c8c1] pt-4 flex justify-between items-end">
             <span className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">
@@ -77,14 +83,14 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
             </span>
             <AnimatePresence mode="wait">
               <motion.span
-                key={total.toFixed(2)}
+                key={total}
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.22 }}
                 className="font-[var(--font-libre-caslon)] text-[32px] font-bold text-[#032616]"
               >
-                ${total.toFixed(2)}
+                {formatCurrency(total)}
               </motion.span>
             </AnimatePresence>
           </div>
@@ -186,10 +192,10 @@ export default function OrderSummary({ subtotal, tax }: OrderSummaryProps) {
                 Processing...
               </>
             ) : (
-              <Link href="/checkout" className="flex items-center gap-2 w-full justify-center">
+              <span className="flex items-center gap-2">
                 Proceed to Payment
                 <PaymentIcon />
-              </Link>
+              </span>
             )}
           </motion.button>
 

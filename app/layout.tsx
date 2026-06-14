@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Libre_Caslon_Text, Work_Sans } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/components/layout/Providers";
 
 const libreCaslon = Libre_Caslon_Text({
   weight: ["400", "700"],
@@ -25,14 +26,16 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }>) {
   return (
     <html
       lang="en"
       className={`${libreCaslon.variable} ${workSans.variable} scroll-smooth`}
     >
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased" suppressHydrationWarning>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
