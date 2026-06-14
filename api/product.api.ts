@@ -28,9 +28,11 @@ export async function getProducts(
   if (params.limit !== undefined) query.limit = params.limit;
   if (params.search) query.search = params.search;
   if (params.status) query.status = params.status;
-  if (params.categoryId) query.categoryId = params.categoryId;
+  if (params.category) query.category = params.category;
   if (params.isFeatured !== undefined)
     query.isFeatured = String(params.isFeatured);
+  if (params.isBestSeller !== undefined)
+    query.isBestSeller = String(params.isBestSeller);
 
   const res = await apiClient.get<ProductListResponse>("/products", {
     params: query,

@@ -8,7 +8,6 @@ import { getProductThumbnailUrl } from "@/lib/imageUtils";
 import { formatCurrency } from "@/lib/currency";
 import type { Product } from "@/types/product.types";
 
-const CATEGORY_ID = process.env.NEXT_PUBLIC_MICROGREENS_CATEGORY_ID;
 
 function resolveBadge(
   product: Product
@@ -41,7 +40,7 @@ export default function MicroCollection() {
   const { products, loading, error } = useProducts({
     status: "active",
     limit: 50,
-    ...(CATEGORY_ID ? { categoryId: CATEGORY_ID } : {}),
+    category: "microgreen",
   });
 
   return (

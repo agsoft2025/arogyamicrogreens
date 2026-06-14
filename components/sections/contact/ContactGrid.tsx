@@ -105,7 +105,7 @@ export default function ContactGrid() {
   };
 
   return (
-    <section className="max-w-[1280px] mx-auto px-5 md:px-16 py-20">
+    <section className="max-w-[1280px] mx-auto px-5 md:px-16 py-0">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
         {/* Contact Form (7 cols) */}
@@ -123,7 +123,7 @@ export default function ContactGrid() {
                 <InputField
                   label="Full Name"
                   id="name"
-                  placeholder="John Doe"
+                  placeholder="Adithya Sharma"
                   value={name}
                   onChange={setName}
                   error={errors.name}
@@ -132,7 +132,7 @@ export default function ContactGrid() {
                   label="Email Address"
                   id="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="adithya@example.com"
                   value={email}
                   onChange={setEmail}
                   error={errors.email}
@@ -262,8 +262,8 @@ export default function ContactGrid() {
         <div className="lg:col-span-5 flex flex-col gap-6">
 
           {/* Support Hub */}
-          <FadeIn direction="right" delay={0.1}>
-            <div className="bg-[#1b3c2a] text-white p-8 rounded-xl" style={{ boxShadow: "0 4px 16px rgba(27,60,42,0.2)" }}>
+          <FadeIn direction="right" delay={0.1} className="flex-1">
+            <div className="h-full bg-[#1b3c2a] text-white p-8 rounded-xl" style={{ boxShadow: "0 4px 16px rgba(27,60,42,0.2)" }}>
               <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold mb-7">Support Hub</h3>
               <div className="space-y-6">
 
@@ -299,18 +299,10 @@ export default function ContactGrid() {
                     <p className="font-bold text-[10px] tracking-widest uppercase opacity-60 font-[var(--font-work-sans)] mb-0.5">
                       Call Us
                     </p>
-                    <a
-                      href="tel:+918500395821"
-                      className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors block"
-                      aria-label="Call +91 8500395821"
-                    >
+                    <a href="tel:+918500395821" className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors block">
                       +91 8500395821
                     </a>
-                    <a
-                      href="tel:+918500395831"
-                      className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors block"
-                      aria-label="Call +91 8500395831"
-                    >
+                    <a href="tel:+918500395831" className="font-[var(--font-work-sans)] text-base hover:text-[#a5f95b] transition-colors block">
                       +91 8500395831
                     </a>
                   </div>
@@ -344,79 +336,6 @@ export default function ContactGrid() {
                   Follow Us
                 </p>
                 <AgriNestSocialRow variant="dark" iconSize={20} />
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* Location card */}
-          <FadeIn direction="right" delay={0.2} className="flex-1">
-            <div
-              className="bg-white rounded-xl border border-[#e3e3dd] overflow-hidden flex flex-col"
-              style={{ boxShadow: "0 4px 16px rgba(27,60,42,0.09)" }}
-            >
-              {/* Map image */}
-              <div className="h-48 relative overflow-hidden">
-                <img
-                  src="https://lh3.googleusercontent.com/aida/AP1WRLuRo7_vp4g_mLRZ3HDynsF98LSQB7CtbTjW5BtPK6NDMqG9KpiP1FvX61Aw-d4CEOw2KuTufWLyDB2SeCqJ-AGZcUXgc9B8YMSu8yi_SWnPdTrF9QN8lZArQM5UoGhUXU-7uYYVI0--ZOli5eE6AN2_Ehaj8oKeT4N-Ax7AgLD0LKlOUgYJpWyE9bGPBtZGbnuEb0P0duRYUoD-SvAL3g3GIpyiOAWrznBzAw-GFeNYsdZpvPB4jMMGMNE"
-                  alt="AgriNest Microgreens location in Hyderabad"
-                  className="w-full h-full object-cover grayscale opacity-60"
-                />
-                {/* Pin */}
-                <motion.div
-                  initial={{ y: -10, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
-                  className="absolute inset-0 flex items-center justify-center"
-                >
-                  <div className="bg-[#386b00] text-white p-3 rounded-full shadow-xl">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                    </svg>
-                  </div>
-                </motion.div>
-              </div>
-
-              <div className="p-7">
-                <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616] mb-2">
-                  AgriNest Microgreens
-                </h3>
-                <address className="text-[#424843] font-[var(--font-work-sans)] mb-5 leading-relaxed not-italic">
-                  Plot No 359, Gokul Plots,<br />
-                  KPHB 9th Phase,<br />
-                  Hyderabad, Telangana – 500085,<br />
-                  India
-                </address>
-                <div className="flex items-start gap-3 mb-4">
-                  <svg className="w-4 h-4 text-[#386b00] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <div className="text-sm text-[#424843] font-[var(--font-work-sans)] leading-relaxed">
-                    Mon–Sat: 9am – 6pm
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <a
-                    href="tel:+918500395821"
-                    className="flex items-center gap-2 text-sm text-[#386b00] font-bold font-[var(--font-work-sans)] hover:text-[#032616] transition-colors"
-                    aria-label="Call +91 8500395821"
-                  >
-                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z" />
-                    </svg>
-                    +91 8500395821
-                  </a>
-                  <a
-                    href="tel:+918500395831"
-                    className="flex items-center gap-2 text-sm text-[#386b00] font-bold font-[var(--font-work-sans)] hover:text-[#032616] transition-colors"
-                    aria-label="Call +91 8500395831"
-                  >
-                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z" />
-                    </svg>
-                    +91 8500395831
-                  </a>
-                </div>
               </div>
             </div>
           </FadeIn>
