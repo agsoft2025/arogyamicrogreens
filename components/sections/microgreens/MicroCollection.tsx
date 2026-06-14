@@ -29,7 +29,6 @@ function SkeletonCard() {
   );
 }
 
-<<<<<<< HEAD
 interface AddToCartButtonProps {
   label?: string;
   dark?: boolean;
@@ -93,8 +92,6 @@ const cardVariants: Variants = {
   }),
 };
 
-=======
->>>>>>> 778866e667559e853cfed1cc349223df4643b3fa
 export default function MicroCollection() {
   const { products, loading, error } = useProducts({
     status: "active",
