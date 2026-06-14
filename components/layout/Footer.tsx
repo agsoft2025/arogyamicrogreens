@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { AgriNestSocialRow } from "@/components/ui/SocialIcons";
+import FooterLogo from "@/assests/footerlogo.png";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -22,20 +24,22 @@ const supportLinks = [
 export default function Footer() {
   return (
     <footer className="bg-[#1e221c] text-white">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-16 py-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-16 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
 
         {/* Brand */}
         <div>
-          <Link
-            href="/"
-            className="font-[var(--font-libre-caslon)] text-2xl font-bold mb-6 block hover:text-[#a5f95b] transition-colors"
-          >
-            AgriNest
+          <Link href="/" aria-label="AgriNest home" className="inline-block mb-6 opacity-90 hover:opacity-100 transition-opacity">
+            <Image
+              src={FooterLogo}
+              alt="AgriNest"
+              height={200}
+              style={{ width: "auto", height: "200px" }}
+            />
           </Link>
-          <p className="text-sm opacity-70 mb-6 leading-relaxed font-[var(--font-work-sans)]">
+          {/* <p className="text-sm opacity-70 mb-6 leading-relaxed font-[var(--font-work-sans)]">
             Harvesting the future of food through sustainable, urban hydroponic farming.
             Freshness you can taste, health you can feel.
-          </p>
+          </p> */}
 
           {/* Social media icons */}
           <div className="mb-6">

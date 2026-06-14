@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/store/authStore";
 import { useCart } from "@/store/cartStore";
 import { useWishlist } from "@/store/wishlistStore";
+import Logo from "@/assests/logo.png";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -34,15 +36,21 @@ export default function Navbar() {
 
   return (
     <header className="bg-[#fafaf4] sticky top-0 z-50 shadow-sm">
-      <nav className="flex justify-between items-center w-full px-5 md:px-16 py-4 max-w-[1280px] mx-auto">
+      <nav className="flex justify-between items-center w-full px-5 md:px-4 py-4 max-w-[1280px] mx-auto">
         {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <Link href="/" className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616]">
-            AgriNest
+          <Link href="/" aria-label="AgriNest home">
+            <Image
+              src={Logo}
+              alt="AgriNest"
+              height={40}
+              style={{ width: "auto", height: "40px" }}
+              priority
+            />
           </Link>
         </motion.div>
 

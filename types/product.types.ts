@@ -8,6 +8,8 @@
 
 export type ProductStatus = "active" | "inactive" | "draft";
 
+export type ProductCategory = "product" | "microgreen";
+
 export interface ProductSeo {
   metaTitle?: string;
   metaDescription?: string;
@@ -19,7 +21,7 @@ export interface Product {
   name: string;
   slug: string;
   sku: string;
-  categoryId: string;
+  category: ProductCategory;
   price: number;
   salePrice?: number;
   stock: number;
@@ -31,6 +33,7 @@ export interface Product {
   weight?: number;
   weightUnit?: string;
   isFeatured: boolean;
+  isBestSeller: boolean;
   status: ProductStatus;
   tags: string[];
   seo?: ProductSeo;
@@ -45,8 +48,9 @@ export interface ProductListParams {
   limit?: number;
   search?: string;
   status?: ProductStatus;
-  categoryId?: string;
+  category?: ProductCategory;
   isFeatured?: boolean;
+  isBestSeller?: boolean;
 }
 
 /* ── Pagination ──────────────────────────────────────────────── */
@@ -87,7 +91,7 @@ export interface CreateProductPayload {
   name: string;
   slug: string;
   sku: string;
-  categoryId: string;
+  category: ProductCategory;
   price: number;
   salePrice?: number;
   stock: number;
@@ -99,6 +103,7 @@ export interface CreateProductPayload {
   weight?: number;
   weightUnit?: string;
   isFeatured: boolean;
+  isBestSeller: boolean;
   status: ProductStatus;
   tags: string[];
   seo?: ProductSeo;

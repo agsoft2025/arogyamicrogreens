@@ -18,7 +18,9 @@ export type AdminOrderStatus =
   | "SHIPPED"
   | "DELIVERED"
   | "CANCELLED"
-  | "REFUNDED";
+  | "REFUNDED"
+  | "PAYMENT_PENDING"
+  | "PAYMENT_FAILED";
 
 export type AdminPaymentStatus =
   | "PENDING"
@@ -31,31 +33,26 @@ export type AdminPaymentMethod = "RAZORPAY" | "COD";
 
 /* ── Status workflow ─────────────────────────────────────────── */
 
-/**
- * Valid next statuses for each current status.
- * Used to show/hide options in the UpdateStatusDialog.
- */
 export const ORDER_STATUS_TRANSITIONS: Record<AdminOrderStatus, AdminOrderStatus[]> = {
-  PENDING:    ["CONFIRMED", "CANCELLED"],
-  CONFIRMED:  ["PROCESSING", "CANCELLED"],
-  PROCESSING: ["SHIPPED", "CANCELLED"],
-  SHIPPED:    ["DELIVERED"],
-  DELIVERED:  [],
-  CANCELLED:  [],
-  REFUNDED:   [],
+  PENDING:         ["CONFIRMED", "CANCELLED"],
+  CONFIRMED:       ["PROCESSING", "CANCELLED"],
+  PROCESSING:      ["SHIPPED", "CANCELLED"],
+  SHIPPED:         ["DELIVERED"],
+  DELIVERED:       [],
+  CANCELLED:       [],
+  REFUNDED:        [],
+  PAYMENT_PENDING: ["CANCELLED"],
+  PAYMENT_FAILED:  ["CANCELLED"],
 };
 
-/** Statuses from which cancellation is allowed */
 export const CANCELLABLE_STATUSES: AdminOrderStatus[] = [
-  "PENDING", "CONFIRMED", "PROCESSING",
+  "PENDING", "CONFIRMED", "PROCESSING", "PAYMENT_PENDING", "PAYMENT_FAILED",
 ];
 
-/** Status is a terminal state — no further updates possible */
 export const TERMINAL_STATUSES: AdminOrderStatus[] = [
   "DELIVERED", "CANCELLED", "REFUNDED",
 ];
 
-/** Refund is allowed when order is DELIVERED */
 export function isRefundEligible(status: AdminOrderStatus): boolean {
   return status === "DELIVERED";
 }
@@ -66,13 +63,15 @@ export const ORDER_STATUS_CFG: Record<
   AdminOrderStatus,
   { label: string; bg: string; text: string; dot: string }
 > = {
-  PENDING:    { label: "Pending",    bg: "bg-[#e3e3dd]",  text: "text-[#424843]",  dot: "bg-[#9ca8a3]"  },
-  CONFIRMED:  { label: "Confirmed",  bg: "bg-[#dbeafe]",  text: "text-[#1d4ed8]",  dot: "bg-[#3b82f6]"  },
-  PROCESSING: { label: "Processing", bg: "bg-[#fff3cd]",  text: "text-[#7a4b00]",  dot: "bg-[#f59e0b]"  },
-  SHIPPED:    { label: "Shipped",    bg: "bg-[#1b3c2a]",  text: "text-[#aacfb6]",  dot: "bg-[#aacfb6]"  },
-  DELIVERED:  { label: "Delivered",  bg: "bg-[#d4f4a0]",  text: "text-[#3b7100]",  dot: "bg-[#386b00]"  },
-  CANCELLED:  { label: "Cancelled",  bg: "bg-[#ffdad6]",  text: "text-[#ba1a1a]",  dot: "bg-[#ba1a1a]"  },
-  REFUNDED:   { label: "Refunded",   bg: "bg-[#ede9fe]",  text: "text-[#6d28d9]",  dot: "bg-[#7c3aed]"  },
+  PENDING:         { label: "Pending",          bg: "bg-[#e3e3dd]",  text: "text-[#424843]",  dot: "bg-[#9ca8a3]"  },
+  CONFIRMED:       { label: "Confirmed",         bg: "bg-[#dbeafe]",  text: "text-[#1d4ed8]",  dot: "bg-[#3b82f6]"  },
+  PROCESSING:      { label: "Processing",        bg: "bg-[#fff3cd]",  text: "text-[#7a4b00]",  dot: "bg-[#f59e0b]"  },
+  SHIPPED:         { label: "Shipped",           bg: "bg-[#1b3c2a]",  text: "text-[#aacfb6]",  dot: "bg-[#aacfb6]"  },
+  DELIVERED:       { label: "Delivered",         bg: "bg-[#d4f4a0]",  text: "text-[#3b7100]",  dot: "bg-[#386b00]"  },
+  CANCELLED:       { label: "Cancelled",         bg: "bg-[#ffdad6]",  text: "text-[#ba1a1a]",  dot: "bg-[#ba1a1a]"  },
+  REFUNDED:        { label: "Refunded",          bg: "bg-[#ede9fe]",  text: "text-[#6d28d9]",  dot: "bg-[#7c3aed]"  },
+  PAYMENT_PENDING: { label: "Awaiting Payment",  bg: "bg-[#fff3cd]",  text: "text-[#7a4b00]",  dot: "bg-[#f59e0b]"  },
+  PAYMENT_FAILED:  { label: "Payment Failed",    bg: "bg-[#ffdad6]",  text: "text-[#ba1a1a]",  dot: "bg-[#ba1a1a]"  },
 };
 
 export const PAYMENT_STATUS_CFG: Record<
@@ -86,7 +85,6 @@ export const PAYMENT_STATUS_CFG: Record<
   COD_PENDING: { label: "COD Pending", bg: "bg-[#e3e3dd]", text: "text-[#424843]"  },
 };
 
-/** Ordered timeline steps (excludes CANCELLED/REFUNDED) */
 export const ORDER_TIMELINE_STEPS: AdminOrderStatus[] = [
   "PENDING", "CONFIRMED", "PROCESSING", "SHIPPED", "DELIVERED",
 ];
@@ -104,7 +102,6 @@ export interface AdminOrderAddress {
   country: string;
 }
 
-/** Populated user summary on an admin order */
 export interface AdminOrderUser {
   _id: string;
   name: string;
@@ -112,7 +109,6 @@ export interface AdminOrderUser {
   mobileNumber?: string;
 }
 
-/** Order item as returned by list endpoint */
 export interface AdminOrderItem {
   productId: string | { _id: string; name: string; images?: string[]; featuredImage?: string; sku?: string };
   productName: string;
@@ -124,11 +120,9 @@ export interface AdminOrderItem {
   image?: string;
 }
 
-/** Single order row in the admin list */
 export interface AdminOrder {
   _id: string;
   orderNumber: string;
-  /** Populated user or bare userId string */
   userId: AdminOrderUser | string;
   items: AdminOrderItem[];
   subtotal: number;
@@ -146,7 +140,6 @@ export interface AdminOrder {
   createdAt: string;
   updatedAt: string;
   statusHistory?: AdminStatusHistory[];
-  /** Populated when a refund has been processed */
   refundInfo?: {
     refundId?: string;
     refundedAmount?: number;
@@ -155,7 +148,6 @@ export interface AdminOrder {
   };
 }
 
-/** Full order detail (same shape, used for detail page clarity) */
 export type AdminOrderDetail = AdminOrder;
 
 export interface AdminStatusHistory {
@@ -209,11 +201,9 @@ export interface UpdateOrderStatusPayload {
 }
 
 export interface RefundOrderPayload {
-  /** Total or partial refund amount in INR */
   refundAmount: number;
 }
 
-/** Refund details returned by POST /admin/orders/refund/:id */
 export interface RefundResult {
   refundId?: string;
   refundedAmount?: number;
@@ -224,7 +214,6 @@ export interface AdminOrderMutationResponse {
   success: boolean;
   message: string;
   data?: AdminOrderDetail;
-  /** Present on successful refund responses */
   refund?: RefundResult;
 }
 
@@ -245,20 +234,19 @@ export interface UseAdminOrderState {
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 
-/** Extract the user object from userId (populated or string) */
 export function resolveOrderUser(order: AdminOrder): AdminOrderUser | null {
   if (!order.userId) return null;
-  if (typeof order.userId === "object") return order.userId;
-  return null;
+  if (typeof order.userId === "string") return null;
+  return order.userId as AdminOrderUser;
 }
 
-/** Get customer display name */
 export function getCustomerName(order: AdminOrder): string {
   const user = resolveOrderUser(order);
-  return user?.name ?? order.shippingAddress?.fullName ?? "Unknown";
+  if (user?.name) return user.name;
+  if (order.shippingAddress?.fullName) return order.shippingAddress.fullName;
+  return "Unknown Customer";
 }
 
-/** Get customer email */
 export function getCustomerEmail(order: AdminOrder): string {
   const user = resolveOrderUser(order);
   return user?.email ?? "—";

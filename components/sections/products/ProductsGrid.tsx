@@ -41,7 +41,7 @@ export default function ProductsGrid() {
   const [sort, setSort] = useState("All Products");
 
   const { products, pagination, loading, error, refetch, setParams, params } =
-    useProducts({ limit: 12, status: "active" });
+    useProducts({ limit: 12, status: "active", category: "product" });
 
   const currentPage = params.page ?? 1;
 

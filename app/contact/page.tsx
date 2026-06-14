@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import ContactHero from "@/components/sections/contact/ContactHero";
 import ContactGrid from "@/components/sections/contact/ContactGrid";
 import FAQSection from "@/components/sections/contact/FAQSection";
+import ContactMap from "@/components/sections/contact/ContactMap";
 import ChatFAB from "@/components/ui/ChatFAB";
 import PageTransition from "@/components/animations/PageTransition";
 
@@ -22,6 +23,7 @@ export default function ContactPage() {
         <main>
           <ContactHero />
           <ContactGrid />
+          <ContactMap />
           <FAQSection />
         </main>
       </PageTransition>

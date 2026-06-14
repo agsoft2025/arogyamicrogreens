@@ -30,6 +30,7 @@ export default function FeaturedMicrogreens() {
     isFeatured: true,
     status: "active",
     limit: 20,
+    category: "microgreen",
   });
 
   const scroll = (dir: "left" | "right") => {
