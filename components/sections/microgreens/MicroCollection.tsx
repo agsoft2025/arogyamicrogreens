@@ -8,18 +8,11 @@ import { getProductThumbnailUrl } from "@/lib/imageUtils";
 import { formatCurrency } from "@/lib/currency";
 import type { Product } from "@/types/product.types";
 
+const smoothEase = [0.25, 0.4, 0.25, 1] as const;
 
-function resolveBadge(
-  product: Product
-): { badge?: string; badgeVariant?: "popular" | "sale" | "new" } {
-  if (product.salePrice) return { badge: "Sale", badgeVariant: "sale" };
-  if (product.isFeatured) return { badge: "Featured", badgeVariant: "popular" };
-  if (product.createdAt) {
-    const days =
-      (Date.now() - new Date(product.createdAt).getTime()) / (1000 * 60 * 60 * 24);
-    if (days < 30) return { badge: "New", badgeVariant: "new" };
-  }
-  return {};
+interface NutrientBarProps {
+  level: string;
+  percent: number;
 }
 
 function SkeletonCard() {
@@ -36,6 +29,72 @@ function SkeletonCard() {
   );
 }
 
+<<<<<<< HEAD
+interface AddToCartButtonProps {
+  label?: string;
+  dark?: boolean;
+  subscribe?: boolean;
+}
+
+function AddToCartButton({ label = "Add to Basket", dark = false, subscribe = false }: AddToCartButtonProps) {
+  const [added, setAdded] = useState(false);
+
+  const handleClick = () => {
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
+
+  return (
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.97 }}
+      onClick={handleClick}
+      className={`w-full py-3.5 rounded-lg font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] flex items-center justify-center gap-2 transition-colors ${
+        added
+          ? "bg-[#032616] text-white"
+          : dark
+          ? "bg-[#032616] text-white hover:opacity-90"
+          : "bg-[#386b00] text-white hover:bg-[#032616]"
+      }`}
+    >
+      {added ? (
+        <>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path d="m5 13 4 4L19 7" />
+          </svg>
+          Added
+        </>
+      ) : subscribe ? (
+        <>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          Subscribe &amp; Save
+        </>
+      ) : (
+        <>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          {label}
+        </>
+      )}
+    </motion.button>
+  );
+}
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.55, ease: smoothEase },
+  }),
+};
+
+=======
+>>>>>>> 778866e667559e853cfed1cc349223df4643b3fa
 export default function MicroCollection() {
   const { products, loading, error } = useProducts({
     status: "active",
