@@ -26,8 +26,10 @@ import CheckoutSummary, {
   SummaryItem,
 } from "@/components/sections/checkout/CheckoutSummary";
 import ChatFAB from "@/components/ui/ChatFAB";
+import { getMyProfile, saveMyAddress, type SavedAddress } from "@/api/user.api";
 
-/* ── Validation helpers ─────────────────────────────────────── */
+/* ── Validation ─────────────────────────────────────────────── */
+
 function validateShipping(data: ShippingData): ShippingErrors {
   const errors: ShippingErrors = {};
   if (!data.fullName.trim()) errors.fullName = "Full name is required.";
@@ -35,10 +37,12 @@ function validateShipping(data: ShippingData): ShippingErrors {
   else if (!/^[+\d\s\-()]{7,}$/.test(data.phone))
     errors.phone = "Enter a valid phone number.";
   if (!data.street.trim()) errors.street = "Street address is required.";
-  if (!data.city.trim()) errors.city = "City / State is required.";
-  if (!data.zip.trim()) errors.zip = "Zip code is required.";
+  if (!data.city.trim()) errors.city = "City is required.";
+  if (!data.state.trim()) errors.state = "State is required.";
+  if (!data.zip.trim()) errors.zip = "PIN code is required.";
   else if (!/^\d{4,10}$/.test(data.zip.replace(/\s/g, "")))
-    errors.zip = "Enter a valid zip code.";
+    errors.zip = "Enter a valid PIN code.";
+  if (!data.country.trim()) errors.country = "Country is required.";
   return errors;
 }
 
@@ -52,46 +56,82 @@ function validateCard(data: CardData): CardErrors {
   return errors;
 }
 
+const EMPTY_SHIPPING: ShippingData = {
+  fullName: "",
+  phone: "",
+  street: "",
+  addressLine2: "",
+  city: "",
+  state: "",
+  zip: "",
+  country: "India",
+};
+
+/* ── Page ────────────────────────────────────────────────────── */
+
 export default function CheckoutPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const { items: cartItems, syncing } = useCart();
-  const { createPaymentOrder, verifyPayment, createCodOrder, preview } = useOrder();
-
-  /* ── All hooks must come before any early returns ── */
+  const { createPaymentOrder, verifyPayment, createCodOrder } = useOrder();
 
   /* ── Shipping state ── */
-  const [shipping, setShipping] = useState<ShippingData>({
-    fullName: "Julianna Veldon",
-    phone: "+1 (555) 000-1234",
-    street: "482 Green Harvest Lane, Organic Valley",
-    city: "Portland, OR",
-    zip: "97201",
-  });
+  const [shipping, setShipping] = useState<ShippingData>(EMPTY_SHIPPING);
   const [shippingErrors, setShippingErrors] = useState<ShippingErrors>({});
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
+  const [addressLoading, setAddressLoading] = useState(true);
 
   /* ── Delivery state ── */
   const [delivery, setDelivery] = useState<DeliveryOption>("standard");
 
   /* ── Payment state ── */
   const [paymentMethod, setPaymentMethod] = useState<PaymentOption>("card");
-  const [cardData, setCardData] = useState<CardData>({
-    number: "",
-    expiry: "",
-    cvv: "",
-  });
+  const [cardData, setCardData] = useState<CardData>({ number: "", expiry: "", cvv: "" });
   const [cardErrors, setCardErrors] = useState<CardErrors>({});
 
   /* ── Processing state ── */
   const [isProcessing, setIsProcessing] = useState(false);
 
-  /* ── Auth guard (after all hooks) ── */
+  /* ── Auth guard ── */
   useEffect(() => {
     if (!isAuthenticated) {
       router.replace("/cart");
     }
   }, [isAuthenticated, router]);
 
+  /* ── Load saved addresses on mount ── */
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    (async () => {
+      try {
+        const profile = await getMyProfile();
+        const addresses = profile.data.savedAddresses ?? [];
+        setSavedAddresses(addresses);
+
+        // Pre-fill with the default (or first) saved address
+        if (addresses.length > 0) {
+          const defaultAddr =
+            addresses.find((a) => a.isDefault) ?? addresses[0];
+          setShipping({
+            fullName: defaultAddr.fullName,
+            phone: defaultAddr.phone,
+            street: defaultAddr.addressLine1,
+            addressLine2: defaultAddr.addressLine2 ?? "",
+            city: defaultAddr.city,
+            state: defaultAddr.state,
+            zip: defaultAddr.postalCode,
+            country: defaultAddr.country,
+          });
+        }
+      } catch {
+        // If profile fetch fails (e.g. network), just leave form empty
+      } finally {
+        setAddressLoading(false);
+      }
+    })();
+  }, [isAuthenticated]);
+
+  /* ── Early returns (after all hooks) ── */
   if (!isAuthenticated) return null;
   if (syncing) {
     return (
@@ -112,7 +152,6 @@ export default function CheckoutPage() {
 
   const shippingCost = delivery === "express" ? 999 : 0;
 
-  /* ── Map cart items to checkout summary format ── */
   const summaryItems: SummaryItem[] = cartItems.map((item) => ({
     id: item.productId,
     name: item.name,
@@ -124,9 +163,23 @@ export default function CheckoutPage() {
   /* ── Handlers ── */
   const handleShippingChange = (field: keyof ShippingData, value: string) => {
     setShipping((prev) => ({ ...prev, [field]: value }));
-    if (shippingErrors[field]) {
+    if (shippingErrors[field as keyof ShippingErrors]) {
       setShippingErrors((prev) => ({ ...prev, [field]: undefined }));
     }
+  };
+
+  const handleSelectSaved = (addr: SavedAddress) => {
+    setShipping({
+      fullName: addr.fullName,
+      phone: addr.phone,
+      street: addr.addressLine1,
+      addressLine2: addr.addressLine2 ?? "",
+      city: addr.city,
+      state: addr.state,
+      zip: addr.postalCode,
+      country: addr.country,
+    });
+    setShippingErrors({});
   };
 
   const handleCardChange = (field: keyof CardData, value: string) => {
@@ -155,21 +208,39 @@ export default function CheckoutPage() {
       }
     }
 
-    /* Process order */
     setIsProcessing(true);
 
     try {
-      // Prepare address data
+      // Build address from actual form values
       const addressData = {
-        fullName: shipping.fullName,
-        phone: shipping.phone,
-        addressLine1: shipping.street,
-        addressLine2: "",
-        city: shipping.city,
-        state: "Oregon",
-        postalCode: shipping.zip,
-        country: "USA",
+        fullName: shipping.fullName.trim(),
+        phone: shipping.phone.trim(),
+        addressLine1: shipping.street.trim(),
+        addressLine2: shipping.addressLine2.trim() || undefined,
+        city: shipping.city.trim(),
+        state: shipping.state.trim(),
+        postalCode: shipping.zip.trim(),
+        country: shipping.country.trim() || "India",
       };
+
+      // Check if this address is already saved; if not, save it silently
+      const alreadySaved = savedAddresses.some(
+        (a) =>
+          a.addressLine1 === addressData.addressLine1 &&
+          a.city === addressData.city &&
+          a.postalCode === addressData.postalCode
+      );
+      if (!alreadySaved) {
+        try {
+          const result = await saveMyAddress({
+            ...addressData,
+            isDefault: savedAddresses.length === 0,
+          });
+          setSavedAddresses(result.data.savedAddresses ?? []);
+        } catch {
+          // Non-fatal: continue with order even if save fails
+        }
+      }
 
       if (paymentMethod === "card") {
         // Razorpay payment flow
@@ -179,7 +250,6 @@ export default function CheckoutPage() {
           billingAddress: addressData,
         });
 
-        // Load Razorpay script
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
         script.async = true;
@@ -193,12 +263,9 @@ export default function CheckoutPage() {
             order_id: paymentOrder.razorpayOrderId,
             prefill: paymentOrder.prefill,
             notes: paymentOrder.notes,
-            theme: {
-              color: "#386b00",
-            },
+            theme: { color: "#386b00" },
             handler: async (response: any) => {
               try {
-                // Verify payment
                 await verifyPayment({
                   razorpayOrderId: response.razorpay_order_id,
                   razorpayPaymentId: response.razorpay_payment_id,
@@ -259,17 +326,28 @@ export default function CheckoutPage() {
               {/* ── Left column: forms ── */}
               <div className="flex-[1.5] min-w-0 flex flex-col gap-8">
                 <div id="shipping-section">
-                  <ShippingForm
-                    data={shipping}
-                    errors={shippingErrors}
-                    onChange={handleShippingChange}
-                  />
+                  {addressLoading ? (
+                    <div className="bg-white rounded-xl p-6 border border-[#c1c8c1]/30 animate-pulse space-y-4"
+                      style={{ boxShadow: "0 4px 12px rgba(3,38,22,0.10)" }}>
+                      <div className="h-7 w-48 bg-[#e3e3dd] rounded" />
+                      <div className="grid grid-cols-2 gap-4">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                          <div key={i} className="h-12 bg-[#e3e3dd] rounded-lg" />
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <ShippingForm
+                      data={shipping}
+                      errors={shippingErrors}
+                      onChange={handleShippingChange}
+                      savedAddresses={savedAddresses}
+                      onSelectSaved={handleSelectSaved}
+                    />
+                  )}
                 </div>
 
-                <DeliveryMethod
-                  selected={delivery}
-                  onChange={setDelivery}
-                />
+                <DeliveryMethod selected={delivery} onChange={setDelivery} />
 
                 <div id="payment-section">
                   <PaymentMethod
@@ -290,7 +368,7 @@ export default function CheckoutPage() {
                   onPlaceOrder={handlePlaceOrder}
                   isProcessing={isProcessing}
                 />
-                        </div>
+              </div>
             </div>
           </div>
         </main>

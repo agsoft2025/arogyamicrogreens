@@ -21,6 +21,11 @@ export const metadata: Metadata = {
   title: "AgriNest | Organic Microgreens Delivered Fresh",
   description:
     "Farm-fresh microgreens packed with nutrients, delivered to your doorstep within hours. Experience the power of pure, hydroponic greens.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

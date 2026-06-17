@@ -20,18 +20,30 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, user, openLoginModal } = useAuth();
   const { count: cartCount } = useCart();
   const { count: wishlistCount } = useWishlist();
 
-  // Show admin controls only for admin role
   const isAdmin = isAuthenticated && user?.role === "admin";
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href.split("#")[0]) && href.split("#")[0] !== "/";
+  };
+
+  const handleSearch = () => {
+    const q = searchQuery.trim();
+    if (!q) return;
+    router.push(`/search?q=${encodeURIComponent(q)}`);
+    setSearchQuery("");
+    setMenuOpen(false);
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleSearch();
   };
 
   return (
@@ -90,25 +102,42 @@ export default function Navbar() {
           transition={{ duration: 0.4, delay: 0.2 }}
           className="flex items-center gap-4"
         >
-          {/* Search */}
-          <div className="hidden lg:flex items-center bg-[#eeeee9] rounded-full px-4 py-2 gap-2">
-            <svg className="w-4 h-4 text-[#727973]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-            </svg>
+          {/* Desktop Search */}
+          <div className="hidden lg:flex items-center bg-[#eeeee9] rounded-full px-4 py-2 gap-2 group focus-within:ring-2 focus-within:ring-[#386b00]/30 transition-all">
+            <button
+              onClick={handleSearch}
+              aria-label="Search products"
+              className="shrink-0 text-[#727973] hover:text-[#032616] transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+              </svg>
+            </button>
             <input
               className="bg-transparent border-none outline-none text-sm w-44 text-[#1a1c19] placeholder:text-[#727973] font-[var(--font-work-sans)]"
-              placeholder="Search Microgreens..."
+              placeholder="Search products..."
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              aria-label="Search products"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                aria-label="Clear search"
+                className="shrink-0 text-[#9ca8a3] hover:text-[#032616] transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            )}
           </div>
 
           {/* Icon buttons */}
           <div className="flex items-center gap-3 text-[#032616]">
-            <Link
-              href="/wishlist"
-              aria-label="Wishlist"
-              className="hover:opacity-70 transition-opacity relative"
-            >
+            <Link href="/wishlist" aria-label="Wishlist" className="hover:opacity-70 transition-opacity relative">
               <svg
                 className="w-5 h-5"
                 fill={pathname === "/wishlist" ? "currentColor" : "none"}
@@ -124,11 +153,7 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
-            <Link
-              href="/cart"
-              aria-label="Shopping cart"
-              className="hover:opacity-70 transition-opacity relative"
-            >
+            <Link href="/cart" aria-label="Shopping cart" className="hover:opacity-70 transition-opacity relative">
               <svg
                 className="w-5 h-5"
                 fill={pathname === "/cart" ? "currentColor" : "none"}
@@ -145,7 +170,6 @@ export default function Navbar() {
               </span>
             </Link>
 
-            {/* Admin pill — only for admin role, desktop */}
             {isAdmin && (
               <motion.button
                 onClick={() => router.push("/admin/dashboard")}
@@ -160,13 +184,9 @@ export default function Navbar() {
             )}
 
             {isAuthenticated ? (
-              <Link
-                href="/profile"
-                aria-label="My profile"
-                className="hover:opacity-70 transition-opacity"
-              >
+              <Link href="/profile" aria-label="My profile" className="flex items-center hover:opacity-70 transition-opacity">
                 <svg
-                  className="w-5 h-5"
+                  className="w-5 h-5 block"
                   fill={pathname === "/profile" ? "currentColor" : "none"}
                   stroke="currentColor"
                   strokeWidth="2"
@@ -180,16 +200,16 @@ export default function Navbar() {
               <button
                 onClick={() => openLoginModal("/profile")}
                 aria-label="Sign in"
-                className="hover:opacity-70 transition-opacity text-[#032616]"
+                className="flex items-center hover:opacity-70 transition-opacity text-[#032616]"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-5 h-5 block"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 4 4v2" />
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </button>
@@ -245,7 +265,6 @@ export default function Navbar() {
                 </motion.div>
               ))}
 
-              {/* Admin entry — mobile, only for admin role */}
               {isAdmin && (
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -262,15 +281,37 @@ export default function Navbar() {
                 </motion.div>
               )}
 
-              <div className="flex items-center bg-[#eeeee9] rounded-full px-4 py-2 gap-2 mt-2">
-                <svg className="w-4 h-4 text-[#727973]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-                </svg>
+              {/* Mobile Search */}
+              <div className="flex items-center bg-[#eeeee9] rounded-full px-4 py-2 gap-2 mt-2 focus-within:ring-2 focus-within:ring-[#386b00]/30 transition-all">
+                <button
+                  onClick={handleSearch}
+                  aria-label="Search products"
+                  className="shrink-0 text-[#727973] hover:text-[#032616] transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+                  </svg>
+                </button>
                 <input
-                  className="bg-transparent border-none outline-none text-sm w-full text-[#1a1c19] placeholder:text-[#727973]"
-                  placeholder="Search Microgreens..."
+                  className="bg-transparent border-none outline-none text-sm w-full text-[#1a1c19] placeholder:text-[#727973] font-[var(--font-work-sans)]"
+                  placeholder="Search products..."
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleSearchKeyDown}
+                  aria-label="Search products"
                 />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    aria-label="Clear search"
+                    className="shrink-0 text-[#9ca8a3] hover:text-[#032616] transition-colors"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
               </div>
             </div>
           </motion.div>
@@ -282,12 +323,8 @@ export default function Navbar() {
 
 function CrownIcon() {
   return (
-    <svg
-      className="w-3 h-3 shrink-0"
-      fill="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path d="M2 19h20v2H2v-2zM2 5l5 7 5-7 5 7 5-7v12H2V5z" />
+    <svg className="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M2 19h20v2H2v-2zM2 5l5 7 5-7 5-7 5 7v12H2V5z" />
     </svg>
   );
 }
