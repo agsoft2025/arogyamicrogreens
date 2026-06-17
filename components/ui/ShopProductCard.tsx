@@ -21,8 +21,10 @@ interface ShopProductCardProps {
   productId?: string;
   /** Numeric unit price in INR — required to wire up real Add to Cart */
   numericPrice?: number;
-  /** Product slug — used for navigation to /products/[slug] */
+  /** Product slug — used for navigation */
   slug?: string;
+  /** Base path for the detail route. Defaults to "/products" */
+  basePath?: string;
 }
 
 const badgeStyles: Record<string, string> = {
@@ -44,6 +46,7 @@ export default function ShopProductCard({
   productId,
   numericPrice,
   slug,
+  basePath = "/products",
 }: ShopProductCardProps) {
   const [justAdded, setJustAdded] = useState(false);
   const router = useRouter();
@@ -56,7 +59,7 @@ export default function ShopProductCard({
 
   /** Navigate to product detail page when the card body is clicked */
   const handleCardClick = () => {
-    if (slug) router.push(`/products/${slug}`);
+    if (slug) router.push(`${basePath}/${slug}`);
   };
 
   /** Wishlist — stops click from bubbling to card and triggering navigation */
@@ -139,7 +142,7 @@ export default function ShopProductCard({
           <h4 className="font-[var(--font-libre-caslon)] text-xl font-bold text-[#032616] leading-tight pr-2">
             {slug ? (
               <Link
-                href={`/products/${slug}`}
+                href={`${basePath}/${slug}`}
                 onClick={(e) => e.stopPropagation()}
                 className="hover:underline"
               >

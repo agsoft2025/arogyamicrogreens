@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Heroimg from "@/assests/heroimg.png";
 import Image from "next/image";
 
@@ -34,20 +35,24 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-wrap gap-4"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="bg-[#032616] text-white px-8 py-4 rounded-lg font-bold text-xs tracking-widest uppercase font-[var(--font-work-sans)] shadow-lg"
-            >
-              Shop Now
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="border-2 border-[#032616] text-[#032616] px-8 py-4 rounded-lg font-bold text-xs tracking-widest uppercase font-[var(--font-work-sans)]"
-            >
-              Subscribe &amp; Save
-            </motion.button>
+            <Link href="/microgreens">
+              <motion.span
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="bg-[#032616] text-white px-8 py-4 rounded-lg font-bold text-xs tracking-widest uppercase font-[var(--font-work-sans)] shadow-lg inline-block"
+              >
+                Shop Now
+              </motion.span>
+            </Link>
+            <Link href="/subscription">
+              <motion.span
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="border-2 border-[#032616] text-[#032616] px-8 py-4 rounded-lg font-bold text-xs tracking-widest uppercase font-[var(--font-work-sans)] inline-block"
+              >
+                Subscribe &amp; Save
+              </motion.span>
+            </Link>
           </motion.div>
 
           <motion.div

@@ -21,8 +21,6 @@ function resolveBadge(product: Product): string | undefined {
   return undefined;
 }
 
-/* ── Component ───────────────────────────────────────────────── */
-
 export default function FeaturedMicrogreens() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +37,6 @@ export default function FeaturedMicrogreens() {
     }
   };
 
-  /* Don't render the section at all if there are no featured products and we're not loading */
   if (!loading && !error && products.length === 0) return null;
 
   return (
@@ -80,7 +77,7 @@ export default function FeaturedMicrogreens() {
           </div>
         </FadeIn>
 
-        {/* ── Loading skeletons ── */}
+        {/* Loading skeletons */}
         {loading && (
           <div className="flex gap-6 overflow-x-hidden pb-6">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -99,7 +96,7 @@ export default function FeaturedMicrogreens() {
           </div>
         )}
 
-        {/* ── Error state ── */}
+        {/* Error state */}
         {!loading && error && (
           <div className="flex items-center gap-3 text-sm text-[#424843] font-[var(--font-work-sans)] py-4">
             <svg className="w-5 h-5 text-[#ba1a1a] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -109,7 +106,7 @@ export default function FeaturedMicrogreens() {
           </div>
         )}
 
-        {/* ── Product carousel ── */}
+        {/* Product carousel */}
         {!loading && !error && products.length > 0 && (
           <div
             ref={scrollRef}
@@ -133,6 +130,9 @@ export default function FeaturedMicrogreens() {
                   }
                   badge={resolveBadge(product)}
                   image={getProductThumbnailUrl(product)}
+                  productId={product._id}
+                  numericPrice={product.salePrice ?? product.price}
+                  slug={product.slug}
                 />
               </motion.div>
             ))}
