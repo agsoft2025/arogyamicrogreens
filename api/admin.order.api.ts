@@ -31,7 +31,7 @@ export async function getAdminOrders(
   const query: Record<string, string | number> = {};
   if (params.page  !== undefined) query.page  = params.page;
   if (params.limit !== undefined) query.limit = params.limit;
-  if (params.status && params.status !== "ALL") query.status = params.status;
+  if (params.status && params.status !== "ALL") query.orderStatus = params.status;
 
   const res = await apiClient.get<AdminOrderListResponse>(
     "/orders/admin/orders",
