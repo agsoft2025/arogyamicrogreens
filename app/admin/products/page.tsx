@@ -34,7 +34,6 @@ const ITEMS_PER_PAGE = 10;
 export default function AdminProductsPage() {
   const [search, setSearch]             = useState("");
   const [status, setStatus]             = useState("");
-  const [currentPage, setCurrentPage]   = useState(1);
   const [dialogOpen, setDialogOpen]     = useState(false);
   const [editProduct, setEditProduct]   = useState<Product | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
@@ -45,47 +44,37 @@ export default function AdminProductsPage() {
   const [featuredUpdating, setFeaturedUpdating] = useState<Set<string>>(new Set());
 
   /* Real API */
-  const { products, pagination, loading, error, refetch, setParams } = useProducts({
+  const { products, pagination, loading, error, refetch, setParams, params } = useProducts({
     page: 1,
     limit: ITEMS_PER_PAGE,
   });
 
-  /* Skip-first-run guards — reset on cleanup so React Strict Mode remount also skips */
-  const searchMountRef  = useRef(true);
-  const statusMountRef  = useRef(true);
-  const pageMountRef    = useRef(true);
+  const currentPage = params.page ?? 1;
+
+  /* Skip-first-run guards */
+  const searchMountRef = useRef(true);
+  const statusMountRef = useRef(true);
 
   /* Debounce search 400ms → push to API params */
   useEffect(() => {
     if (searchMountRef.current) {
       searchMountRef.current = false;
-      return () => { searchMountRef.current = true; };
+      return; // ← no cleanup: returning a cleanup here resets the ref on every keystroke
     }
     const t = setTimeout(() => {
       setParams({ search: search || undefined, page: 1 });
-      setCurrentPage(1);
     }, 400);
     return () => clearTimeout(t);
   }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  /* Status filter → push to API params */
+  /* Status filter → push to API params immediately (no debounce needed for a select) */
   useEffect(() => {
     if (statusMountRef.current) {
       statusMountRef.current = false;
-      return () => { statusMountRef.current = true; };
+      return; // ← same fix
     }
     setParams({ status: (status as ProductStatus) || undefined, page: 1 });
-    setCurrentPage(1);
   }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  /* Page change → push to API params */
-  useEffect(() => {
-    if (pageMountRef.current) {
-      pageMountRef.current = false;
-      return () => { pageMountRef.current = true; };
-    }
-    setParams({ page: currentPage });
-  }, [currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const totalPages = pagination?.totalPages ?? 1;
   const total      = pagination?.total ?? products.length;
@@ -94,7 +83,6 @@ export default function AdminProductsPage() {
   const handleReset = useCallback(() => {
     setSearch("");
     setStatus("");
-    setCurrentPage(1);
     setParams({ search: undefined, status: undefined, page: 1 });
   }, [setParams]);
 
@@ -156,8 +144,8 @@ export default function AdminProductsPage() {
     return [1, null, currentPage - 1, currentPage, currentPage + 1, null, totalPages];
   })();
 
-  const showingFrom = total === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1;
-  const showingTo   = Math.min(currentPage * ITEMS_PER_PAGE, total);
+  const showingFrom = total === 0 ? 0 : (currentPage - 1) * (params.limit ?? ITEMS_PER_PAGE) + 1;
+  const showingTo   = Math.min(currentPage * (params.limit ?? ITEMS_PER_PAGE), total);
 
   return (
     <div className="space-y-5 pb-20 md:pb-6">
@@ -462,7 +450,7 @@ export default function AdminProductsPage() {
 
             {totalPages > 1 && (
               <div className="flex items-center gap-1.5" role="navigation" aria-label="Pagination">
-                <PaginationButton onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1} aria-label="Previous page">
+                <PaginationButton onClick={() => setParams({ page: Math.max(1, currentPage - 1) })} disabled={currentPage === 1} aria-label="Previous page">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
                 </PaginationButton>
 
@@ -470,13 +458,13 @@ export default function AdminProductsPage() {
                   num === null ? (
                     <span key={`ellipsis-${idx}`} className="px-2 text-[#9ca8a3] text-sm select-none">…</span>
                   ) : (
-                    <PaginationButton key={num} onClick={() => setCurrentPage(num)} active={currentPage === num} aria-label={`Page ${num}`}>
+                    <PaginationButton key={num} onClick={() => setParams({ page: num })} active={currentPage === num} aria-label={`Page ${num}`}>
                       {num}
                     </PaginationButton>
                   )
                 )}
 
-                <PaginationButton onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} aria-label="Next page">
+                <PaginationButton onClick={() => setParams({ page: Math.min(totalPages, currentPage + 1) })} disabled={currentPage === totalPages} aria-label="Next page">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
                 </PaginationButton>
               </div>

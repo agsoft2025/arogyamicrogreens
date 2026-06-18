@@ -83,7 +83,7 @@ export default function AdminUsersPage() {
   useEffect(() => {
     if (filterMountRef.current) {
       filterMountRef.current = false;
-      return () => { filterMountRef.current = true; };
+      return; // ← no cleanup: returning a cleanup here resets the ref on every keystroke, permanently blocking API calls
     }
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
@@ -151,7 +151,15 @@ export default function AdminUsersPage() {
   const handleAddSuccess    = useCallback(() => { refetch(); showSuccess("User created successfully!"); }, [refetch, showSuccess]);
   const handleEditSuccess   = useCallback(() => { refetch(); showSuccess("User updated successfully!"); }, [refetch, showSuccess]);
   const handleBlockSuccess  = useCallback(() => { refetch(); showSuccess("User blocked successfully!"); }, [refetch, showSuccess]);
-  const handleDeleteSuccess = useCallback(() => { refetch(); showSuccess("User deleted successfully!"); }, [refetch, showSuccess]);
+  const handleDeleteSuccess = useCallback(() => {
+    // If we deleted the last item on a page > 1, go back one page
+    if (users.length === 1 && currentPage > 1) {
+      setParams({ page: currentPage - 1 });
+    } else {
+      refetch();
+    }
+    showSuccess("User deleted successfully!");
+  }, [users.length, currentPage, setParams, refetch, showSuccess]);
 
   const resetFilters = useCallback(() => {
     setSearchInput("");

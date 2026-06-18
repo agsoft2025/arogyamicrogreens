@@ -70,7 +70,6 @@ function formatDate(iso?: string): string {
 /* ═══════════════════════════════════════════════════════ */
 export default function AdminOrdersPage() {
   const [statusFilter, setStatusFilter] = useState<"" | AdminOrderStatus>("");
-  const [page, setPage] = useState(1);
 
   const [successMsg, setSuccessMsg] = useState("");
   const showSuccess = useCallback((msg: string) => {
@@ -87,8 +86,10 @@ export default function AdminOrdersPage() {
     right: number;
   } | null>(null);
 
-  const { orders, pagination, loading, error, refetch, setParams } =
+  const { orders, pagination, loading, error, refetch, setParams, params } =
     useAdminOrders({ page: 1, limit: 10 });
+
+  const currentPage = params.page ?? 1;
 
   const filterMountRef = useRef(true);
   useEffect(() => {
@@ -97,14 +98,8 @@ export default function AdminOrdersPage() {
       return;
     }
     setParams({ page: 1, status: statusFilter || undefined });
-    setPage(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
-
-  useEffect(() => {
-    setParams({ page });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
 
   useEffect(() => {
     if (!menuState) return;
@@ -132,15 +127,15 @@ export default function AdminOrdersPage() {
 
   const totalPages = pagination?.totalPages ?? 1;
   const pageNums: number[] = [];
-  const start = Math.max(1, Math.min(page - 1, totalPages - 2));
+  const start = Math.max(1, Math.min(currentPage - 1, totalPages - 2));
   for (let i = start; i <= Math.min(start + 2, totalPages); i++)
     pageNums.push(i);
 
   const showingFrom = pagination
-    ? (pagination.page - 1) * pagination.limit + 1
+    ? (currentPage - 1) * (params.limit ?? 10) + 1
     : 0;
   const showingTo = pagination
-    ? Math.min(pagination.page * pagination.limit, pagination.total)
+    ? Math.min(currentPage * (params.limit ?? 10), pagination.total)
     : 0;
 
   return (
@@ -360,8 +355,8 @@ export default function AdminOrdersPage() {
               </span>
               <div className="flex items-center gap-1.5" role="navigation" aria-label="Pagination">
                 <PageBtn
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
+                  onClick={() => setParams({ page: Math.max(1, currentPage - 1) })}
+                  disabled={currentPage === 1}
                   aria-label="Previous page"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -369,13 +364,13 @@ export default function AdminOrdersPage() {
                   </svg>
                 </PageBtn>
                 {pageNums.map((num) => (
-                  <PageBtn key={num} onClick={() => setPage(num)} active={page === num} aria-label={`Page ${num}`}>
+                  <PageBtn key={num} onClick={() => setParams({ page: num })} active={currentPage === num} aria-label={`Page ${num}`}>
                     {num}
                   </PageBtn>
                 ))}
                 <PageBtn
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={page === totalPages}
+                  onClick={() => setParams({ page: Math.min(totalPages, currentPage + 1) })}
+                  disabled={currentPage === totalPages}
                   aria-label="Next page"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
