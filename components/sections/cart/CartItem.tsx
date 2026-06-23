@@ -90,7 +90,11 @@ export default function CartItem({
   };
 
   const decrement = () => {
-    if (localQty <= 1) return;
+    if (localQty <= 1) {
+      // Going below 1 removes the item — cancel any pending debounce first
+      handleRemove();
+      return;
+    }
     const next = localQty - 1;
     setLocalQty(next);
     scheduleUpdate(item.productId, next);
@@ -178,11 +182,14 @@ export default function CartItem({
             <motion.button
               whileTap={{ scale: 0.85 }}
               onClick={decrement}
-              disabled={localQty <= 1}
-              aria-label="Decrease quantity"
-              className="px-3 py-2 hover:bg-[#e8e8e3] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label={localQty <= 1 ? `Remove ${item.name} from cart` : "Decrease quantity"}
+              className={`px-3 py-2 transition-colors ${
+                localQty <= 1
+                  ? "text-[#9ca8a3] hover:bg-[#ffd9d5]/60 hover:text-[#ba1a1a]"
+                  : "hover:bg-[#e8e8e3]"
+              }`}
             >
-              <MinusIcon />
+              {localQty <= 1 ? <SmallTrashIcon /> : <MinusIcon />}
             </motion.button>
 
             <span className="w-10 text-center font-bold text-[15px] font-[var(--font-work-sans)] text-[#1a1c19] select-none">
@@ -259,6 +266,24 @@ function PlusIcon() {
       viewBox="0 0 24 24"
     >
       <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
+/** Trash icon sized to match the stepper buttons (w-4 h-4) */
+function SmallTrashIcon() {
+  return (
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+      <path d="M10 11v6M14 11v6" />
+      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
     </svg>
   );
 }
