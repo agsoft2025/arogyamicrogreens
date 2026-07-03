@@ -1,26 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
-
-interface PlanFeature {
-  text: string;
-  highlight?: boolean;
-  icon?: React.ReactNode;
-}
-
-interface Plan {
-  id: string;
-  tier: string;
-  name: string;
-  tagline: string;
-  price: string;
-  period: string;
-  features: PlanFeature[];
-  featured?: boolean;
-  badge?: string;
-  buttonStyle: "primary" | "secondary";
-}
+import { getActivePlans, SubscriptionPlan } from "@/api/subscription-plan.api";
 
 const GiftIcon = () => (
   <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -44,64 +27,25 @@ const CheckIcon = () => (
   </svg>
 );
 
-const plans: Plan[] = [
-  {
-    id: "weekly",
-    tier: "Entry Level",
-    name: "Weekly Plan",
-    tagline: "Perfect for solo health enthusiasts",
-    price: "₹1,599",
-    period: "/week",
-    features: [
-      { text: "7 Days Supply" },
-      { text: "1 Variety / Pack" },
-      { text: "Free Delivery" },
-    ],
-    buttonStyle: "primary",
-  },
-  {
-    id: "monthly",
-    tier: "Best Value",
-    name: "Monthly Plan",
-    tagline: "Great for couples and chefs",
-    price: "₹4,899",
-    period: "/month",
-    features: [
-      { text: "30 Days Supply" },
-      { text: "4 Varieties / Pack" },
-      { text: "Free Delivery" },
-      {
-        text: "Surprise Monthly Gift",
-        highlight: true,
-        icon: <StarIcon />,
-      },
-    ],
-    featured: true,
-    badge: "Most Popular",
-    buttonStyle: "secondary",
-  },
-  {
-    id: "family",
-    tier: "Bulk Bundle",
-    name: "Family Pack",
-    tagline: "Ideal for large healthy households",
-    price: "₹8,199",
-    period: "/month",
-    features: [
-      { text: "30 Days Supply (XL)" },
-      { text: "6 Varieties / Pack" },
-      { text: "Free Delivery" },
-      {
-        text: "Family Workshop Pass",
-        highlight: true,
-        icon: <GiftIcon />,
-      },
-    ],
-    buttonStyle: "primary",
-  },
-];
+function getFeatureIcon(iconType: "star" | "gift" | "none"): React.ReactNode | null {
+  if (iconType === "star") return <StarIcon />;
+  if (iconType === "gift") return <GiftIcon />;
+  return null;
+}
 
 export default function PricingCards() {
+  const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getActivePlans()
+      .then((data) => setPlans(data))
+      .catch((err) => {
+        console.error("[PricingCards] Failed to load plans:", err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="py-24 px-5 md:px-16">
       <div className="max-w-[1280px] mx-auto">
@@ -114,86 +58,112 @@ export default function PricingCards() {
           </p>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-          {plans.map((plan, i) => (
-            <motion.div
-              key={plan.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12, duration: 0.55, ease: [0.25, 0.4, 0.25, 1] }}
-              whileHover={{ y: -8, boxShadow: "0 16px 32px rgba(3,38,22,0.14)" }}
-              className={`relative bg-white rounded-xl flex flex-col p-8 ${
-                plan.featured
-                  ? "border-2 border-[#386b00]"
-                  : "border border-[#e3e3dd]"
-              }`}
-              style={{ boxShadow: "0 4px 12px rgba(27,60,42,0.10)" }}
-            >
-              {/* Popular badge */}
-              {plan.badge && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#386b00] text-white px-5 py-1.5 rounded-full font-bold text-[10px] tracking-widest uppercase font-[var(--font-work-sans)] whitespace-nowrap">
-                  {plan.badge}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="bg-white rounded-xl border border-[#e3e3dd] p-8 animate-pulse"
+                style={{ boxShadow: "0 4px 12px rgba(27,60,42,0.10)" }}
+              >
+                <div className="h-3 w-20 bg-[#e3e3dd] rounded mb-3" />
+                <div className="h-7 w-36 bg-[#e3e3dd] rounded mb-2" />
+                <div className="h-3 w-48 bg-[#e3e3dd] rounded mb-8" />
+                <div className="h-12 w-32 bg-[#e3e3dd] rounded mb-8" />
+                <div className="space-y-4">
+                  {[0, 1, 2].map((j) => (
+                    <div key={j} className="h-4 bg-[#e3e3dd] rounded" />
+                  ))}
                 </div>
-              )}
+                <div className="h-12 bg-[#e3e3dd] rounded-lg mt-8" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {plans.map((plan, i) => (
+              <motion.div
+                key={plan._id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.12, duration: 0.55, ease: [0.25, 0.4, 0.25, 1] }}
+                whileHover={{ y: -8, boxShadow: "0 16px 32px rgba(3,38,22,0.14)" }}
+                className={`relative bg-white rounded-xl flex flex-col p-8 ${
+                  plan.featured
+                    ? "border-2 border-[#386b00]"
+                    : "border border-[#e3e3dd]"
+                }`}
+                style={{ boxShadow: "0 4px 12px rgba(27,60,42,0.10)" }}
+              >
+                {/* Popular badge */}
+                {plan.badge && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#386b00] text-white px-5 py-1.5 rounded-full font-bold text-[10px] tracking-widest uppercase font-[var(--font-work-sans)] whitespace-nowrap">
+                    {plan.badge}
+                  </div>
+                )}
 
-              {/* Header */}
-              <div className={`mb-6 ${plan.featured ? "text-center" : ""}`}>
-                <span
-                  className={`font-bold text-[10px] tracking-widest uppercase font-[var(--font-work-sans)] ${
-                    plan.featured ? "text-[#386b00]" : "text-[#727973]"
+                {/* Header */}
+                <div className={`mb-6 ${plan.featured ? "text-center" : ""}`}>
+                  <span
+                    className={`font-bold text-[10px] tracking-widest uppercase font-[var(--font-work-sans)] ${
+                      plan.featured ? "text-[#386b00]" : "text-[#727973]"
+                    }`}
+                  >
+                    {plan.tier}
+                  </span>
+                  <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616] mt-1">
+                    {plan.name}
+                  </h3>
+                  <p className="text-sm text-[#424843] font-[var(--font-work-sans)]">{plan.tagline}</p>
+                </div>
+
+                {/* Price */}
+                <div className={`mb-8 ${plan.featured ? "text-center" : ""}`}>
+                  <span className="font-[var(--font-libre-caslon)] text-5xl font-bold text-[#032616]">
+                    ₹ {plan.price}
+                  </span>
+                  <span className="text-[#424843] font-[var(--font-work-sans)] ml-1">/ {plan.period}</span>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-4 mb-auto">
+                  {plan.features.map((feat, fi) => {
+                    const icon = getFeatureIcon(feat.iconType);
+                    return (
+                      <li
+                        key={fi}
+                        className={`flex items-center gap-3 ${
+                          feat.highlight ? "font-bold text-[#386b00]" : "text-[#1a1c19]"
+                        } font-[var(--font-work-sans)]`}
+                      >
+                        {icon ? (
+                          <span className="text-[#386b00]">{icon}</span>
+                        ) : (
+                          <CheckIcon />
+                        )}
+                        <span className="text-sm">{feat.text}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                {/* CTA */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  className={`w-full mt-8 py-4 rounded-lg font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] transition-colors ${
+                    plan.buttonStyle === "secondary"
+                      ? "bg-[#386b00] text-white hover:bg-[#032616]"
+                      : "bg-[#032616] text-white hover:bg-[#386b00]"
                   }`}
                 >
-                  {plan.tier}
-                </span>
-                <h3 className="font-[var(--font-libre-caslon)] text-2xl font-bold text-[#032616] mt-1">
-                  {plan.name}
-                </h3>
-                <p className="text-sm text-[#424843] font-[var(--font-work-sans)]">{plan.tagline}</p>
-              </div>
-
-              {/* Price */}
-              <div className={`mb-8 ${plan.featured ? "text-center" : ""}`}>
-                <span className="font-[var(--font-libre-caslon)] text-5xl font-bold text-[#032616]">
-                  {plan.price}
-                </span>
-                <span className="text-[#424843] font-[var(--font-work-sans)] ml-1">{plan.period}</span>
-              </div>
-
-              {/* Features */}
-              <ul className="space-y-4 mb-auto">
-                {plan.features.map((feat) => (
-                  <li
-                    key={feat.text}
-                    className={`flex items-center gap-3 ${
-                      feat.highlight ? "font-bold text-[#386b00]" : "text-[#1a1c19]"
-                    } font-[var(--font-work-sans)]`}
-                  >
-                    {feat.icon ? (
-                      <span className="text-[#386b00]">{feat.icon}</span>
-                    ) : (
-                      <CheckIcon />
-                    )}
-                    <span className="text-sm">{feat.text}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                className={`w-full mt-8 py-4 rounded-lg font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] transition-colors ${
-                  plan.buttonStyle === "secondary"
-                    ? "bg-[#386b00] text-white hover:bg-[#032616]"
-                    : "bg-[#032616] text-white hover:bg-[#386b00]"
-                }`}
-              >
-                Subscribe Now
-              </motion.button>
-            </motion.div>
-          ))}
-        </div>
+                  Subscribe Now
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

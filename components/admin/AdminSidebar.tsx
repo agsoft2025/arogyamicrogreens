@@ -9,11 +9,12 @@ import { useAuth } from "@/store/authStore";
 /* ── Nav items ───────────────────────────────────────────────── */
 
 const NAV_ITEMS = [
-  { label: "Overview",         href: "/admin/dashboard", icon: <DashboardIcon /> },
-  { label: "Product Catalog",  href: "/admin/products",  icon: <PlantIcon /> },
-  { label: "Order Management", href: "/admin/orders",    icon: <ShippingIcon /> },
-  { label: "User Management",  href: "/admin/users",     icon: <GroupIcon /> },
-  { label: "Settings",         href: "/admin/settings",  icon: <SettingsIcon /> },
+  { label: "Overview",           href: "/admin/dashboard",          icon: <DashboardIcon /> },
+  { label: "Product Catalog",    href: "/admin/products",           icon: <PlantIcon /> },
+  { label: "Order Management",   href: "/admin/orders",             icon: <ShippingIcon /> },
+  { label: "User Management",    href: "/admin/users",              icon: <GroupIcon /> },
+  { label: "Subscription Plans", href: "/admin/subscription-plans", icon: <PlansIcon /> },
+  { label: "Settings",           href: "/admin/settings",           icon: <SettingsIcon /> },
 ];
 
 /* ── Component ───────────────────────────────────────────────── */
@@ -258,6 +259,14 @@ function GroupIcon() {
     <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
       <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+function PlansIcon() {
+  return (
+    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <rect width="20" height="14" x="2" y="5" rx="2" />
+      <path d="M2 10h20M8 5v14M16 5v14" />
     </svg>
   );
 }
