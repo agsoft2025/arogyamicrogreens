@@ -320,7 +320,7 @@ export default function ContactGrid() {
                       Visit Us
                     </p>
                     <address className="font-[var(--font-work-sans)] text-sm not-italic leading-relaxed opacity-90">
-                      Plot No 359, Gokul Plots,<br />
+                      Plot No 669, Gayatri Arcade, Gokul Plots,<br />
                       KPHB 9th Phase,<br />
                       Hyderabad, Telangana – 500085,<br />
                       India

@@ -66,6 +66,7 @@ export default function EditSubscriptionPlanPage() {
         featured: plan.featured,
         displayOrder: plan.displayOrder,
         status: plan.status,
+        category: plan.category ?? "microgreens",
         features: plan.features.map((f) => ({ ...f })),
       }
     : null;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { IconType } from "@/api/subscription-plan.api";
+import type { IconType, PlanCategory } from "@/api/subscription-plan.api";
 
 export interface PlanFormData {
   tier: string;
@@ -15,6 +15,7 @@ export interface PlanFormData {
   featured: boolean;
   displayOrder: number;
   status: "active" | "inactive";
+  category: PlanCategory;
   features: { text: string; highlight: boolean; iconType: IconType }[];
 }
 
@@ -41,6 +42,8 @@ export default function PlanForm({
 }: PlanFormProps) {
   const [form, setForm] = useState<PlanFormData>({ ...initialData, features: initialData.features.map((f) => ({ ...f })) });
   const [errors, setErrors] = useState<Partial<Record<keyof PlanFormData | `feature_${number}`, string>>>({});
+  // Raw string for displayOrder — lets the user clear the field while editing
+  const [rawDisplayOrder, setRawDisplayOrder] = useState(String(initialData.displayOrder));
 
   const setField = <K extends keyof PlanFormData>(key: K, value: PlanFormData[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -94,6 +97,13 @@ export default function PlanForm({
     if (!validate()) return;
     await onSubmit(form);
   };
+
+  const inputClass = (hasError: boolean) =>
+    `w-full px-3.5 py-2.5 rounded-lg border text-sm font-[var(--font-work-sans)] bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#386b00]/30 ${
+      hasError
+        ? "border-red-400 focus:border-red-400"
+        : "border-[#d4ddd0] focus:border-[#386b00]"
+    }`;
 
   return (
     <motion.form
@@ -154,7 +164,7 @@ export default function PlanForm({
             type="text"
             value={form.period}
             onChange={(e) => setField("period", e.target.value)}
-            placeholder="/week"
+            placeholder="week"
             className={inputClass(!!errors.period)}
           />
         </Field>
@@ -174,13 +184,30 @@ export default function PlanForm({
         <Field label="Display Order" hint="Lower numbers appear first">
           <input
             type="number"
-            value={form.displayOrder}
-            onChange={(e) => setField("displayOrder", parseInt(e.target.value, 10) || 0)}
+            value={rawDisplayOrder}
             min={0}
+            onChange={(e) => {
+              setRawDisplayOrder(e.target.value);
+              const parsed = parseInt(e.target.value, 10);
+              setField("displayOrder", isNaN(parsed) ? 0 : Math.max(0, parsed));
+            }}
+            onBlur={() => setRawDisplayOrder(String(form.displayOrder))}
+            onWheel={(e) => e.currentTarget.blur()}
             className={inputClass(false)}
           />
         </Field>
       </div>
+
+      <Field label="Category" required>
+        <select
+          value={form.category}
+          onChange={(e) => setField("category", e.target.value as PlanCategory)}
+          className={inputClass(false)}
+        >
+          <option value="microgreens">Microgreens Subscription Plans</option>
+          <option value="microgreens-meal">Microgreens &amp; Meal Subscription Plans</option>
+        </select>
+      </Field>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <Field label="Button Style">
@@ -313,7 +340,7 @@ export default function PlanForm({
                           onChange={(e) => setFeatureField(i, "iconType", e.target.value as IconType)}
                           className="text-[11px] font-[var(--font-work-sans)] border border-[#e3e3dd] rounded-lg px-2.5 py-1.5 bg-white outline-none focus:border-[#386b00] transition-colors"
                         >
-                          <option value="none">None (checkmark)</option>
+                          <option value="none">• Bullet</option>
                           <option value="star">⭐ Star</option>
                           <option value="gift">🎁 Gift</option>
                         </select>
@@ -399,8 +426,12 @@ function Field({
       <AnimatePresence>
         {error && (
           <motion.p
-            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="text-[#ba1a1a] text-xs font-[var(--font-work-sans)] mt-1"
+            key="err"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+            className="text-[11px] text-[#ba1a1a] font-[var(--font-work-sans)] mt-1"
           >
             {error}
           </motion.p>
@@ -408,12 +439,4 @@ function Field({
       </AnimatePresence>
     </div>
   );
-}
-
-function inputClass(hasError: boolean) {
-  return `w-full border rounded-lg px-4 py-3 bg-white text-sm font-[var(--font-work-sans)] text-[#1a1c19] placeholder:text-[#9ca8a3] outline-none transition-colors ${
-    hasError
-      ? "border-[#ba1a1a] focus:border-[#ba1a1a] focus:ring-2 focus:ring-[#ba1a1a]/10"
-      : "border-[#e3e3dd] focus:border-[#386b00] focus:ring-2 focus:ring-[#386b00]/10"
-  }`;
 }

@@ -3,6 +3,7 @@ import apiClient from "./axios";
 export type IconType = "star" | "gift" | "none";
 export type ButtonStyle = "primary" | "secondary";
 export type PlanStatus = "active" | "inactive";
+export type PlanCategory = "microgreens" | "microgreens-meal";
 
 export interface PlanFeature {
   text: string;
@@ -22,6 +23,7 @@ export interface SubscriptionPlan {
   featured: boolean;
   displayOrder: number;
   status: PlanStatus;
+  category: PlanCategory;
   features: PlanFeature[];
   createdAt: string;
   updatedAt: string;
@@ -38,6 +40,7 @@ export interface CreatePlanPayload {
   featured?: boolean;
   displayOrder?: number;
   status?: PlanStatus;
+  category?: PlanCategory;
   features: PlanFeature[];
 }
 
