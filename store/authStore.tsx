@@ -1,9 +1,21 @@
 "use client";
 
-import React, { createContext, useContext, useReducer, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { logout as apiLogout } from "@/api/auth.api";
+import {
+  registerUnauthorizedHandler,
+  unregisterUnauthorizedHandler,
+  refreshAccessToken,
+} from "@/api/axios";
 
-/* ── Session persistence helpers ────────────────────────────── */
+/* -- Session persistence helpers -- */
 
 const SESSION_KEY = "agrinest_session";
 
@@ -17,7 +29,7 @@ function persistSession(user: User, token: string): void {
   try {
     localStorage.setItem(SESSION_KEY, JSON.stringify({ user, token }));
   } catch {
-    // localStorage unavailable (private browsing, etc.) — safe to ignore
+    // safe to ignore
   }
 }
 
@@ -36,7 +48,6 @@ function loadPersistedSession(): PersistedSession | null {
     const raw = localStorage.getItem(SESSION_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as PersistedSession;
-    // Basic validity check — discard corrupt or old-format data
     if (!parsed?.user?.mobileNumber || !parsed?.user?.name) return null;
     return parsed;
   } catch {
@@ -44,7 +55,22 @@ function loadPersistedSession(): PersistedSession | null {
   }
 }
 
-/* ── Types ─────────────────────────────────────────────────── */
+/* -- JWT expiry helper -- */
+
+/**
+ * Decodes the JWT payload (client-side, no library) and returns the
+ * exp claim in milliseconds, or null if the token is malformed.
+ */
+function getTokenExpMs(token: string): number | null {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1])) as { exp?: number };
+    return typeof payload.exp === "number" ? payload.exp * 1000 : null;
+  } catch {
+    return null;
+  }
+}
+
+/* -- Types -- */
 
 export interface User {
   _id: string;
@@ -58,18 +84,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
   isLoginModalOpen: boolean;
-  /**
-   * Where to redirect after a successful login.
-   * null        = just close the modal (no redirect)
-   * "/checkout" = came from cart → checkout flow
-   * "/profile"  = came from profile icon click
-   */
   redirectAfterLogin: string | null;
-  /**
-   * true while the initial localStorage restore is in flight.
-   * Auth guards must wait for this to become false before making
-   * any routing decisions to avoid a flash of incorrect state.
-   */
   isRestoring: boolean;
 }
 
@@ -84,17 +99,14 @@ type AuthAction =
 export interface AuthContextValue extends AuthState {
   login: (user: User, token?: string) => void;
   logout: () => void;
-  /** Restore session from localStorage — called once on app mount via SessionRestorer */
   restoreSession: () => void;
   openLoginModal: (redirectAfterLogin?: string) => void;
   closeLoginModal: () => void;
-  /** Returns true if the current user has the "admin" role */
   isAdmin: () => boolean;
-  /** Returns true if the current user has the "user" role */
   isUser: () => boolean;
 }
 
-/* ── Reducer ────────────────────────────────────────────────── */
+/* -- Reducer -- */
 
 function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
@@ -105,7 +117,6 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         user: action.payload,
         isLoginModalOpen: false,
         isRestoring: false,
-        // keep redirectAfterLogin so the modal's setTimeout closure can read it
       };
     case "RESTORE_SESSION":
       return {
@@ -147,10 +158,10 @@ const initialState: AuthState = {
   user: null,
   isLoginModalOpen: false,
   redirectAfterLogin: null,
-  isRestoring: true, // assume restore needed until proven otherwise
+  isRestoring: true,
 };
 
-/* ── Context & Provider ─────────────────────────────────────── */
+/* -- Context & Provider -- */
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -158,8 +169,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   /**
+   * Guard that prevents restoreSession from running concurrently.
+   * React 18 Strict Mode double-invokes effects in development, which would
+   * otherwise fire two simultaneous refresh requests -- the second using the
+   * already-rotated refresh token and failing, causing a spurious logout.
+   */
+  const isRestoringRef = useRef(false);
+
+  /** Shared redirect used by the unauthorized handler. */
+  const redirectToHome = useCallback(() => {
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    }
+  }, []);
+
+  /** Clears localStorage and in-memory auth state. */
+  const logout = useCallback(() => {
+    clearPersistedSession();
+    dispatch({ type: "LOGOUT" });
+    // Fire-and-forget -- failure is non-critical; cookie expires on its own
+    apiLogout().catch(() => {});
+  }, []);
+
+  /**
    * Called by LoginModal after successful OTP verification.
-   * Persists full user + token to localStorage and updates in-memory state.
+   * Persists user + token and updates auth state.
+   *
+   * Token refresh is handled lazily by axios.ts:
+   *   - Pre-flight check: refreshes before the next API call if the token is expired
+   *   - Reactive 401: retries the call once with a fresh token if the server rejects it
    */
   const login = useCallback((user: User, token = "") => {
     persistSession(user, token);
@@ -167,29 +205,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   /**
-   * Called from ProfilePage or any logout UI.
-   * Clears localStorage, fires logout API to clear httpOnly cookie,
-   * and resets in-memory auth state.
-   */
-  const logout = useCallback(() => {
-    clearPersistedSession();
-    dispatch({ type: "LOGOUT" });
-    // Fire-and-forget — failure is non-critical (cookie will expire on its own)
-    apiLogout().catch(() => {});
-  }, []);
-
-  /**
    * Restores auth state from localStorage on app cold-start.
-   * Called once in Providers.tsx via SessionRestorer's useEffect.
-   * Dispatches RESTORE_DONE (not RESTORE_SESSION) if no valid session found,
-   * so guards know the restore attempt has completed.
+   *
+   * If the stored access token is expired, attempts a silent refresh before
+   * restoring state. If the refresh token is also expired, clears the session
+   * and lets the user log in again.
+   *
+   * Token refresh during active use is handled by axios.ts (pre-flight check
+   * + reactive 401 interceptor) -- no polling or timers are needed here.
    */
-  const restoreSession = useCallback(() => {
-    const session = loadPersistedSession();
-    if (session) {
+  const restoreSession = useCallback(async () => {
+    // Prevent concurrent invocations (React Strict Mode double-effect guard).
+    if (isRestoringRef.current) return;
+    isRestoringRef.current = true;
+
+    try {
+      const session = loadPersistedSession();
+
+      if (!session) {
+        dispatch({ type: "RESTORE_DONE" });
+        return;
+      }
+
+      const expMs = session.token ? getTokenExpMs(session.token) : null;
+
+      if (expMs !== null && expMs <= Date.now()) {
+        // Access token is expired -- attempt a silent refresh.
+        const newToken = await refreshAccessToken();
+
+        if (newToken) {
+          // Refresh succeeded: restore the session with the fresh access token.
+          dispatch({ type: "RESTORE_SESSION", payload: session.user });
+        } else {
+          // Refresh token is also expired/revoked -- clear the stale session.
+          clearPersistedSession();
+          dispatch({ type: "RESTORE_DONE" });
+        }
+        return;
+      }
+
+      // Access token is still valid (or we cannot decode it) -- restore directly.
+      // axios.ts will refresh it lazily when it next expires.
       dispatch({ type: "RESTORE_SESSION", payload: session.user });
-    } else {
-      dispatch({ type: "RESTORE_DONE" });
+    } finally {
+      isRestoringRef.current = false;
     }
   }, []);
 
@@ -200,6 +259,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const closeLoginModal = useCallback(() => {
     dispatch({ type: "CLOSE_LOGIN_MODAL" });
   }, []);
+
+  /**
+   * Registers a fallback 401 handler with the API client.
+   * Fires when an authenticated request returns 401 after token refresh has
+   * already been attempted and failed (e.g., refresh token revoked server-side).
+   */
+  useEffect(() => {
+    registerUnauthorizedHandler(() => {
+      logout();
+      redirectToHome();
+    });
+    return () => {
+      unregisterUnauthorizedHandler();
+    };
+  }, [logout, redirectToHome]);
 
   const isAdmin = useCallback(
     () => state.isAuthenticated && state.user?.role === "admin",
@@ -225,7 +299,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-/* ── Hook ───────────────────────────────────────────────────── */
+/* -- Hook -- */
 
 export function useAuth(): AuthContextValue {
   const ctx = useContext(AuthContext);

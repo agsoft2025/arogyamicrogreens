@@ -120,6 +120,7 @@ interface CartState {
 type CartAction =
   | { type: "SET_ITEMS"; items: CartItem[] }
   | { type: "UPDATE_ITEM_QTY"; productId: string; quantity: number }
+  | { type: "REMOVE_ITEM"; productId: string }
   | { type: "SET_LOADING"; loading: boolean }
   | { type: "SET_SYNCING"; syncing: boolean }
   | { type: "SET_SYNC_ERROR"; error: string | null }
@@ -136,6 +137,11 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         items: state.items.map((i) =>
           i.productId === action.productId ? { ...i, quantity: action.quantity } : i
         ),
+      };
+    case "REMOVE_ITEM":
+      return {
+        ...state,
+        items: state.items.filter((i) => i.productId !== action.productId),
       };
     case "SET_LOADING":
       return { ...state, loading: action.loading };
@@ -308,8 +314,31 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const updateQty = useCallback(
     async (productId: string, quantity: number) => {
-      if (quantity <= 0) return;
       dispatch({ type: "SET_ERROR", error: null });
+
+      // qty ≤ 0 → remove the item instead of clamping or ignoring
+      if (quantity <= 0) {
+        if (!isAuthenticated) {
+          const current = readGuestCart();
+          const updated = current.filter((i) => i.productId !== productId);
+          writeGuestCart(updated);
+          dispatch({ type: "SET_ITEMS", items: updated });
+        } else {
+          dispatch({ type: "REMOVE_ITEM", productId }); // optimistic
+          try {
+            const res = await removeFromCart(productId);
+            if (res.success && res.data?.items) {
+              dispatch({ type: "SET_ITEMS", items: normalizeApiItems(res.data.items) });
+            } else {
+              await fetchApiCart();
+            }
+          } catch {
+            await fetchApiCart();
+          }
+        }
+        return;
+      }
+
       if (!isAuthenticated) {
         const current = readGuestCart();
         const updated = current.map((i) =>
@@ -406,7 +435,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   /* ── Derived values ──────────────────────────────────────────── */
-  const count = state.items.reduce((sum, i) => sum + i.quantity, 0);
+  /** Number of unique products in the cart (drives the badge). */
+  const count = state.items.length;
   const subtotal = state.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
   /* ── Context value ───────────────────────────────────────────── */

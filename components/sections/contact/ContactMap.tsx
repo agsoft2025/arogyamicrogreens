@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 const EMBED_SRC =
-  "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1902.751735328925!2d78.3804115!3d17.4834637!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb910029600d2f%3A0x8deb0f57fd5f5e74!2sGokul%20Plots%20Kphb%209th%20Phase!5e0!3m2!1sen!2sin!4v1781358004722!5m2!1sen!2sin";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.456574175598!2d78.381271!3d17.485705199999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9226d5a3711b%3A0x85a5713c364d6a46!2sGayathri%20Arcade%2C%20Gokul%20Plots%2C%20Plot%20no-669%2C%20above%20Bharath%20bazar%2C%20Kukatpally%20Housing%20Board%20Colony%2C%20Venkata%20Ramana%20Colony%2C%20Hafeezpet%2C%20Hyderabad%2C%20Telangana%20500085!5e0!3m2!1sen!2sin!4v1783845107472!5m2!1sen!2sin"
 
 export default function ContactMap() {
   return (
@@ -53,7 +53,7 @@ export default function ContactMap() {
             href="https://maps.app.goo.gl/GpYKKqiprnEjVQA97"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#386b00] transition-colors underline underline-offset-2"
+            className="text-[#032616] hover:text-[#386b00] transition-colors font-medium underline-offset-2"
           >
             Open in Google Maps
           </a>

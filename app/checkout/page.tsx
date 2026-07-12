@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/authStore";
 import { useCart } from "@/store/cartStore";
@@ -19,8 +19,6 @@ import DeliveryMethod, {
 } from "@/components/sections/checkout/DeliveryMethod";
 import PaymentMethod, {
   PaymentOption,
-  CardData,
-  CardErrors,
 } from "@/components/sections/checkout/PaymentMethod";
 import CheckoutSummary, {
   SummaryItem,
@@ -28,7 +26,19 @@ import CheckoutSummary, {
 import ChatFAB from "@/components/ui/ChatFAB";
 import { getMyProfile, saveMyAddress, type SavedAddress } from "@/api/user.api";
 
-/* ── Validation ─────────────────────────────────────────────── */
+/* ── Razorpay SDK ───────────────────────────────────────────────
+   Declare the global so TypeScript doesn't complain.
+   The actual SDK is loaded via a <script> tag on mount.          */
+declare global {
+  interface Window {
+    Razorpay: new (options: Record<string, unknown>) => {
+      open(): void;
+      on(event: string, handler: (response: unknown) => void): void;
+    };
+  }
+}
+
+/* ── Shipping validation ─────────────────────────────────────── */
 
 function validateShipping(data: ShippingData): ShippingErrors {
   const errors: ShippingErrors = {};
@@ -43,16 +53,6 @@ function validateShipping(data: ShippingData): ShippingErrors {
   else if (!/^\d{4,10}$/.test(data.zip.replace(/\s/g, "")))
     errors.zip = "Enter a valid PIN code.";
   if (!data.country.trim()) errors.country = "Country is required.";
-  return errors;
-}
-
-function validateCard(data: CardData): CardErrors {
-  const errors: CardErrors = {};
-  const stripped = data.number.replace(/\s/g, "");
-  if (stripped.length < 16) errors.number = "Enter a valid 16-digit card number.";
-  if (!/^\d{2}\s?\/\s?\d{2}$/.test(data.expiry))
-    errors.expiry = "Enter expiry as MM / YY.";
-  if (data.cvv.length < 3) errors.cvv = "CVV must be 3-4 digits.";
   return errors;
 }
 
@@ -71,9 +71,39 @@ const EMPTY_SHIPPING: ShippingData = {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { items: cartItems, syncing } = useCart();
+  const { isAuthenticated, isRestoring } = useAuth();
+  const { items: cartItems, syncing, clearCart } = useCart();
   const { createPaymentOrder, verifyPayment, createCodOrder } = useOrder();
+
+  /* ── Razorpay SDK pre-load ── */
+  const razorpayReady = useRef(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // Already available (hot-reload, cached, or previous load)
+    if (window.Razorpay) {
+      razorpayReady.current = true;
+      return;
+    }
+    // Avoid double-injecting
+    if (document.getElementById("razorpay-sdk")) return;
+
+    console.log("[Checkout] Preloading Razorpay SDK…");
+    const script = document.createElement("script");
+    script.id = "razorpay-sdk";
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => {
+      console.log("[Checkout] Razorpay SDK loaded successfully.");
+      razorpayReady.current = true;
+    };
+    script.onerror = () => {
+      console.error(
+        "[Checkout] Failed to load Razorpay SDK from checkout.razorpay.com. " +
+          "Check network connectivity, CSP headers, and ad-blocker settings."
+      );
+    };
+    document.body.appendChild(script);
+  }, []);
 
   /* ── Shipping state ── */
   const [shipping, setShipping] = useState<ShippingData>(EMPTY_SHIPPING);
@@ -85,19 +115,19 @@ export default function CheckoutPage() {
   const [delivery, setDelivery] = useState<DeliveryOption>("standard");
 
   /* ── Payment state ── */
-  const [paymentMethod, setPaymentMethod] = useState<PaymentOption>("card");
-  const [cardData, setCardData] = useState<CardData>({ number: "", expiry: "", cvv: "" });
-  const [cardErrors, setCardErrors] = useState<CardErrors>({});
+  const [paymentMethod, setPaymentMethod] = useState<PaymentOption>("razorpay");
 
   /* ── Processing state ── */
   const [isProcessing, setIsProcessing] = useState(false);
 
-  /* ── Auth guard ── */
+  /* ── Auth guard — wait for session restore before redirecting ── */
   useEffect(() => {
+    if (isRestoring) return; // session check still in flight — don't redirect yet
     if (!isAuthenticated) {
+      console.log("[Checkout] Not authenticated, redirecting to /cart");
       router.replace("/cart");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isRestoring, router]);
 
   /* ── Load saved addresses on mount ── */
   useEffect(() => {
@@ -132,7 +162,22 @@ export default function CheckoutPage() {
   }, [isAuthenticated]);
 
   /* ── Early returns (after all hooks) ── */
+
+  // Show spinner while session is being restored
+  if (isRestoring) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#fafaf4]">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+          className="w-10 h-10 rounded-full border-4 border-[#e3e3dd] border-t-[#386b00]"
+        />
+      </div>
+    );
+  }
+
   if (!isAuthenticated) return null;
+
   if (syncing) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#fafaf4]">
@@ -182,36 +227,23 @@ export default function CheckoutPage() {
     setShippingErrors({});
   };
 
-  const handleCardChange = (field: keyof CardData, value: string) => {
-    setCardData((prev) => ({ ...prev, [field]: value }));
-    if (cardErrors[field]) {
-      setCardErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
-  };
-
+  /* ── Place order ── */
   const handlePlaceOrder = async () => {
-    /* Validate shipping */
+    /* 1. Validate shipping */
     const sErrs = validateShipping(shipping);
     if (Object.keys(sErrs).length > 0) {
       setShippingErrors(sErrs);
-      document.getElementById("shipping-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .getElementById("shipping-section")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
-    /* Validate card if selected */
-    if (paymentMethod === "card") {
-      const cErrs = validateCard(cardData);
-      if (Object.keys(cErrs).length > 0) {
-        setCardErrors(cErrs);
-        document.getElementById("payment-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
-    }
-
+    console.log("[Checkout] handlePlaceOrder triggered, paymentMethod:", paymentMethod);
     setIsProcessing(true);
 
     try {
-      // Build address from actual form values
+      /* 2. Build address */
       const addressData = {
         fullName: shipping.fullName.trim(),
         phone: shipping.phone.trim(),
@@ -223,7 +255,7 @@ export default function CheckoutPage() {
         country: shipping.country.trim() || "India",
       };
 
-      // Check if this address is already saved; if not, save it silently
+      /* 3. Save new address silently (non-blocking) */
       const alreadySaved = savedAddresses.some(
         (a) =>
           a.addressLine1 === addressData.addressLine1 &&
@@ -238,69 +270,130 @@ export default function CheckoutPage() {
           });
           setSavedAddresses(result.data.savedAddresses ?? []);
         } catch {
-          // Non-fatal: continue with order even if save fails
+          // Non-fatal — continue even if save fails
         }
       }
 
-      if (paymentMethod === "card") {
-        // Razorpay payment flow
+      /* ── Razorpay online payment ── */
+      if (paymentMethod === "razorpay") {
+        /* 4a. Create Razorpay order on backend */
+        console.log("[Checkout] Calling createPaymentOrder…");
         const paymentOrder = await createPaymentOrder({
           paymentMethod: "RAZORPAY",
           shippingAddress: addressData,
           billingAddress: addressData,
         });
+        console.log("[Checkout] Payment order received:", {
+          razorpayOrderId: paymentOrder.razorpayOrderId,
+          amount: paymentOrder.amount,
+          currency: paymentOrder.currency,
+          keyPresent: Boolean(paymentOrder.key),
+        });
 
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.async = true;
-        script.onload = () => {
-          const options = {
-            key: paymentOrder.key,
-            amount: paymentOrder.amount,
-            currency: paymentOrder.currency,
-            name: paymentOrder.orderName,
-            description: paymentOrder.description,
-            order_id: paymentOrder.razorpayOrderId,
-            prefill: paymentOrder.prefill,
-            notes: paymentOrder.notes,
-            theme: { color: "#386b00" },
-            handler: async (response: any) => {
+        /* 4b. Verify the SDK is ready */
+        if (!window.Razorpay) {
+          throw new Error(
+            "Razorpay payment system is not ready. " +
+              "Please refresh the page and ensure checkout.razorpay.com is reachable."
+          );
+        }
+
+        /* 4c. Open Razorpay modal */
+        console.log("[Checkout] Opening Razorpay modal…");
+        const rzp = new window.Razorpay({
+          key: paymentOrder.key,
+          amount: paymentOrder.amount,
+          currency: paymentOrder.currency,
+          name: paymentOrder.orderName,
+          description: paymentOrder.description,
+          order_id: paymentOrder.razorpayOrderId,
+          prefill: paymentOrder.prefill,
+          notes: paymentOrder.notes,
+          theme: { color: "#386b00" },
+
+          handler: async (response: unknown) => {
+            /* Payment captured — verify signature with backend */
+            const r = response as {
+              razorpay_order_id: string;
+              razorpay_payment_id: string;
+              razorpay_signature: string;
+            };
+            console.log("[Checkout] Payment captured, verifying signature…");
+            try {
+              await verifyPayment({
+                razorpayOrderId: r.razorpay_order_id,
+                razorpayPaymentId: r.razorpay_payment_id,
+                razorpaySignature: r.razorpay_signature,
+              });
+              console.log("[Checkout] Payment verified — clearing cart…");
               try {
-                await verifyPayment({
-                  razorpayOrderId: response.razorpay_order_id,
-                  razorpayPaymentId: response.razorpay_payment_id,
-                  razorpaySignature: response.razorpay_signature,
-                });
-                router.push("/checkout/success");
-              } catch (error: any) {
-                console.error("Payment verification failed:", error);
-                alert("Payment verification failed. Please try again.");
-              } finally {
-                setIsProcessing(false);
+                await clearCart();
+                console.log("[Checkout] Cart cleared successfully.");
+              } catch (clearErr) {
+                // Non-fatal: cart will re-sync on next session; don't block navigation
+                console.error("[Checkout] Cart clear failed (non-fatal):", clearErr);
               }
-            },
-            modal: {
-              ondismiss: () => {
-                setIsProcessing(false);
-              },
-            },
-          };
+              router.push("/checkout/success");
+            } catch (verifyErr: unknown) {
+              const msg =
+                verifyErr instanceof Error
+                  ? verifyErr.message
+                  : (verifyErr as { message?: string })?.message;
+              console.error("[Checkout] Payment verification failed:", verifyErr);
+              alert(
+                msg ||
+                  "Payment received but verification failed. Please contact support with your payment ID."
+              );
+              setIsProcessing(false);
+            }
+          },
 
-          const rzp = new (window as any).Razorpay(options);
-          rzp.open();
-        };
-        document.body.appendChild(script);
+          modal: {
+            ondismiss: () => {
+              console.log("[Checkout] Razorpay modal closed by user");
+              setIsProcessing(false);
+            },
+          },
+        });
+
+        rzp.on("payment.failed", (response: unknown) => {
+          const r = response as { error?: { description?: string; code?: string } };
+          console.error("[Checkout] Razorpay payment.failed:", r.error);
+          alert(
+            r.error?.description ||
+              "Payment failed. Please try a different payment method."
+          );
+          setIsProcessing(false);
+        });
+
+        rzp.open();
+        console.log("[Checkout] rzp.open() called — modal should be visible");
+
+        /* NOTE: setIsProcessing(false) is intentionally NOT called here.
+           It is called inside handler (on success → navigate) / ondismiss /
+           payment.failed. The button stays in "Processing" state while the
+           Razorpay modal is open.                                           */
+
       } else {
-        // COD flow
+        /* ── COD flow ── */
+        console.log("[Checkout] Creating COD order…");
         await createCodOrder({
           shippingAddress: addressData,
           billingAddress: addressData,
         });
+        console.log("[Checkout] COD order created \u2014 clearing cart\u2026");
+        try {
+          await clearCart();
+          console.log("[Checkout] Cart cleared successfully.");
+        } catch (clearErr) {
+          console.error("[Checkout] Cart clear failed (non-fatal):", clearErr);
+        }
         router.push("/checkout/success");
       }
-    } catch (error: any) {
-      console.error("Order placement failed:", error);
-      alert(error.message || "Failed to place order. Please try again.");
+    } catch (error: unknown) {
+      const err = error as { message?: string };
+      console.error("[Checkout] Order placement failed:", error);
+      alert(err?.message || "Failed to place order. Please try again.");
       setIsProcessing(false);
     }
   };
@@ -323,12 +416,14 @@ export default function CheckoutPage() {
             </motion.h1>
 
             <div className="flex flex-col lg:flex-row gap-8 items-start">
-              {/* ── Left column: forms ── */}
+              {/* \u2500\u2500 Left column: forms \u2500\u2500 */}
               <div className="flex-[1.5] min-w-0 flex flex-col gap-8">
                 <div id="shipping-section">
                   {addressLoading ? (
-                    <div className="bg-white rounded-xl p-6 border border-[#c1c8c1]/30 animate-pulse space-y-4"
-                      style={{ boxShadow: "0 4px 12px rgba(3,38,22,0.10)" }}>
+                    <div
+                      className="bg-white rounded-xl p-6 border border-[#c1c8c1]/30 animate-pulse space-y-4"
+                      style={{ boxShadow: "0 4px 12px rgba(3,38,22,0.10)" }}
+                    >
                       <div className="h-7 w-48 bg-[#e3e3dd] rounded" />
                       <div className="grid grid-cols-2 gap-4">
                         {Array.from({ length: 6 }).map((_, i) => (
@@ -352,15 +447,12 @@ export default function CheckoutPage() {
                 <div id="payment-section">
                   <PaymentMethod
                     selected={paymentMethod}
-                    cardData={cardData}
-                    cardErrors={cardErrors}
                     onSelect={setPaymentMethod}
-                    onCardChange={handleCardChange}
                   />
                 </div>
               </div>
 
-              {/* ── Right column: summary ── */}
+              {/* Right column: summary */}
               <div className="w-full lg:w-[380px] shrink-0">
                 <CheckoutSummary
                   items={summaryItems}

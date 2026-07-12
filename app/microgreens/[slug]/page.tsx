@@ -58,22 +58,33 @@ function ProductDetail({ product }: { product: Product }) {
 
   const [activeImg, setActiveImg] = useState(0);
   const [justAdded, setJustAdded] = useState(false);
+  const [qty, setQty] = useState(1);
 
-  const { items, addItem } = useCart();
+  const { items, addItem, updateQty } = useCart();
   const { isInWishlist, toggleItem } = useWishlist();
 
-  const inCart = items.some((i) => i.productId === product._id);
+  const cartItem = items.find((i) => i.productId === product._id);
+  const inCart = !!cartItem;
   const inWishlist = isInWishlist(product._id);
 
   const handleAddToCart = async () => {
-    await addItem({
-      productId: product._id,
-      name: product.name,
-      price: effectivePrice,
-      image: getProductImageUrl(product.featuredImage ?? product.images[0]),
-    });
+    await addItem(
+      {
+        productId: product._id,
+        name: product.name,
+        price: effectivePrice,
+        image: getProductImageUrl(product.featuredImage ?? product.images[0]),
+      },
+      qty
+    );
+    setQty(1);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 2000);
+  };
+
+  const handleCartQtyChange = async (delta: number) => {
+    if (!cartItem) return;
+    await updateQty(product._id, cartItem.quantity + delta);
   };
 
   const handleToggleWishlist = async () => {
@@ -280,60 +291,141 @@ function ProductDetail({ product }: { product: Product }) {
               )}
             </div>
 
-            <div className="flex gap-3">
-              <motion.button
-                onClick={handleAddToCart}
-                disabled={product.stock === 0}
-                whileHover={product.stock > 0 ? { scale: 1.02 } : {}}
-                whileTap={product.stock > 0 ? { scale: 0.97 } : {}}
-                aria-label={`Add ${product.name} to cart`}
-                className={`flex-1 flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] transition-all ${
-                  product.stock === 0
-                    ? "bg-[#e3e3dd] text-[#9ca8a3] cursor-not-allowed"
-                    : inCart || justAdded
-                    ? "bg-[#032616] text-white"
-                    : "bg-[#386b00] text-white hover:bg-[#032616]"
-                }`}
-              >
-                <AnimatePresence mode="wait">
-                  {justAdded ? (
-                    <motion.span key="added" initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7" /></svg>
+            {/* Action buttons */}
+            <div className="flex flex-col gap-3">
+              <AnimatePresence mode="wait">
+                {justAdded ? (
+                  /* ── "Added" flash ────────────────────────────── */
+                  <motion.div
+                    key="added-confirmation"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex gap-3"
+                  >
+                    <div className="flex-1 flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl bg-[#032616] text-white font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)]">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path d="m5 13 4 4L19 7" />
+                      </svg>
                       Added to Cart
-                    </motion.span>
-                  ) : (
-                    <motion.span key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-2">
+                    </div>
+                    <WishlistButton inWishlist={inWishlist} onClick={handleToggleWishlist} name={product.name} />
+                  </motion.div>
+                ) : inCart ? (
+                  /* ── In-cart: qty stepper + View Cart ────────── */
+                  <motion.div
+                    key="in-cart"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    className="flex gap-3"
+                  >
+                    <div className="flex items-center border-2 border-[#032616] rounded-xl overflow-hidden bg-white">
+                      <motion.button
+                        whileTap={{ scale: 0.85 }}
+                        onClick={() => handleCartQtyChange(-1)}
+                        aria-label={
+                          cartItem!.quantity <= 1
+                            ? `Remove ${product.name} from cart`
+                            : "Decrease cart quantity"
+                        }
+                        className={`px-4 py-3.5 transition-colors ${
+                          cartItem!.quantity <= 1
+                            ? "text-[#9ca8a3] hover:bg-[#ffd9d5]/60 hover:text-[#ba1a1a]"
+                            : "text-[#032616] hover:bg-[#eeeee9]"
+                        }`}
+                      >
+                        {cartItem!.quantity <= 1 ? <SmallTrashIcon /> : <MinusIcon />}
+                      </motion.button>
+                      <span className="w-10 text-center font-bold text-[15px] font-[var(--font-work-sans)] text-[#032616] select-none">
+                        {cartItem!.quantity}
+                      </span>
+                      <motion.button
+                        whileTap={{ scale: 0.85 }}
+                        onClick={() => handleCartQtyChange(1)}
+                        aria-label="Increase cart quantity"
+                        className="px-4 py-3.5 text-[#032616] hover:bg-[#eeeee9] transition-colors"
+                      >
+                        <PlusIcon />
+                      </motion.button>
+                    </div>
+                    <Link
+                      href="/cart"
+                      className="flex-1 flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] bg-[#032616] text-white hover:bg-[#386b00] transition-colors"
+                    >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                       </svg>
-                      {inCart ? "In Cart" : product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-
-              <motion.button
-                onClick={handleToggleWishlist}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-                className={`w-14 h-14 rounded-xl flex items-center justify-center border-2 transition-all ${
-                  inWishlist
-                    ? "border-[#ba1a1a] bg-[#ffdad6] text-[#ba1a1a]"
-                    : "border-[#c1c8c1] bg-white text-[#424843] hover:border-[#ba1a1a] hover:bg-[#ffdad6] hover:text-[#ba1a1a]"
-                }`}
-              >
-                <svg
-                  className={`w-5 h-5 transition-transform duration-200 ${inWishlist ? "scale-110" : ""}`}
-                  fill={inWishlist ? "currentColor" : "none"}
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </motion.button>
+                      View Cart
+                    </Link>
+                    <WishlistButton inWishlist={inWishlist} onClick={handleToggleWishlist} name={product.name} />
+                  </motion.div>
+                ) : (
+                  /* ── Pre-add: qty picker + Add to Cart ───────── */
+                  <motion.div
+                    key="pre-add"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    className="flex flex-col gap-3"
+                  >
+                    {product.stock > 0 && (
+                      <div className="flex items-center gap-4">
+                        <span className="text-[11px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] text-[#727973]">
+                          Qty
+                        </span>
+                        <div className="flex items-center border border-[#c1c8c1] rounded-lg overflow-hidden bg-[#fafaf4]">
+                          <motion.button
+                            whileTap={{ scale: 0.85 }}
+                            onClick={() => setQty(Math.max(1, qty - 1))}
+                            disabled={qty <= 1}
+                            aria-label="Decrease quantity"
+                            className="px-3 py-2 hover:bg-[#e8e8e3] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                          >
+                            <MinusIcon />
+                          </motion.button>
+                          <span className="w-10 text-center font-bold text-[15px] font-[var(--font-work-sans)] text-[#1a1c19] select-none">
+                            {qty}
+                          </span>
+                          <motion.button
+                            whileTap={{ scale: 0.85 }}
+                            onClick={() => setQty(qty + 1)}
+                            aria-label="Increase quantity"
+                            className="px-3 py-2 hover:bg-[#e8e8e3] transition-colors"
+                          >
+                            <PlusIcon />
+                          </motion.button>
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex gap-3">
+                      <motion.button
+                        onClick={handleAddToCart}
+                        disabled={product.stock === 0}
+                        whileHover={product.stock > 0 ? { scale: 1.02 } : {}}
+                        whileTap={product.stock > 0 ? { scale: 0.97 } : {}}
+                        aria-label={`Add ${product.name} to cart`}
+                        className={`flex-1 flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] transition-all ${
+                          product.stock === 0
+                            ? "bg-[#e3e3dd] text-[#9ca8a3] cursor-not-allowed"
+                            : "bg-[#386b00] text-white hover:bg-[#032616]"
+                        }`}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                        {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+                      </motion.button>
+                      <WishlistButton inWishlist={inWishlist} onClick={handleToggleWishlist} name={product.name} />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <AnimatePresence>
@@ -349,6 +441,7 @@ function ProductDetail({ product }: { product: Product }) {
               )}
             </AnimatePresence>
 
+            {/* Long description */}
             {product.description && (
               <div className="mt-8 pt-8 border-t border-[#e3e3dd]">
                 <h3 className="font-[var(--font-work-sans)] text-[10px] font-bold tracking-widest uppercase text-[#727973] mb-3">
@@ -363,6 +456,70 @@ function ProductDetail({ product }: { product: Product }) {
         </div>
       </div>
     </main>
+  );
+}
+
+/* ── Shared icon sub-components ─────────────────────────────── */
+
+function MinusIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+      <path d="M5 12h14" />
+    </svg>
+  );
+}
+
+function PlusIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
+function SmallTrashIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+      <path d="M10 11v6M14 11v6" />
+      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+    </svg>
+  );
+}
+
+function WishlistButton({
+  inWishlist,
+  onClick,
+  name,
+}: {
+  inWishlist: boolean;
+  onClick: () => void;
+  name: string;
+}) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+      title={inWishlist ? `Remove ${name} from wishlist` : `Save ${name} to wishlist`}
+      className={`w-14 h-14 rounded-xl flex items-center justify-center border-2 transition-all ${
+        inWishlist
+          ? "border-[#ba1a1a] bg-[#ffdad6] text-[#ba1a1a]"
+          : "border-[#c1c8c1] bg-white text-[#424843] hover:border-[#ba1a1a] hover:bg-[#ffdad6] hover:text-[#ba1a1a]"
+      }`}
+    >
+      <svg
+        className={`w-5 h-5 transition-transform duration-200 ${inWishlist ? "scale-110" : ""}`}
+        fill={inWishlist ? "currentColor" : "none"}
+        stroke="currentColor"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+      >
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+      </svg>
+    </motion.button>
   );
 }
 
