@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useProduct, getEffectivePrice } from "@/hooks/useProducts";
 import { useCart } from "@/store/cartStore";
 import { useWishlist } from "@/store/wishlistStore";
+import { useReviewSettings } from "@/hooks/useReviewSettings";
 import { formatCurrencyInt } from "@/lib/currency";
 import { getProductImageUrl } from "@/lib/imageUtils";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
@@ -13,6 +14,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ChatFAB from "@/components/ui/ChatFAB";
 import PageTransition from "@/components/animations/PageTransition";
+import ReviewSection from "@/components/ui/ReviewSection";
 import type { Product } from "@/types/product.types";
 
 /* ── Page ────────────────────────────────────────────────────── */
@@ -62,6 +64,7 @@ function ProductDetail({ product }: { product: Product }) {
 
   const { items, addItem, updateQty } = useCart();
   const { isInWishlist, toggleItem } = useWishlist();
+  const { shouldShowRating, settings } = useReviewSettings();
 
   const cartItem = items.find((i) => i.productId === product._id);
   const inCart = !!cartItem;
@@ -212,9 +215,26 @@ function ProductDetail({ product }: { product: Product }) {
               {product.name}
             </h1>
 
-            <p className="text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] text-[#9ca8a3] mb-4">
-              SKU: {product.sku}
-            </p>
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-[10px] font-bold tracking-widest uppercase font-[var(--font-work-sans)] text-[#9ca8a3]">
+                SKU: {product.sku}
+              </p>
+              {shouldShowRating(product.rating, "detail") && (
+                <div className="flex items-center gap-1.5 text-[#386b00]">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  </svg>
+                  <span className="font-bold text-sm font-[var(--font-work-sans)]">
+                    {product.rating!.toFixed(1)}
+                  </span>
+                  {settings.showReviewCount && product.reviewCount != null && product.reviewCount > 0 && (
+                    <span className="text-[#9ca8a3] text-xs font-[var(--font-work-sans)]">
+                      ({product.reviewCount})
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
 
             <div className="flex items-baseline gap-3 mb-6">
               <span className="font-[var(--font-libre-caslon)] text-3xl font-bold text-[#386b00]">
@@ -454,12 +474,23 @@ function ProductDetail({ product }: { product: Product }) {
             )}
           </motion.div>
         </div>
+
+        {/* Reviews */}
+        <ReviewSection productId={product._id} />
       </div>
     </main>
   );
 }
 
 /* ── Shared icon sub-components ─────────────────────────────── */
+
+function ChevronRight() {
+  return (
+    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  );
+}
 
 function MinusIcon() {
   return (
@@ -594,23 +625,12 @@ function ProductDetailError({ error, onRetry }: { error: string | null; onRetry:
             <motion.span
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
-              className="block w-full border border-[#c1c8c1] text-[#424843] font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] py-3 rounded-xl text-center hover:border-[#032616] hover:text-[#032616] transition-colors cursor-pointer"
-            >
-              Back to Microgreens
+              className="block w-full bg-[#032616] hover:bg-[#0a3d20] text-white font-bold text-[11px] tracking-[0.14em] uppercase font-[var(--font-work-sans)] py-3 rounded-xl center">
+              Browse Microgreens
             </motion.span>
           </Link>
         </div>
       </div>
     </main>
-  );
-}
-
-/* ── Icon ────────────────────────────────────────────────────── */
-
-function ChevronRight() {
-  return (
-    <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-      <path d="m9 18 6-6-6-6" />
-    </svg>
   );
 }

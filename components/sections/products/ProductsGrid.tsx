@@ -214,7 +214,7 @@ export default function ProductsGrid() {
                 originalPrice={
                   product.salePrice ? formatCurrency(product.price) : undefined
                 }
-                rating="4.8"
+                rating={product.rating}
                 badge={badge}
                 badgeVariant={badgeVariant}
                 image={getProductThumbnailUrl(product)}

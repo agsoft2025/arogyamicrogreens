@@ -42,6 +42,8 @@ export interface ApiResponse<T = void> {
 export interface SendOtpResponse extends ApiResponse {
   success: boolean;
   message: string;
+  /** Name of the existing user, if they have registered before. Null for new users. */
+  existingName?: string | null;
 }
 
 export interface VerifyOtpResponseData {
@@ -61,7 +63,7 @@ export interface PersistedSession {
   expiresAt: number; // unix ms — for future token-expiry checks
 }
 
-/* ── Auth context value ──────────────────────────────────────── */
+/* ── Auth context value ────────────────────────────── */
 
 export interface AuthContextUser {
   mobileNumber: string;

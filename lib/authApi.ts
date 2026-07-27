@@ -20,6 +20,8 @@ export interface SendOtpRequest {
 export interface SendOtpResponse {
   success: boolean;
   message: string;
+  /** Returned when the mobile number belongs to an existing user. */
+  existingName?: string | null;
 }
 
 export interface VerifyOtpRequest {
@@ -53,9 +55,13 @@ export async function sendOtp(
   data: SendOtpRequest
 ): Promise<SendOtpResponse> {
   const res = await authApiRaw.sendOtp({ mobileNumber: data.mobileNumber });
+  // Backend wraps the OTP payload in a nested `data` field:
+  // { success, message, data: { success, otp, existingName } }
+  const inner = (res as unknown as { data?: { existingName?: string | null } }).data;
   return {
     success: res.success,
     message: res.message,
+    existingName: inner?.existingName ?? null,
   };
 }
 

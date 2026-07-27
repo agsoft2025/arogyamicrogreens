@@ -6,13 +6,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/store/cartStore";
 import { useWishlist } from "@/store/wishlistStore";
+import { useReviewSettings } from "@/hooks/useReviewSettings";
 
 interface ShopProductCardProps {
   name: string;
   description: string;
   price: string;
   originalPrice?: string;
-  rating: string;
+  /** Average rating 0–5. Omit or pass 0 to hide the rating widget. */
+  rating?: number;
   badge?: string;
   badgeVariant?: "popular" | "sale" | "new";
   image: string;
@@ -53,6 +55,7 @@ export default function ShopProductCard({
   const { items, addItem, clearError } = useCart();
   const { isInWishlist, toggleItem } = useWishlist();
   const inWishlist = !!productId && isInWishlist(productId);
+  const { shouldShowRating, settings } = useReviewSettings();
 
   const isInCart = !!productId && items.some((i) => i.productId === productId);
   const showActive = isInCart || justAdded;
@@ -152,14 +155,16 @@ export default function ShopProductCard({
               name
             )}
           </h4>
-          <div className="flex items-center gap-1 shrink-0 text-[#386b00]">
-            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-            </svg>
-            <span className="font-bold text-[11px] tracking-wide font-[var(--font-work-sans)]">
-              {rating}
-            </span>
-          </div>
+          {shouldShowRating(rating, "card") && (
+            <div className="flex items-center gap-1 shrink-0 text-[#386b00]">
+              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              </svg>
+              <span className="font-bold text-[11px] tracking-wide font-[var(--font-work-sans)]">
+                {rating!.toFixed(1)}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Description */}

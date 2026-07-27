@@ -54,6 +54,8 @@ interface FormValues {
   isBestSeller: boolean;
   status: ProductStatus;
   tags: string[];
+  rating: string;
+  reviewCount: string;
   seoMetaTitle: string;
   seoMetaDescription: string;
 }
@@ -93,6 +95,8 @@ const BLANK_FORM: FormValues = {
   isBestSeller: false,
   status: "draft",
   tags: [],
+  rating: "",
+  reviewCount: "",
   seoMetaTitle: "",
   seoMetaDescription: "",
 };
@@ -118,6 +122,8 @@ function productToForm(p: Product): FormValues {
     isBestSeller: p.isBestSeller,
     status: p.status,
     tags: p.tags ?? [],
+    rating: p.rating != null && p.rating > 0 ? String(p.rating) : "",
+    reviewCount: p.reviewCount != null && p.reviewCount > 0 ? String(p.reviewCount) : "",
     seoMetaTitle: p.seo?.metaTitle ?? "",
     seoMetaDescription: p.seo?.metaDescription ?? "",
   };
@@ -436,6 +442,8 @@ export default function AddProductDialog({
       isBestSeller:     form.isBestSeller,
       status:           form.status,
       tags:             form.tags,
+      rating:           form.rating ? Number(form.rating) : undefined,
+      reviewCount:      form.reviewCount ? Number(form.reviewCount) : undefined,
       seo:
         form.seoMetaTitle || form.seoMetaDescription
           ? {
@@ -833,7 +841,47 @@ export default function AddProductDialog({
 
                 <div className="h-px bg-[#f0f4f0]" />
 
-                {/* ── Section 9: SEO (collapsible) ── */}
+                {/* ── Section 9: Ratings ── */}
+                <section>
+                  <SectionLabel>Ratings</SectionLabel>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <FieldLabel htmlFor="pf-rating">Average Rating</FieldLabel>
+                      <input
+                        id="pf-rating"
+                        type="number"
+                        min={0}
+                        max={5}
+                        step={0.1}
+                        value={form.rating}
+                        onChange={(e) => set("rating", e.target.value)}
+                        onWheel={(e) => e.currentTarget.blur()}
+                        placeholder="e.g. 4.5"
+                        className={inputCls()}
+                      />
+                      <p className="mt-1 text-[10px] text-[#9ca8a3] font-[var(--font-work-sans)]">0 – 5 · leave blank if no rating yet</p>
+                    </div>
+                    <div>
+                      <FieldLabel htmlFor="pf-review-count">Review Count</FieldLabel>
+                      <input
+                        id="pf-review-count"
+                        type="number"
+                        min={0}
+                        step={1}
+                        value={form.reviewCount}
+                        onChange={(e) => set("reviewCount", e.target.value)}
+                        onWheel={(e) => e.currentTarget.blur()}
+                        placeholder="e.g. 128"
+                        className={inputCls()}
+                      />
+                      <p className="mt-1 text-[10px] text-[#9ca8a3] font-[var(--font-work-sans)]">total number of reviews</p>
+                    </div>
+                  </div>
+                </section>
+
+                <div className="h-px bg-[#f0f4f0]" />
+
+                {/* ── Section 10: SEO (collapsible) ── */}
                 <section>
                   <button
                     type="button"
@@ -908,51 +956,49 @@ export default function AddProductDialog({
                     className="flex items-center gap-2 bg-[#ffdad6] text-[#ba1a1a] text-sm font-[var(--font-work-sans)] rounded-lg px-4 py-3"
                   >
                     <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" />
+                      <circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" />
                     </svg>
                     {submitError}
                   </motion.div>
                 )}
               </AnimatePresence>
+            </div>
 
-              <div className="flex items-center justify-end gap-3">
-                <motion.button type="button" whileTap={{ scale: 0.97 }}
-                  onClick={submitting ? undefined : onClose} disabled={submitting}
-                  className="px-5 py-2.5 border border-[#e3e3dd] text-[#424843] font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] rounded-lg hover:bg-[#f4f4ee] transition-colors disabled:opacity-50"
-                >
-                  Cancel
-                </motion.button>
-
-                <motion.button type="submit" form={formId}
-                  whileHover={!submitting ? { scale: 1.02 } : {}}
-                  whileTap={!submitting ? { scale: 0.97 } : {}}
-                  disabled={submitting}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-[#386b00] text-white font-bold text-[11px] tracking-widest uppercase font-[var(--font-work-sans)] rounded-lg hover:bg-[#4a8a00] transition-colors disabled:opacity-70 shadow-sm"
-                >
-                  {submitting ? (
-                    <>
-                      <motion.svg className="w-4 h-4"
-                        animate={{ rotate: 360 }}
-                        transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
-                        fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
-                      >
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                      </motion.svg>
-                      {loadingLabel}
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                        <path d="M5 13l4 4L19 7" />
-                      </svg>
-                      {submitLabel}
-                    </>
-                  )}
-                </motion.button>
-              </div>
+            {/* Footer buttons */}
+            <div className="flex justify-end gap-3 px-8 py-5 border-t border-[#f0f4f0] bg-white shrink-0">
+              <motion.button
+                type="button"
+                onClick={onClose}
+                disabled={submitting}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-5 py-2.5 rounded-lg text-sm font-bold font-[var(--font-work-sans)] text-[#424843] border border-[#e3e3dd] hover:border-[#386b00] hover:text-[#386b00] transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </motion.button>
+              <motion.button
+                type="submit"
+                form={formId}
+                disabled={submitting}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-6 py-2.5 rounded-lg text-sm font-bold font-[var(--font-work-sans)] bg-[#032616] text-white hover:bg-[#0a3d20] transition-colors disabled:opacity-60 flex items-center gap-2"
+              >
+                {submitting ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    {isEdit ? "Saving..." : "Creating..."}
+                  </>
+                ) : (
+                  submitLabel
+                )}
+              </motion.button>
             </div>
           </motion.div>
-        </>
+      </>
       )}
     </AnimatePresence>
   );

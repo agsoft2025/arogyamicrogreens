@@ -36,6 +36,10 @@ export interface Product {
   isBestSeller: boolean;
   status: ProductStatus;
   tags: string[];
+  /** Average rating 0–5. 0 means no reviews yet. */
+  rating?: number;
+  /** Total number of ratings/reviews. */
+  reviewCount?: number;
   seo?: ProductSeo;
   createdAt?: string;
   updatedAt?: string;
@@ -106,6 +110,8 @@ export interface CreateProductPayload {
   isBestSeller: boolean;
   status: ProductStatus;
   tags: string[];
+  rating?: number;
+  reviewCount?: number;
   seo?: ProductSeo;
 }
 
