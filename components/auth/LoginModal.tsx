@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/authStore";
 import type { User } from "@/store/authStore";
 import { sendOtp, verifyOtp } from "@/lib/authApi";
+import { getPublicStats, formatStatCount, type PublicStats } from "@/api/stats.api";
 
 /* ── Constants ──────────────────────────────────────────────── */
 const OTP_LENGTH = 6;
@@ -60,6 +61,25 @@ function BrandIllustration() {
 
 /* ── Left brand panel ───────────────────────────────────────── */
 function BrandPanel() {
+  const [stats, setStats] = useState<PublicStats | null>(null);
+
+  useEffect(() => {
+    getPublicStats()
+      .then(setStats)
+      .catch(() => { /* keep null — fallback to skeleton */ });
+  }, []);
+
+  const statItems = stats
+    ? [
+        { value: formatStatCount(stats.customerCount), label: "Happy Customers" },
+        { value: `${stats.varietyCount}+`,             label: "Varieties" },
+        {
+          value: stats.avgRating > 0 ? `${stats.avgRating}★` : "N/A",
+          label: "Avg. Rating",
+        },
+      ]
+    : null; // loading
+
   return (
     <div className="hidden md:flex md:w-[42%] shrink-0 bg-[#032616] flex-col justify-between p-10 relative overflow-hidden">
       {/* Subtle background texture */}
@@ -89,16 +109,19 @@ function BrandPanel() {
 
       {/* Bottom stats */}
       <div className="relative z-10 grid grid-cols-3 gap-2 text-center">
-        {[
-          { value: "10K+", label: "Happy Customers" },
-          { value: "50+", label: "Varieties" },
-          { value: "4.9★", label: "Avg. Rating" },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-white/5 rounded-xl p-3">
-            <p className="font-[var(--font-libre-caslon)] text-lg font-bold text-[#a5f95b]">{stat.value}</p>
-            <p className="font-[var(--font-work-sans)] text-[10px] text-white/50 uppercase tracking-wider leading-tight mt-0.5">{stat.label}</p>
-          </div>
-        ))}
+        {statItems
+          ? statItems.map((stat) => (
+              <div key={stat.label} className="bg-white/5 rounded-xl p-3">
+                <p className="font-[var(--font-libre-caslon)] text-lg font-bold text-[#a5f95b]">{stat.value}</p>
+                <p className="font-[var(--font-work-sans)] text-[10px] text-white/50 uppercase tracking-wider leading-tight mt-0.5">{stat.label}</p>
+              </div>
+            ))
+          : ["Happy Customers", "Varieties", "Avg. Rating"].map((label) => (
+              <div key={label} className="bg-white/5 rounded-xl p-3 animate-pulse">
+                <div className="h-5 w-10 bg-white/10 rounded mx-auto mb-1" />
+                <div className="h-2.5 w-14 bg-white/10 rounded mx-auto" />
+              </div>
+            ))}
       </div>
     </div>
   );
@@ -238,7 +261,7 @@ function FormInput({
 
 /* ── Step 1 — Mobile Number ─────────────────────────────────── */
 interface Step1Props {
-  onSuccess: (mobile: string) => void;
+  onSuccess: (mobile: string, existingName: string | null) => void;
 }
 
 function Step1({ onSuccess }: Step1Props) {
@@ -258,7 +281,7 @@ function Step1({ onSuccess }: Step1Props) {
     try {
       const res = await sendOtp({ mobileNumber: cleaned });
       if (res.success) {
-        onSuccess(cleaned);
+        onSuccess(cleaned, res.existingName ?? null);
       } else {
         setError(res.message ?? "Failed to send OTP. Please try again.");
       }
@@ -326,14 +349,17 @@ function Step1({ onSuccess }: Step1Props) {
 /* ── Step 2 — OTP + Name ────────────────────────────────────── */
 interface Step2Props {
   mobileNumber: string;
+  /** Pre-filled name for returning users (null for new users) */
+  existingName: string | null;
   onBack: () => void;
   /** Passes full verified User and the JWT token returned by the backend */
   onSuccess: (user: User, token: string) => void;
 }
 
-function Step2({ mobileNumber, onBack, onSuccess }: Step2Props) {
+function Step2({ mobileNumber, existingName, onBack, onSuccess }: Step2Props) {
+  const isReturning = existingName !== null;
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
-  const [name, setName] = useState("");
+  const [name, setName] = useState(existingName ?? "");
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
@@ -465,11 +491,12 @@ function Step2({ mobileNumber, onBack, onSuccess }: Step2Props) {
       {/* Name */}
       <FormInput
         id="name"
-        label="Your Name"
+        label={isReturning ? "Your Name" : "Your Name"}
         value={name}
         onChange={(v) => { setName(v); setNameError(""); }}
         placeholder="e.g. Ajay Kumar"
         error={nameError}
+        helper={isReturning ? "Welcome back! You can edit your name if needed." : undefined}
       />
 
       {/* Global error */}
@@ -543,6 +570,7 @@ export default function LoginModal() {
 
   const [step, setStep] = useState<1 | 2 | "success">(1);
   const [mobileNumber, setMobileNumber] = useState("");
+  const [existingName, setExistingName] = useState<string | null>(null);
   const [verifiedName, setVerifiedName] = useState("");
 
   // Reset to step 1 whenever modal opens
@@ -550,11 +578,13 @@ export default function LoginModal() {
     if (isLoginModalOpen) {
       setStep(1);
       setMobileNumber("");
+      setExistingName(null);
     }
   }, [isLoginModalOpen]);
 
-  const handleStep1Success = useCallback((mobile: string) => {
+  const handleStep1Success = useCallback((mobile: string, name: string | null) => {
     setMobileNumber(mobile);
+    setExistingName(name);
     setStep(2);
   }, []);
 
@@ -699,6 +729,7 @@ export default function LoginModal() {
                     >
                       <Step2
                         mobileNumber={mobileNumber}
+                        existingName={existingName}
                         onBack={() => setStep(1)}
                         onSuccess={handleStep2Success}
                       />
@@ -744,7 +775,7 @@ function SpinnerIcon() {
 
 function ArrowRightIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   );
@@ -752,16 +783,8 @@ function ArrowRightIcon() {
 
 function ArrowLeftIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M19 12H5M12 19l-7-7 7-7" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m5 13 4 4L19 7" />
     </svg>
   );
 }
@@ -774,11 +797,18 @@ function CloseIcon() {
   );
 }
 
+function CheckIcon() {
+  return (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m5 13 4 4L19 7" />
+    </svg>
+  );
+}
+
 function AlertIcon() {
   return (
-    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 8v4M12 16h.01" />
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
     </svg>
   );
 }

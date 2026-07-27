@@ -199,7 +199,7 @@ export default function MicroCollection() {
                       ? formatCurrency(product.price)
                       : undefined
                   }
-                  rating="4.5"
+                  rating={product.rating}
                   badge={badge}
                   badgeVariant={badgeVariant}
                   image={getProductThumbnailUrl(product)}
