@@ -9,24 +9,11 @@ import SearchResults from "@/components/sections/search/SearchResults";
 import PageTransition from "@/components/animations/PageTransition";
 import ChatFAB from "@/components/ui/ChatFAB";
 
-interface SearchPageProps {
-  searchParams: Promise<{ q?: string }>;
-}
-
-export async function generateMetadata({
-  searchParams,
-}: SearchPageProps): Promise<Metadata> {
-  const { q } = await searchParams;
-  const query = q?.trim();
-  return {
-    title: query
-      ? `Search Results for "${query}" | AgriNest`
-      : "Search Products | AgriNest",
-    description: query
-      ? `Explore AgriNest products matching "${query}". Fresh microgreens and organic products delivered to your door.`
-      : "Search our full collection of fresh microgreens and organic products at AgriNest.",
-  };
-}
+export const metadata: Metadata = {
+  title: "Search Products | AgriNest",
+  description:
+    "Search our full collection of fresh microgreens and organic products at AgriNest.",
+};
 
 function SearchSkeleton() {
   return (

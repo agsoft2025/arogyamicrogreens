@@ -2,8 +2,9 @@
 
 export const dynamic = 'force-static';
 
-import { use, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProduct, getEffectivePrice } from "@/hooks/useProducts";
 import { useCart } from "@/store/cartStore";
@@ -21,13 +22,8 @@ import type { Product } from "@/types/product.types";
 
 /* ── Page ────────────────────────────────────────────────────── */
 
-export default function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  // Next.js 15+ passes params as a Promise — unwrap with React.use()
-  const { slug } = use(params);
+export default function ProductDetailPage() {
+  const { slug } = useParams<{ slug: string }>();
   const { product, loading, error, refetch } = useProduct({ slug });
 
   return (
