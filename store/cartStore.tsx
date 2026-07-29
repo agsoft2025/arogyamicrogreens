@@ -24,7 +24,7 @@ import {
   updateCartItem,
   removeFromCart,
   clearApiCart,
-} from "@/api/cart.api";
+} from "@/services/cart.api";
 import type { CartItem, ApiCartItem, PopulatedProduct } from "@/types/cart.types";
 import { getProductImageUrl } from "@/lib/imageUtils";
 

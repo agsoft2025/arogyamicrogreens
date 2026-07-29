@@ -12,7 +12,7 @@ import ProductFiltersBar from "@/components/admin/ProductFiltersBar";
 import AddProductDialog from "@/components/admin/products/AddProductDialog";
 import DeleteProductDialog from "@/components/admin/products/DeleteProductDialog";
 import { useProducts } from "@/hooks/useProducts";
-import { updateProduct } from "@/api/product.api";
+import { updateProduct } from "@/services/product.api";
 import type { Product, ProductStatus } from "@/types/product.types";
 
 /* ── Status config ───────────────────────────────────────────── */

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getReviewSettings } from "@/api/review-settings.api";
+import { getReviewSettings } from "@/services/review-settings.api";
 import type { ReviewSettings } from "@/types/review-settings.types";
 
 /* ── Module-level cache so all component instances share one fetch ── */

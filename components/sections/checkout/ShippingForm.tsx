@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import type { SavedAddress } from "@/api/user.api";
+import type { SavedAddress } from "@/services/user.api";
 
 export interface ShippingData {
   fullName: string;

@@ -4,7 +4,7 @@ export const dynamic = 'force-static';
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getReviewSettings, updateReviewSettings } from "@/api/review-settings.api";
+import { getReviewSettings, updateReviewSettings } from "@/services/review-settings.api";
 import { invalidateReviewSettingsCache } from "@/hooks/useReviewSettings";
 import type { ReviewSettings } from "@/types/review-settings.types";
 

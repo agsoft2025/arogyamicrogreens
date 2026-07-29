@@ -8,12 +8,12 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import { logout as apiLogout } from "@/api/auth.api";
+import { logout as apiLogout } from "@/services/auth.api";
 import {
   registerUnauthorizedHandler,
   unregisterUnauthorizedHandler,
   refreshAccessToken,
-} from "@/api/axios";
+} from "@/services/axios";
 
 /* -- Session persistence helpers -- */
 

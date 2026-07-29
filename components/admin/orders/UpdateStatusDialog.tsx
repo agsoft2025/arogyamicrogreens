@@ -10,7 +10,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { updateOrderStatus } from "@/api/admin.order.api";
+import { updateOrderStatus } from "@/services/admin.order.api";
 import type {
   AdminOrderStatus,
   UpdateOrderStatusPayload,

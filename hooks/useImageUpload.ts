@@ -21,7 +21,7 @@ import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import {
   uploadSingleImage,
   validateImageFiles,
-} from "@/api/upload.api";
+} from "@/services/upload.api";
 import type { UploadItem } from "@/types/upload.types";
 
 /* ── Hook return type ────────────────────────────────────────── */

@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { createUser } from "@/api/user.api";
+import { createUser } from "@/services/user.api";
 import type { UserRole } from "@/types/user.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 
 interface AddUserDialogProps {
   open: boolean;

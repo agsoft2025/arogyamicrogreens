@@ -10,7 +10,7 @@ import {
   deletePlan,
   updatePlanStatus,
   SubscriptionPlan,
-} from "@/api/subscription-plan.api";
+} from "@/services/subscription-plan.api";
 
 const ITEMS_PER_PAGE = 10;
 

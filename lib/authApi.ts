@@ -9,7 +9,7 @@
  * Error handling lives in: @/api/axios.ts
  */
 
-import * as authApiRaw from "@/api/auth.api";
+import * as authApiRaw from "@/services/auth.api";
 
 /* ── Re-exported types (for backward compatibility) ─────────── */
 

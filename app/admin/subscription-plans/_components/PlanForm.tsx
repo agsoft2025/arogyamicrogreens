@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { IconType, PlanCategory } from "@/api/subscription-plan.api";
+import type { IconType, PlanCategory } from "@/services/subscription-plan.api";
 
 export interface PlanFormData {
   tier: string;

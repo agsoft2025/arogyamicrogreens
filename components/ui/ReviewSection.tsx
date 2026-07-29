@@ -8,7 +8,7 @@ import {
   getMyReview,
   submitReview,
   editReview,
-} from "@/api/review.api";
+} from "@/services/review.api";
 import type { Review, ReviewsPage } from "@/types/review.types";
 
 /* ── Star components ─────────────────────────────────────────── */

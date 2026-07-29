@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
-import { orderApi, Order, OrderPreviewResponse, Address } from '@/api/order.api';
+import { orderApi, Order, OrderPreviewResponse, Address } from '@/services/order.api';
 
 interface OrderState {
   orders: Order[];

@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { createProduct, updateProduct } from "@/api/product.api";
+import { createProduct, updateProduct } from "@/services/product.api";
 import type { CreateProductPayload, Product, ProductCategory, ProductStatus } from "@/types/product.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 import FeaturedToggle from "@/components/admin/FeaturedToggle";
 import ProductBenefitsInput from "./ProductBenefitsInput";
 import ProductTagsInput from "./ProductTagsInput";
 import ProductImageUploader from "./ProductImageUploader";
-import { buildServerUrl } from "@/api/upload.api";
+import { buildServerUrl } from "@/services/upload.api";
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 

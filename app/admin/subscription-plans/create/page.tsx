@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { createPlan, PlanFeature, IconType, ButtonStyle, PlanStatus } from "@/api/subscription-plan.api";
+import { createPlan, PlanFeature, IconType, ButtonStyle, PlanStatus } from "@/services/subscription-plan.api";
 import PlanForm, { PlanFormData } from "../_components/PlanForm";
 
 const EMPTY_FORM: PlanFormData = {

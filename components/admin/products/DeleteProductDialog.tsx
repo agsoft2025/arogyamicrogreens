@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { deleteProduct } from "@/api/product.api";
+import { deleteProduct } from "@/services/product.api";
 import type { Product } from "@/types/product.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 
 interface DeleteProductDialogProps {
   open: boolean;

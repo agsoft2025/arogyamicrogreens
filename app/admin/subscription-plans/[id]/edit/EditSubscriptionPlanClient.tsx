@@ -11,7 +11,7 @@ import {
   PlanFeature,
   ButtonStyle,
   PlanStatus,
-} from "@/api/subscription-plan.api";
+} from "@/services/subscription-plan.api";
 import PlanForm, { PlanFormData } from "../../_components/PlanForm";
 
 export default function EditSubscriptionPlanClient() {

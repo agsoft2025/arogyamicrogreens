@@ -9,7 +9,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getProducts, getProductById, getProductBySlug } from "@/api/product.api";
+import { getProducts, getProductById, getProductBySlug } from "@/services/product.api";
 import type {
   Product,
   ProductListParams,
@@ -17,7 +17,7 @@ import type {
   UseProductsState,
   UseProductState,
 } from "@/types/product.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 
 /* ── useProducts ─────────────────────────────────────────────── */
 

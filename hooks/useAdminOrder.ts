@@ -6,9 +6,9 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getAdminOrderById } from "@/api/admin.order.api";
+import { getAdminOrderById } from "@/services/admin.order.api";
 import type { UseAdminOrderState } from "@/types/admin.order.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 
 interface UseAdminOrderReturn extends UseAdminOrderState {
   refetch: () => void;

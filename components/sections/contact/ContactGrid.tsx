@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
 import { AgriNestSocialRow } from "@/components/ui/SocialIcons";
-import { contactApi } from "@/api/contact.api";
+import { contactApi } from "@/services/contact.api";
 
 type FormState = "idle" | "loading" | "success" | "error";
 

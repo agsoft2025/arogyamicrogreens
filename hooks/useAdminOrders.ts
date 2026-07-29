@@ -7,14 +7,14 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getAdminOrders } from "@/api/admin.order.api";
+import { getAdminOrders } from "@/services/admin.order.api";
 import type {
   AdminOrderListParams,
   UseAdminOrdersState,
   AdminOrderPagination,
   AdminOrder,
 } from "@/types/admin.order.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 
 interface UseAdminOrdersOptions extends AdminOrderListParams {
   skip?: boolean;

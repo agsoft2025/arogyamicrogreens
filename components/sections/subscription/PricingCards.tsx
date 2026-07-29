@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
-import { getActivePlans, SubscriptionPlan } from "@/api/subscription-plan.api";
+import { getActivePlans, SubscriptionPlan } from "@/services/subscription-plan.api";
 
 /* -- Icons -- */
 

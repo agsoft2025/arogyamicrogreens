@@ -6,12 +6,12 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getUsers } from "@/api/user.api";
+import { getUsers } from "@/services/user.api";
 import type {
   UserListParams,
   UseUsersState,
 } from "@/types/user.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 
 /* ── useUsers ────────────────────────────────────────────────── */
 

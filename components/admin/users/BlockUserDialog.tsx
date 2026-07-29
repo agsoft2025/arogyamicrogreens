@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { blockUser } from "@/api/user.api";
+import { blockUser } from "@/services/user.api";
 import type { User } from "@/types/user.types";
-import type { ApiError } from "@/api/axios";
+import type { ApiError } from "@/services/axios";
 
 interface BlockUserDialogProps {
   open: boolean;

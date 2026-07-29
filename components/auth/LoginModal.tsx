@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/authStore";
 import type { User } from "@/store/authStore";
 import { sendOtp, verifyOtp } from "@/lib/authApi";
-import { getPublicStats, formatStatCount, type PublicStats } from "@/api/stats.api";
+import { getPublicStats, formatStatCount, type PublicStats } from "@/services/stats.api";
 
 /* ── Constants ──────────────────────────────────────────────── */
 const OTP_LENGTH = 6;

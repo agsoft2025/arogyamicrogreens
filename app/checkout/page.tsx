@@ -26,7 +26,7 @@ import CheckoutSummary, {
   SummaryItem,
 } from "@/components/sections/checkout/CheckoutSummary";
 import ChatFAB from "@/components/ui/ChatFAB";
-import { getMyProfile, saveMyAddress, type SavedAddress } from "@/api/user.api";
+import { getMyProfile, saveMyAddress, type SavedAddress } from "@/services/user.api";
 
 /* ── Razorpay SDK ───────────────────────────────────────────────
    Declare the global so TypeScript doesn't complain.
