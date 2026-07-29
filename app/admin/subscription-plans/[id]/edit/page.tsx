@@ -2,6 +2,10 @@
 
 export const dynamic = 'force-static';
 
+export function generateStaticParams() {
+  return [{ id: 'placeholder' }];
+}
+
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";

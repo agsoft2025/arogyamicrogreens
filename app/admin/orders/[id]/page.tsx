@@ -2,6 +2,10 @@
 
 export const dynamic = 'force-static';
 
+export function generateStaticParams() {
+  return [{ id: 'placeholder' }];
+}
+
 import { useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";

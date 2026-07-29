@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/products/:slug", "destination": "/products/placeholder" },
+    { "source": "/microgreens/:slug", "destination": "/microgreens/placeholder" },
+    { "source": "/admin/orders/:id", "destination": "/admin/orders/placeholder" },
+    { "source": "/admin/subscription-plans/:id/edit", "destination": "/admin/subscription-plans/placeholder/edit" }
+  ]
+}
