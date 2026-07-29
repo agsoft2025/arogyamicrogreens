@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import { Suspense } from "react";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import Navbar from "@/components/layout/Navbar";

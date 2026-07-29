@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = 'force-static';
+
 import { formatCurrency } from "@/lib/currency";
 import { getProductThumbnailUrl } from "@/lib/imageUtils";
 import { useState, useEffect, useCallback, useRef, type ReactNode } from "react";

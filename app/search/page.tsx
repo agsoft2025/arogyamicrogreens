@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";

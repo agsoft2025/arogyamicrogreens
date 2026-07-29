@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = 'force-static';
+
 import { useState, useMemo, useCallback, useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
