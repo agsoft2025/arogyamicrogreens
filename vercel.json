@@ -1,4 +1,7 @@
 {
+  "framework": null,
+  "buildCommand": "next build",
+  "outputDirectory": "out",
   "rewrites": [
     { "source": "/products/:slug", "destination": "/products/placeholder" },
     { "source": "/microgreens/:slug", "destination": "/microgreens/placeholder" },
