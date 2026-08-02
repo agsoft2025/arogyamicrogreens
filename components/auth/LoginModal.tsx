@@ -395,7 +395,7 @@ function Step2({ mobileNumber, existingName, onBack, onSuccess }: Step2Props) {
     } else {
       setOtpError("");
     }
-    if (!name.trim()) {
+    if (!isReturning && !name.trim()) {
       setNameError("Please enter your name.");
       valid = false;
     } else {
@@ -406,7 +406,7 @@ function Step2({ mobileNumber, existingName, onBack, onSuccess }: Step2Props) {
     setError("");
     setLoading(true);
     try {
-      const res = await verifyOtp({ mobileNumber, otp: otpValue, name: name.trim() });
+      const res = await verifyOtp({ mobileNumber, otp: otpValue, name: isReturning ? existingName! : name.trim() });
       if (res.success) {
         onSuccess(res.user as User, res.token ?? "");
       } else {
@@ -488,16 +488,22 @@ function Step2({ mobileNumber, existingName, onBack, onSuccess }: Step2Props) {
         </div>
       </div>
 
-      {/* Name */}
-      <FormInput
-        id="name"
-        label={isReturning ? "Your Name" : "Your Name"}
-        value={name}
-        onChange={(v) => { setName(v); setNameError(""); }}
-        placeholder="e.g. Ajay Kumar"
-        error={nameError}
-        helper={isReturning ? "Welcome back! You can edit your name if needed." : undefined}
-      />
+      {/* Name — only collected for new users; returning users already have one on file */}
+      {!isReturning && (
+        <FormInput
+          id="name"
+          label="Your Name"
+          value={name}
+          onChange={(v) => { setName(v); setNameError(""); }}
+          placeholder="e.g. Ajay Kumar"
+          error={nameError}
+        />
+      )}
+      {isReturning && (
+        <p className="text-sm text-[#424843] font-[var(--font-work-sans)]">
+          Welcome back, <span className="font-bold text-[#032616]">{existingName}</span>!
+        </p>
+      )}
 
       {/* Global error */}
       <AnimatePresence>
