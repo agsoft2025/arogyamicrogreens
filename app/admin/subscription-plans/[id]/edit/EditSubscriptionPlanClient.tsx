@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
@@ -16,8 +16,7 @@ import PlanForm, { PlanFormData } from "../../_components/PlanForm";
 
 export default function EditSubscriptionPlanClient() {
   const router = useRouter();
-  const params = useParams<{ id: string }>();
-  const id = params.id;
+  const id = usePathname().split('/').filter(Boolean).at(-2) ?? '';
 
   const [plan, setPlan] = useState<SubscriptionPlan | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);

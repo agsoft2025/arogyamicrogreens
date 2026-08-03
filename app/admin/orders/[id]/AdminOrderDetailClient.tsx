@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAdminOrder } from "@/hooks/useAdminOrder";
@@ -64,7 +64,7 @@ function avatarColors(name: string) {
 
 /* ═══════════════════════════════════════════════════════ */
 export default function AdminOrderDetailClient() {
-  const { id } = useParams<{ id: string }>();
+  const id = usePathname().split('/').filter(Boolean).pop() ?? '';
   const router = useRouter();
 
   const { order, loading, error, refetch } = useAdminOrder(id ?? null);

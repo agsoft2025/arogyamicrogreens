@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProduct, getEffectivePrice } from "@/hooks/useProducts";
 import { useCart } from "@/store/cartStore";
@@ -21,7 +21,7 @@ import type { Product } from "@/types/product.types";
 /* ── Page ────────────────────────────────────────────────────── */
 
 export default function MicrogreenDetailClient() {
-  const { slug } = useParams<{ slug: string }>();
+  const slug = usePathname().split('/').filter(Boolean).pop() ?? '';
   const { product, loading, error, refetch } = useProduct({ slug });
 
   return (
